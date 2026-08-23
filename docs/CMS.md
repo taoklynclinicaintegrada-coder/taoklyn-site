@@ -1,273 +1,408 @@
-# Como atualizar o site da Tao Klyn
+# Manual do painel — site da Tao Klyn
 
-Este guia é para quem cuida do conteúdo do site — **não é preciso saber
-programar**. Se você consegue usar o Instagram e o e-mail, consegue usar isto.
+Este guia é para quem cuida do conteúdo do site. **Não é preciso saber
+programar.** Se você usa Instagram e e-mail, consegue usar isto.
 
-O sistema chama-se **Pages CMS**. Ele funciona como um painel onde você escreve,
-troca fotos e publica. Ao salvar, o site se atualiza sozinho em poucos minutos.
+O painel se chama **Pages CMS**. É uma página na internet onde você escreve,
+troca fotos e publica. **Ao salvar, o site se atualiza sozinho em poucos
+minutos** — não existe um botão "publicar site" separado.
+
+> **Endereço do painel:** https://app.pagescms.org
+> Guarde nos favoritos. É sempre o mesmo.
 
 ---
 
 ## Índice
 
-1. [Como entrar no painel](#1-como-entrar-no-painel)
-2. [Primeira configuração (uma vez só)](#2-primeira-configuração-uma-vez-só)
-3. [O que existe no painel](#3-o-que-existe-no-painel)
-4. [Profissionais](#4-profissionais)
-5. [Serviços](#5-serviços)
-6. [Publicações (blog)](#6-publicações-blog)
-7. [Galeria, Espaços e Vídeos](#7-galeria-espaços-e-vídeos)
-8. [Configurações do site (telefone, WhatsApp, horários…)](#8-configurações-do-site)
-9. [Trocar uma imagem](#9-trocar-uma-imagem)
-10. [Desfazer uma alteração](#10-desfazer-uma-alteração)
-11. [Convidar outra pessoa para editar](#11-convidar-outra-pessoa-para-editar)
-12. [Perguntas frequentes](#12-perguntas-frequentes)
+1. [Como entrar](#1-como-entrar)
+2. [Senha e segurança da conta](#2-senha-e-segurança-da-conta)
+3. [Primeira configuração (só o administrador)](#3-primeira-configuração-só-o-administrador)
+4. [Como o painel é organizado](#4-como-o-painel-é-organizado)
+5. [Publicações: escrever, publicar e tirar do ar](#5-publicações-escrever-publicar-e-tirar-do-ar)
+6. [Profissionais](#6-profissionais)
+7. [Serviços](#7-serviços)
+8. [Galeria, Espaços e Vídeos](#8-galeria-espaços-e-vídeos)
+9. [Configurações do site](#9-configurações-do-site)
+10. [Trocar uma imagem](#10-trocar-uma-imagem)
+11. [Desfazer uma alteração](#11-desfazer-uma-alteração)
+12. [Dar e tirar acesso de outras pessoas](#12-dar-e-tirar-acesso-de-outras-pessoas)
+13. [Quando algo não funciona](#13-quando-algo-não-funciona)
+14. [O que nunca publicar](#14-o-que-nunca-publicar)
 
 ---
 
-## 1. Como entrar no painel
+## 1. Como entrar
 
-Existem **duas formas de entrar**, dependendo de quem você é.
+Abra **https://app.pagescms.org**. A tela de entrada oferece **duas formas**:
 
-### Você administra o site (tem conta no GitHub)
+### Forma A — com conta do GitHub (administrador)
 
-1. Abra **https://pagescms.org**
-2. Clique em **Sign in with GitHub** (entrar com GitHub).
-3. Entre com a conta do GitHub que tem acesso ao repositório da clínica.
-4. Na lista de repositórios, escolha **taoklyn/taoklyn-site**.
+Para quem administra o site e precisa mexer na configuração.
 
-### Você foi convidada para cuidar do conteúdo (não precisa de GitHub)
+1. Clique em **Sign in with GitHub**.
+2. Entre com o usuário e a senha do GitHub.
+3. Se for a primeira vez, autorize o aplicativo.
+4. Na lista de repositórios, escolha **taoklyn / taoklyn-site**.
 
-1. Você recebe um **convite por e-mail**, enviado por quem administra o site.
-2. Siga o que o e-mail pede para ativar o acesso.
-3. Depois disso, entre em **https://pagescms.org** com **o mesmo e-mail** do
-   convite e o painel abre direto no site da clínica.
+### Forma B — com e-mail (recepção e equipe de conteúdo)
 
-**Não é preciso ter conta no GitHub, nem instalar nada, nem saber programar.**
+**Não precisa de conta no GitHub, não precisa instalar nada.**
 
-O que uma pessoa convidada pode fazer: escrever, editar e publicar conteúdo, e
-enviar imagens. O que ela **não** pode: mexer na configuração do painel, na
-lista de convidados ou em qualquer parte técnica — isso fica só com quem
-administra.
+1. Digite seu e-mail no campo **Email**.
+2. Clique em **Continue with email**.
+3. O Pages CMS envia o acesso para esse endereço. Abra sua caixa de entrada e
+   siga o que chegou.
+4. Pronto: o painel abre no site da clínica.
 
-> Guarde o endereço **pagescms.org** nos favoritos. É sempre o mesmo.
-> Como convidar alguém está na [seção 11](#11-convidar-outra-pessoa-para-editar).
+> Só funciona com um e-mail que já tenha sido **convidado** — veja a
+> [seção 12](#12-dar-e-tirar-acesso-de-outras-pessoas). Um e-mail não convidado
+> entra, mas não enxerga nenhum site.
+>
+> Se o e-mail não chegar em alguns minutos, **olhe no spam/lixo eletrônico**.
 
 ---
 
-## 2. Primeira configuração (uma vez só)
+## 2. Senha e segurança da conta
 
-Feita apenas uma vez, por quem administra a conta do GitHub da clínica.
+### No painel não existe senha
 
-1. Entre em **https://pagescms.org** com a conta do GitHub.
-2. O Pages CMS vai pedir para instalar um aplicativo do GitHub. Autorize.
+Esta é a parte que costuma confundir: **o Pages CMS não tem senha própria.** Não
+há senha para criar, lembrar, trocar nem perder.
+
+- Quem entra **por e-mail** recebe o acesso na caixa de entrada, toda vez.
+  A segurança do painel é a segurança do seu e-mail.
+- Quem entra **pelo GitHub** usa a senha do GitHub.
+
+Por isso, **proteger o e-mail é proteger o site**. Quem tiver acesso à sua caixa
+de entrada tem acesso ao painel.
+
+### Trocar a senha do GitHub (administrador)
+
+1. Entre em **https://github.com** com sua conta.
+2. Clique na sua foto, canto superior direito → **Settings**.
+3. No menu lateral, **Password and authentication**.
+4. Em **Change password**, informe a senha atual e a nova, duas vezes.
+5. Clique em **Update password**.
+
+### Ativar a verificação em duas etapas (fortemente recomendado)
+
+Na mesma tela **Password and authentication**, seção **Two-factor
+authentication** → **Enable two-factor authentication**. O GitHub guia o resto,
+por aplicativo de autenticação ou SMS.
+
+Isso impede que alguém entre no repositório do site mesmo tendo descoberto a
+senha.
+
+> **Guarde os códigos de recuperação** que o GitHub mostra ao ativar. Sem eles,
+> perder o celular significa perder o acesso.
+
+### Esqueci a senha do GitHub
+
+Na tela de entrada do GitHub, clique em **Forgot password?** e informe o e-mail
+da conta. O link de redefinição chega por e-mail.
+
+### Se alguém sair da clínica
+
+Remova o acesso da pessoa no painel
+([seção 12](#12-dar-e-tirar-acesso-de-outras-pessoas)). Não é preciso trocar
+senha de ninguém — cada pessoa entra com o próprio e-mail.
+
+---
+
+## 3. Primeira configuração (só o administrador)
+
+Feita **uma vez só**, por quem administra a conta do GitHub da clínica.
+
+1. Entre em **https://app.pagescms.org** com **Sign in with GitHub**.
+2. O Pages CMS pede para instalar um aplicativo do GitHub. Autorize.
 3. Na tela do GitHub, escolha a organização **taoklyn**.
-4. Em "Repository access", escolha **Only select repositories** e marque
-   **taoklyn-site**. Isso limita o acesso apenas a este site.
-5. Confirme. Volte ao Pages CMS e escolha o repositório.
+4. Em **Repository access**, marque **Only select repositories** e selecione
+   apenas **taoklyn-site**.
+5. Confirme. Volte ao Pages CMS e abra o repositório.
 
-O Pages CMS lê um arquivo chamado `.pages.yml`, que já está pronto no
-repositório — é ele que define os campos que você vê no painel.
+O painel já abre montado, porque o arquivo de configuração (`.pages.yml`) está
+no repositório. **Ele não precisa ser alterado no dia a dia.**
+
+Para colocar o site no ar pela primeira vez, veja [`DEPLOY.md`](DEPLOY.md).
 
 ---
 
-## 3. O que existe no painel
+## 4. Como o painel é organizado
 
-No menu da esquerda aparecem duas áreas:
+No menu da esquerda:
 
 **GERAL**
-- **Configurações do site** — telefone, WhatsApp, e-mail, endereço, horários,
-  textos institucionais, missão, redes sociais, locação de salas.
+
+| Item | O que tem dentro |
+|---|---|
+| **Configurações do site** | telefone, WhatsApp, e-mail, endereço, horários, missão, textos institucionais, redes sociais, locação de salas |
 
 **CONTEÚDO**
-- **Profissionais** — quem atende na clínica.
-- **Serviços** — o que a clínica oferece.
-- **Publicações** — textos e avisos do blog.
-- **Galeria** — fotos da clínica.
-- **Vídeos** — vídeos institucionais e o tour pela clínica.
-- **Espaços** — salas e ambientes.
-- **Páginas de texto** — Política de Privacidade e Política de Cookies.
 
-Também há **Media**, onde ficam todas as imagens enviadas.
+| Item | O que tem dentro |
+|---|---|
+| **Profissionais** | quem atende na clínica — uma ficha por pessoa |
+| **Serviços** | o que a clínica oferece — uma ficha por serviço |
+| **Publicações** | textos e avisos do blog |
+| **Galeria** | fotos da clínica |
+| **Vídeos** | vídeos institucionais e o tour pela clínica |
+| **Espaços** | salas e ambientes |
+| **Páginas de texto** | Política de Privacidade e Política de Cookies |
+
+Há ainda **Media**, onde ficam todas as imagens já enviadas.
+
+### Dois tipos de tela
+
+- **Ficha por ficha** (Profissionais, Serviços, Publicações, Páginas): há uma
+  lista, e você clica em um item para editar. O botão **Add entry** cria um novo.
+- **Lista única** (Galeria, Vídeos, Espaços): tudo numa tela só. O botão **Add
+  item** acrescenta uma linha, e você **arrasta** para mudar a ordem — a ordem
+  da lista é a ordem que aparece no site.
+
+### Botões que aparecem em todas as telas
+
+| Botão | O que faz |
+|---|---|
+| **Save** | grava e publica. É o único que importa |
+| **Add entry / Add item** | cria conteúdo novo |
+| **⋯** (três pontos) | opções extras, incluindo apagar |
 
 ---
 
-## 4. Profissionais
+## 5. Publicações: escrever, publicar e tirar do ar
 
-### Cadastrar um profissional novo
+É a parte mais usada do painel. Leia com calma uma vez; depois vira rotina.
 
-1. Menu **Profissionais** → botão **Add entry** (adicionar).
-2. Preencha:
-   - **Nome do profissional** (obrigatório)
-   - **Profissão** (obrigatório) — ex.: Fisioterapeuta
-   - **Conselho** e **Número do registro** — ex.: CREFITO e 12345-F.
-     *Se a pessoa não tiver registro, deixe vazio. Nunca invente.*
-   - **Foto** — veja [Trocar uma imagem](#9-trocar-uma-imagem)
-   - **Apresentação curta** — uma ou duas frases
-   - **Áreas de atuação** — clique em "Add item" para cada uma
-   - **Serviços que atende** — escolha da lista de serviços já cadastrados
-   - **Ordem de exibição** — menor número aparece primeiro
-   - **Mostrar na página inicial** — marque para destacar
-   - **Mostrar no site** — deixe marcado
-   - **Texto da página** — biografia completa, com formatação
+### 5.1 Escrever uma publicação nova
+
+1. Menu **Publicações** → botão **Add entry**.
+2. Preencha os campos:
+
+| Campo | O que escrever |
+|---|---|
+| **Título** | o nome do texto. Aparece grande na página e no Google |
+| **Resumo** | uma ou duas frases. Aparece na lista de conteúdos e no Google |
+| **Imagem de capa** | opcional. Fica melhor em formato deitado (paisagem) |
+| **Categoria** | ex.: `Avisos`, `Saúde`, `Bem-estar`. Textos com a mesma categoria ficam agrupados |
+| **Autor** | escolha um profissional já cadastrado. Pode deixar vazio |
+| **Data de publicação** | a data que aparece para o leitor |
+| **Data da última atualização** | preencha só se revisar o texto depois |
+| **Destacar** | marque para dar prioridade ao texto |
+| **Publicado no site** | **deixe DESMARCADO enquanto escreve** |
+| **Texto** | o conteúdo em si |
+
 3. Clique em **Save**.
 
-Em poucos minutos a página do profissional existe sozinha, no endereço
-`taoklyn.com.br/profissionais/nome-da-pessoa`.
+### 5.2 Escrever o texto
 
-### Alterar um profissional
+O campo **Texto** funciona como um editor comum. A barra superior tem:
 
-Clique no nome na lista, altere o que precisar e clique em **Save**.
+- **negrito** e *itálico*;
+- títulos internos (para dividir o texto em partes);
+- listas com marcador e listas numeradas;
+- link (selecione a palavra e clique no ícone de corrente);
+- imagem no meio do texto;
+- citação.
 
-### Tirar um profissional do site (sem apagar)
+**Estrutura que costuma funcionar bem:**
 
-Abra o cadastro e **desmarque "Mostrar no site"** → **Save**.
+1. Um parágrafo curto dizendo do que se trata.
+2. Dois a quatro títulos internos, dividindo o assunto.
+3. Um fecho convidando a falar com a clínica.
 
-A pessoa some do site imediatamente, mas o cadastro continua guardado. Para
-trazer de volta, basta marcar de novo. **Prefira sempre isso a apagar.**
+Evite parágrafos com mais de cinco linhas — no celular, viram um bloco cansativo.
 
-### Apagar de verdade
+### 5.3 Salvar como rascunho
 
-Só faça isso se tiver certeza. Abra o cadastro → menu **⋯** → **Delete**.
-A página do profissional deixa de existir e o endereço passa a dar erro para
-quem tiver o link salvo.
+É simplesmente **não marcar "Publicado no site"**.
 
----
+Com a opção desmarcada, o texto:
 
-## 5. Serviços
-
-Funciona igual a Profissionais.
-
-- **Nome do serviço** e **Resumo** são o que aparece no cartão da lista.
-- **Ícone** — escolha o desenho que aparece no cartão.
-- **Quem atende** — escolha os profissionais. *Você pode preencher a relação
-  por aqui ou pela ficha do profissional: o site junta as duas.*
-- **Mensagem que já vem escrita no WhatsApp** — é o texto que aparece pronto
-  quando alguém clica em "Agendar" nesta página.
-- **Mostrar no site** — desmarque para esconder sem apagar.
-
----
-
-## 6. Publicações (blog)
-
-### Escrever uma publicação
-
-1. Menu **Publicações** → **Add entry**.
-2. Preencha **Título**, **Resumo**, **Categoria** e **Data de publicação**.
-3. Escreva o texto no campo **Texto**, com negrito, listas e subtítulos.
-4. **Deixe "Publicado no site" DESMARCADO** enquanto estiver escrevendo.
-5. **Save**.
-
-### Salvar como rascunho
-
-É o passo 4 acima. Com "Publicado no site" desmarcado, o texto:
-
-- não aparece no blog;
+- não aparece no blog do site;
 - não aparece no Google;
-- não entra no mapa do site.
+- não entra no mapa do site;
+- fica guardado, visível só para quem tem acesso ao painel.
 
-Fica guardado, visível só para quem tem acesso ao painel.
+É assim que se prepara um texto com calma, ou se deixa algo pronto para publicar
+numa data específica.
 
-### Publicar
+> Existe uma publicação chamada **Modelo de publicação**, já salva como
+> rascunho. Use como referência — ela nunca aparece no site.
+
+### 5.4 Publicar
 
 Abra a publicação → marque **Publicado no site** → **Save**.
 
-### Despublicar
+Em 1 a 3 minutos o texto está no ar, em `/blog`.
 
-Desmarque **Publicado no site** → **Save**. O texto sai do ar e continua salvo.
+### 5.5 Editar algo já publicado
 
-> Existe uma publicação chamada **Modelo de publicação**, salva como rascunho.
-> Use-a como referência — ela nunca aparece no site.
+Menu **Publicações** → clique no título → altere → **Save**.
+
+Se a mudança foi grande, vale preencher **Data da última atualização**: o site
+passa a mostrar "atualizado em…" para o leitor.
+
+### 5.6 Tirar do ar sem apagar
+
+Abra a publicação → **desmarque "Publicado no site"** → **Save**.
+
+O texto sai do site na hora e continua guardado. Para trazer de volta, marque de
+novo. **Prefira sempre isso a apagar.**
+
+### 5.7 Apagar de verdade
+
+Abra a publicação → menu **⋯** → **Delete**.
+
+Só faça isso se tiver certeza. O endereço do texto deixa de existir, e quem
+tiver o link salvo ou compartilhado passa a ver a página de erro.
 
 ---
 
-## 7. Galeria, Espaços e Vídeos
+## 6. Profissionais
 
-As três são **listas**: cada uma fica numa tela só, e a ordem da lista é a
-ordem que aparece no site.
+### Cadastrar alguém novo
+
+Menu **Profissionais** → **Add entry**:
+
+| Campo | Observação |
+|---|---|
+| **Nome do profissional** | obrigatório. É o nome que aparece no site |
+| **Profissão** | obrigatório. Ex.: `Fisioterapeuta`, `Psicóloga` |
+| **Conselho** | ex.: `CRM`, `CRP`, `CREFITO`. Vazio se não houver |
+| **Número do registro** | ex.: `15/1565`. **Nunca invente** |
+| **Foto** | veja [Trocar uma imagem](#10-trocar-uma-imagem). Quadrada fica melhor |
+| **Apresentação curta** | uma ou duas frases, para o cartão da lista |
+| **Áreas de atuação** | clique em **Add item** para cada uma. Viram etiquetas |
+| **Serviços que atende** | escolha da lista de serviços já cadastrados |
+| **Ordem de exibição** | número menor aparece primeiro |
+| **Mostrar na página inicial** | dá prioridade no carrossel da home |
+| **Mostrar no site** | deixe marcado |
+| **Texto da página** | a biografia completa |
+
+Clique em **Save**. A página da pessoa passa a existir sozinha, em
+`/profissionais/nome-da-pessoa`.
+
+### Tirar alguém do site sem apagar
+
+Abra a ficha → **desmarque "Mostrar no site"** → **Save**. A pessoa some do
+site, do carrossel e do mapa do site, mas a ficha continua guardada.
+
+### Sobre o endereço da página
+
+O endereço vem do **nome do arquivo**, definido quando a ficha é criada, e
+**não muda** se você corrigir o nome exibido depois. Isso é proposital: endereço
+que já circulou no Instagram ou no WhatsApp não pode deixar de funcionar.
+
+Se o endereço estiver realmente errado, fale com quem cuida do código — é uma
+alteração que exige cuidado com redirecionamento.
+
+---
+
+## 7. Serviços
+
+Funciona como Profissionais.
+
+| Campo | Observação |
+|---|---|
+| **Nome do serviço** e **Resumo** | é o que aparece no cartão |
+| **Imagem** | opcional |
+| **Ícone** | escolha o desenho do cartão |
+| **Quem atende** | escolha os profissionais |
+| **Mensagem que já vem escrita no WhatsApp** | o texto pronto ao clicar em "Agendar" nessa página |
+| **Ordem de exibição** | menor aparece primeiro |
+| **Mostrar no site** | desmarque para esconder sem apagar |
+
+> **A relação com profissionais pode ser preenchida dos dois lados.** Ligar a
+> Tereza ao Pilates pela ficha dela ou pela ficha do Pilates dá no mesmo — o
+> site junta as duas pontas. Não é preciso preencher duas vezes.
+
+---
+
+## 8. Galeria, Espaços e Vídeos
+
+As três são **listas**: tudo numa tela só, e a ordem da lista é a ordem no site.
 
 ### Galeria
 
-1. Menu **Galeria**.
-2. Clique em **Add item**.
-3. Envie a **Imagem**.
-4. Preencha a **Descrição da imagem (acessibilidade)** — obrigatória. Descreva
-   o que aparece na foto: "Recepção da clínica, com sofá e plantas". Isso é
-   lido por pessoas cegas e aparece se a imagem não carregar.
-5. Escolha a **Categoria** (Recepção, Consultórios, Pilates…).
-6. **Save**.
+1. Menu **Galeria** → **Add item**.
+2. Envie a **Imagem**.
+3. Preencha a **Descrição da imagem (acessibilidade)** — **obrigatória**.
+   Descreva o que se vê: *"Recepção da clínica, com sofá e plantas"*. Esse texto
+   é lido em voz alta para pessoas cegas e aparece se a imagem não carregar.
+4. Escolha a **Categoria** (Recepção, Consultórios, Pilates…). As fotos ficam
+   agrupadas por ela.
+5. **Save**.
 
-**Para reordenar**, arraste os itens pela alça na lateral. A ordem da lista é a
-ordem no site.
-
+**Para reordenar**, arraste os itens pela alça lateral.
 **Para esconder uma foto**, desmarque "Mostrar no site" naquele item.
 
 ### Espaços
 
-Mesma lógica. Cada item é uma sala ou ambiente. Marque **Disponível para
-locação** para que apareça o selo correspondente.
+Cada item é uma sala ou ambiente. Marque **Disponível para locação** para
+aparecer o selo correspondente.
 
 ### Vídeos
 
-Também é uma lista. Cada item é um vídeo, e há **duas formas** de colocá-lo no
-site:
+Cada item é um vídeo. Há **duas formas** de colocá-lo no site:
 
-**Vídeo pequeno (até uns 5 MB)** — envie o arquivo em "Arquivo de vídeo".
+**Vídeo pequeno (até uns 5 MB)** — envie o arquivo em **Arquivo de vídeo**.
 
-**Vídeo grande** — publique primeiro no YouTube e cole o link em "Endereço do
-vídeo (YouTube ou similar)". Arquivo grande deixa o site pesado e pode estourar
+**Vídeo grande** — publique primeiro no YouTube e cole o link em **Endereço do
+vídeo (YouTube ou similar)**. Arquivo grande deixa o site pesado e pode estourar
 o limite da hospedagem.
 
 Preencha também:
 
-- **Categoria** — decide onde o vídeo aparece:
+- **Categoria** — decide **onde** o vídeo aparece:
   - *Conheça a clínica* → seção "Conheça nosso espaço"
   - *Como chegar* → botão "Assistir como chegar", na Localização e no Contato
   - *Institucional* → guardado para uso futuro
-- **Imagem de capa** — é o que aparece antes de a pessoa apertar play.
+- **Imagem de capa** — o que aparece antes de apertar play.
 - **Descrição do vídeo (acessibilidade)** — uma frase dizendo o que o vídeo
   mostra.
 
-> Nenhum vídeo começa sozinho, e nenhum é baixado antes de a pessoa clicar.
-> Quem abre a página paga só o peso da capa.
+**Dica de título:** escrever `Conheça nossa clínica — Parte 1` faz o site
+mostrar o selo "PARTE 1" sobre a capa e o título limpo embaixo. A duração
+("0:13") aparece sozinha, lida do próprio arquivo.
 
-**O vídeo "Como chegar à Tao Klyn" está cadastrado e vazio de propósito**: o
-arquivo original tem 24 MB, grande demais para o site. Assim que ele estiver no
-YouTube, basta colar o endereço nesse item e o botão aparece sozinho.
+> Nenhum vídeo começa sozinho e nenhum é baixado antes de a pessoa clicar. Quem
+> abre a página paga só o peso da capa.
+
+**O vídeo "Como chegar à Tao Klyn" está cadastrado e vazio de propósito:** o
+arquivo original tem 24 MB, grande demais. Assim que ele estiver no YouTube,
+cole o endereço nesse item e o botão aparece sozinho no site.
 
 ---
 
-## 8. Configurações do site
+## 9. Configurações do site
 
-Menu **Configurações do site**. Aqui ficam os dados que aparecem no site
-inteiro. Alterar aqui muda em todos os lugares de uma vez.
+Menu **Configurações do site**. O que muda aqui muda no site inteiro de uma vez.
 
 ### Trocar o telefone
 
-Campo **Contato → Telefone fixo**. Escreva com DDD: `(82) 3221-6064` → **Save**.
+**Contato → Telefone fixo**. Escreva com DDD: `(82) 3221-6064` → **Save**.
 
 ### Trocar o WhatsApp
 
-Campo **Contato → WhatsApp**. Escreva com DDD: `(82) 99131-1477` → **Save**.
-Todos os botões do site passam a apontar para o número novo.
+**Contato → WhatsApp**. Escreva com DDD: `(82) 99131-1477` → **Save**. Todos os
+botões do site passam a apontar para o número novo.
 
 ### Mudar a mensagem que já vem escrita no WhatsApp
 
-Campo **Contato → Mensagem que já vem escrita no WhatsApp**.
-Cada serviço também tem a sua, na ficha do serviço.
+**Contato → Mensagem que já vem escrita no WhatsApp**. É o texto que aparece
+pronto quando alguém clica em "Agendar". Cada serviço também tem a sua, na ficha
+do serviço.
 
 ### Publicar o horário de funcionamento
 
 1. **Horário de funcionamento → Mostrar o horário no site**: marque.
-2. Em **Faixas de horário**, clique em **Add item** e preencha:
+2. Em **Faixas de horário**, **Add item**:
    - **Dias**: `Segunda a sexta`
    - **Horário**: `8h às 18h`
-3. Repita para sábado, se houver.
-4. **Save**.
+3. Repita para sábado, se houver. **Save**.
 
-> Enquanto "Mostrar o horário no site" estiver **desmarcado**, o site diz para
-> a pessoa confirmar o horário pelo WhatsApp — o que é melhor do que publicar
-> um horário errado.
+> Enquanto "Mostrar o horário no site" estiver **desmarcado**, o site pede que a
+> pessoa confirme pelo WhatsApp — o que é melhor do que publicar horário errado.
 
 ### Colocar o link oficial do Google Maps
 
@@ -275,91 +410,121 @@ Cada serviço também tem a sua, na ficha do serviço.
    link.
 2. Cole em **Endereço → Link oficial do Google Maps** → **Save**.
 
-Enquanto estiver vazio, o botão "Como chegar" faz uma busca pelo endereço —
-funciona, mas o link oficial é melhor.
+Enquanto estiver vazio, o botão "Abrir no Google Maps" faz uma busca pelo
+endereço — funciona, mas o link oficial é melhor.
+
+### Textos institucionais
+
+**Frase principal da página inicial**, **Texto de apresentação** e **Missão**
+são os textos grandes da home. Mudanças aqui aparecem em várias páginas.
 
 ---
 
-## 9. Trocar uma imagem
+## 10. Trocar uma imagem
 
 Em qualquer campo de imagem:
 
-1. Clique no campo (ou no botão **Select/Upload**).
+1. Clique no campo (ou em **Select/Upload**).
 2. Escolha **Upload** e selecione o arquivo do computador ou do celular.
 3. Espere o envio terminar e confirme.
 4. Clique em **Save**.
 
-A imagem entra no site já otimizada, em vários tamanhos, automaticamente.
+A imagem entra no site já otimizada, em vários tamanhos, automaticamente. Você
+não precisa redimensionar nada antes.
 
 **Dicas:**
-- Fotos de profissionais ficam melhores **quadradas** e com o rosto centralizado.
-- Capas de publicação ficam melhores **deitadas** (paisagem).
-- Evite arquivos gigantes: acima de 5 MB, o envio fica lento.
+
+| Onde | Formato que funciona melhor |
+|---|---|
+| Foto de profissional | **quadrada**, rosto centralizado |
+| Capa de publicação | **deitada** (paisagem) |
+| Galeria | qualquer uma; o site recorta com bom senso |
+| Capa de vídeo | **em pé** (vertical), igual ao vídeo |
+
+Evite arquivos acima de 5 MB: o envio fica lento sem ganho de qualidade visível.
 
 ---
 
-## 10. Desfazer uma alteração
+## 11. Desfazer uma alteração
 
-Todo salvamento fica registrado. Para voltar atrás:
+Todo salvamento fica registrado, com data, autor e o que mudou.
+
+### Jeito simples
+
+Reabra o item no painel e digite o texto anterior. Para a maioria dos casos,
+resolve.
+
+### Jeito completo (histórico)
 
 1. Abra **https://github.com/taoklyn/taoklyn-site/commits/main**
-2. Encontre a alteração pela data e pela descrição
+2. Ache a alteração pela data e pela descrição
    (ex.: `content: atualiza pilates.md`).
-3. Clique nela. Você vê exatamente o que mudou: vermelho é o que saiu, verde é
-   o que entrou.
-4. Para reverter, clique em **Revert** e confirme. O site volta ao estado
-   anterior em poucos minutos.
+3. Clique nela: o vermelho é o que saiu, o verde é o que entrou.
+4. Para reverter, clique em **Revert** e confirme.
 
-Se preferir, é mais simples reabrir o item no painel e digitar o texto antigo.
+Em poucos minutos o site volta ao estado anterior.
+
+> **Nada se perde.** Mesmo conteúdo apagado continua no histórico e pode ser
+> recuperado.
 
 ---
 
-## 11. Convidar outra pessoa para editar
+## 12. Dar e tirar acesso de outras pessoas
 
-O Pages CMS permite convidar pessoas por e-mail, direto no painel — **e elas
-não precisam de conta no GitHub**:
+### Convidar
 
 1. Abra o repositório no Pages CMS.
-2. Vá em **Settings → Collaborators**.
+2. Vá em **Settings** → **Collaborators**.
 3. Informe o e-mail da pessoa e envie o convite.
-4. Ela recebe o e-mail, ativa o acesso e passa a entrar em pagescms.org com o
-   próprio e-mail.
+4. Ela recebe o e-mail e passa a entrar em app.pagescms.org com o próprio
+   endereço, sem precisar de conta no GitHub.
 
-Assim ninguém compartilha senha. Para tirar o acesso, remova a pessoa da mesma
-lista — o acesso acaba na hora.
+### O que a pessoa convidada pode e não pode
 
-**Quem é convidado pode:** escrever, editar e publicar conteúdo; enviar e
-trocar imagens.
-**Quem é convidado não pode:** alterar a configuração do painel, convidar ou
-remover outras pessoas, nem mexer em qualquer parte técnica. Isso continua
-exigindo uma conta do GitHub com acesso ao repositório.
+| Pode | Não pode |
+|---|---|
+| escrever, editar e publicar conteúdo | alterar a configuração do painel |
+| enviar e trocar imagens e vídeos | convidar ou remover outras pessoas |
+| desfazer o próprio trabalho | mexer em qualquer parte técnica |
 
-> Faça o primeiro convite para um e-mail seu, para conhecer o fluxo antes de
+### Remover
+
+**Settings → Collaborators** → remova a pessoa da lista. O acesso acaba na hora.
+
+> **Faça o primeiro convite para um e-mail seu**, para conhecer o fluxo antes de
 > repassá-lo à recepção.
 
 ---
 
-## 12. Perguntas frequentes
+## 13. Quando algo não funciona
 
-**Salvei e o site não mudou. E agora?**
-Espere de 1 a 3 minutos e recarregue a página com `Ctrl + F5`. O site é
-reconstruído a cada alteração e isso leva algum tempo.
+| Situação | O que fazer |
+|---|---|
+| **Salvei e o site não mudou** | espere de 1 a 3 minutos e recarregue com `Ctrl + F5` |
+| **Continua sem mudar depois de 5 minutos** | pode ter havido erro na publicação; peça a quem administra para olhar em *Cloudflare → Deployments* |
+| **O e-mail de acesso não chegou** | procure no spam; confirme que o endereço foi convidado |
+| **"Save" está apagado / não clica** | algum campo obrigatório está vazio. Procure a marcação em vermelho |
+| **A imagem não sobe** | arquivo grande demais ou formato incomum. Use JPG, PNG ou WEBP com menos de 5 MB |
+| **Apaguei sem querer** | veja [Desfazer uma alteração](#11-desfazer-uma-alteração) — nada se perde |
 
-**Posso apagar um profissional que saiu da clínica?**
-Prefira desmarcar "Mostrar no site". Se apagar, o endereço da página dele passa
-a dar erro para quem tiver o link salvo.
+---
 
-**Posso mudar o nome de um profissional já cadastrado?**
-Pode mudar o **nome exibido** normalmente. O endereço da página não muda junto
-— e isso é proposital, para não quebrar links já compartilhados.
+## 14. O que nunca publicar
 
-**Posso escrever informação de paciente no site?**
-**Não.** Nada de prontuário, diagnóstico, sintoma, medicamento ou foto de
-paciente. Este site é só institucional.
+Este site é **institucional**. Ele não tem área de paciente, cadastro nem
+prontuário — e não deve receber conteúdo clínico de ninguém.
 
-**Posso publicar preço, convênio ou promessa de resultado?**
-Não sem conferir com a direção da clínica e com o conselho profissional
-correspondente. Publicidade em saúde tem regras próprias.
+**Nunca publique:**
 
-**Estraguei alguma coisa. E agora?**
-Nada se perde: veja [Desfazer uma alteração](#10-desfazer-uma-alteração).
+- nome, foto, história ou qualquer dado de paciente, mesmo com boa intenção e
+  mesmo que a pessoa autorize de viva voz;
+- diagnóstico, exame, medicamento ou orientação clínica individual;
+- promessa de resultado ("cura", "elimina a dor", "garante");
+- depoimento de paciente, antes e depois, ou número de casos atendidos;
+- preço, convênio ou promoção sem confirmar com a direção;
+- registro profissional que você não tenha visto — CRM, CRP e CREFITO errados
+  são problema perante o conselho de classe.
+
+**Na dúvida, deixe o campo vazio e pergunte.** O site foi construído para
+funcionar bem com informação faltando: seções sem conteúdo simplesmente não
+aparecem, em vez de mostrar algo errado.

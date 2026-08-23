@@ -6,6 +6,12 @@ fundada em 22 de dezembro de 2007.
 **Quem cuida do conteúdo não precisa deste arquivo.** O manual da recepção é o
 [`docs/CMS.md`](docs/CMS.md).
 
+| Documento | Para quem | Assunto |
+|---|---|---|
+| [`docs/CMS.md`](docs/CMS.md) | recepção e equipe de conteúdo | entrar no painel, escrever, publicar, trocar imagem, desfazer |
+| [`docs/DEPLOY.md`](docs/DEPLOY.md) | quem administra | colocar o site no ar, domínio, variáveis, o que fazer quando falha |
+| [`docs/PENDENCIAS.md`](docs/PENDENCIAS.md) | ambos | o que falta e o que deliberadamente não foi inventado |
+
 ---
 
 ## Sumário
@@ -53,7 +59,7 @@ página** — hoje o site usa 0,7 KB. Passar do teto quebra a verificação.
  Administração da clínica
           │
           ▼
-    Pages CMS (pagescms.org)
+    Pages CMS (app.pagescms.org)
           │  grava arquivos no repositório
           ▼
         GitHub  ──▶  Cloudflare Pages  ──▶  site atualizado
@@ -88,6 +94,7 @@ O site sobe em `http://localhost:4321`.
 | `npm run verificar:site` | Audita o `dist/` gerado: links internos, `alt`, H1, canonical, JSON-LD, sitemap |
 | `npm run verificar` | Roda tudo: tipos, CMS, contraste, build e auditoria do `dist/` |
 | `npm run assets:marca` | Regera logos, ícones, imagem social e recortes a partir de `referencias/` |
+| `node scripts/inspecionar-video.mjs <arquivo>` | Mede duração, resolução, codec e bitrate de um MP4 antes de publicá-lo |
 
 ## Estrutura de diretórios
 
@@ -97,13 +104,17 @@ taoklyn-site/
 ├── astro.config.mjs
 ├── docs/
 │   ├── CMS.md                 manual da recepção
+│   ├── DEPLOY.md              publicação passo a passo
 │   └── PENDENCIAS.md          o que falta e o que não foi inventado
 ├── public/                    servido como está (favicons, logos, manifest)
 │   ├── _headers               cabeçalhos HTTP aplicados pelo Cloudflare
-│   └── images/brand/
+│   ├── images/brand/
+│   └── uploads/videos/        vídeos e suas capas
 ├── referencias/               material de origem — NUNCA modificado pelo site
 ├── scripts/
-│   ├── preparar-assets.mjs      referencias/ → public/ e src/assets/
+│   ├── lib/mp4.mjs             leitor de MP4 (duração, resolução, codec)
+│   ├── inspecionar-video.mjs   mede um vídeo antes de publicá-lo
+│   ├── preparar-assets.mjs     referencias/ → public/ e src/assets/
 │   ├── servir-como-producao.mjs dist/ com os cabeçalhos do Cloudflare
 │   ├── verificar-cms.mjs
 │   ├── verificar-contraste.mjs
@@ -113,9 +124,9 @@ taoklyn-site/
     ├── components/
     ├── content/               profissionais, servicos, posts, paginas
     ├── content.config.ts      schemas Zod das coleções
-    ├── data/                  site.json, galeria.json, espacos.json
+    ├── data/                  site.json, galeria.json, espacos.json, videos.json
     ├── layouts/Base.astro     <head>, SEO, JSON-LD, cabeçalho e rodapé
-    ├── lib/                   site.ts, conteudo.ts, imagens.ts, seo.ts
+    ├── lib/                   site.ts, conteudo.ts, imagens.ts, midia.ts, seo.ts
     ├── pages/
     └── styles/global.css      tokens da paleta e componentes visuais
 ```
@@ -131,6 +142,7 @@ taoklyn-site/
 | Políticas | `src/content/paginas/*.md` | frontmatter YAML + corpo |
 | Galeria | `src/data/galeria.json` | lista |
 | Espaços | `src/data/espacos.json` | lista |
+| Vídeos | `src/data/videos.json` | lista |
 
 Regras que valem para todo o conteúdo:
 
@@ -146,8 +158,8 @@ Regras que valem para todo o conteúdo:
 
 ## CMS
 
-O painel é a aplicação hospedada do Pages CMS, em **https://pagescms.org**, que
-lê o `.pages.yml` do repositório. Não há `/admin` neste projeto, nem tela de
+O painel é a aplicação hospedada do Pages CMS, em **https://app.pagescms.org**,
+que lê o `.pages.yml` do repositório. Não há `/admin` neste projeto, nem tela de
 login própria, nem usuários próprios.
 
 Depois de alterar `.pages.yml` ou os schemas, rode:
@@ -182,6 +194,10 @@ Copie `.env.example` para `.env`. O `.env` **não** vai para o Git.
 ## Deploy no Cloudflare Pages
 
 Repositório: **https://github.com/taoklyn/taoklyn-site** (privado).
+
+> **Passo a passo completo, com os rótulos exatos de cada tela, domínio próprio,
+> variáveis e resolução de problemas: [`docs/DEPLOY.md`](docs/DEPLOY.md).**
+> O resumo abaixo serve para quem já conhece o Cloudflare.
 
 1. Cloudflare Pages → **Create a project** → conectar o repositório
    `taoklyn/taoklyn-site`.
