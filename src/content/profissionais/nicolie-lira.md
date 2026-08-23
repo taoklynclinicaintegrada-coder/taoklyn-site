@@ -7,7 +7,7 @@ areasDeAtuacao:
   - Endocrinologia
 servicosRelacionados:
   - endocrinologia
-ordem: 2
+ordem: 100
 destaque: false
 ativo: true
 ---

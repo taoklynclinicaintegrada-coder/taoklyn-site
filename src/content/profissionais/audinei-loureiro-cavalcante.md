@@ -12,8 +12,8 @@ areasDeAtuacao:
 servicosRelacionados:
   - acupuntura
   - homeopatia
-ordem: 1
-destaque: true
+ordem: 100
+destaque: false
 ativo: true
 ---
 

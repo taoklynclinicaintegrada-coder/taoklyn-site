@@ -21,7 +21,7 @@ servicosRelacionados:
   - fisioterapia
   - pilates
   - yoga
-ordem: 7
+ordem: 100
 destaque: false
 ativo: true
 ---

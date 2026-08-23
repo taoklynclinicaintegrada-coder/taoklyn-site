@@ -17,8 +17,8 @@ servicosRelacionados:
   - psicologia
   - yoga
   - meditacao
-ordem: 4
-destaque: true
+ordem: 100
+destaque: false
 ativo: true
 ---
 

@@ -321,7 +321,7 @@ Menu **Profissionais** → **Add entry**:
 | **Apresentação curta** | uma ou duas frases, para o cartão da lista |
 | **Áreas de atuação** | clique em **Add item** para cada uma. Viram etiquetas |
 | **Serviços que atende** | escolha da lista de serviços já cadastrados |
-| **Ordem de exibição** | número menor aparece primeiro |
+| **Ordem de exibição** | deixe em `100` para seguir a ordem alfabética. Um número **menor** fixa a pessoa no topo |
 | **Mostrar na página inicial** | dá prioridade no carrossel da home |
 | **Mostrar no site** | deixe marcado |
 | **Texto da página** | a biografia completa |
@@ -333,6 +333,16 @@ Clique em **Save**. A página da pessoa passa a existir sozinha, em
 
 Abra a ficha → **desmarque "Mostrar no site"** → **Save**. A pessoa some do
 site, do carrossel e do mapa do site, mas a ficha continua guardada.
+
+### Em que ordem as pessoas aparecem
+
+Por padrão, **ordem alfabética pelo nome** — na página inicial e na lista
+completa. É o que acontece enquanto todo mundo estiver com **Ordem de exibição**
+igual a `100`.
+
+Para fixar alguém no topo, dê a essa pessoa um número menor: quem tem `1`
+aparece antes de quem tem `100`. Entre pessoas com o mesmo número, vale a
+ordem alfabética.
 
 ### Sobre o endereço da página
 

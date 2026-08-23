@@ -13,7 +13,7 @@ areasDeAtuacao:
   - Abordagem Centrada na Pessoa
 servicosRelacionados:
   - psicologia
-ordem: 6
+ordem: 100
 destaque: false
 ativo: true
 ---

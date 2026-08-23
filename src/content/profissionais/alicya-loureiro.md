@@ -12,7 +12,7 @@ areasDeAtuacao:
   - Fisioterapia motora para adultos e idosos
 servicosRelacionados:
   - fisioterapia
-ordem: 8
+ordem: 100
 destaque: false
 ativo: true
 ---

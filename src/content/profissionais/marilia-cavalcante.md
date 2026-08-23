@@ -7,7 +7,7 @@ areasDeAtuacao:
   - Urologia
 servicosRelacionados:
   - urologia
-ordem: 3
+ordem: 100
 destaque: false
 ativo: true
 ---

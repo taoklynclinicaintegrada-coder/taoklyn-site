@@ -15,7 +15,7 @@ areasDeAtuacao:
   - Hipnose ericksoniana
 servicosRelacionados:
   - psicologia
-ordem: 5
+ordem: 100
 destaque: false
 ativo: true
 ---
