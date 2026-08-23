@@ -21,13 +21,20 @@ if (!env.SITE_URL) {
 
 export default defineConfig({
   site,
+  // Site 100% estatico: paginas prontas, sem servidor nenhum. Explicito de
+  // proposito — hospedagens que "detectam o framework" as vezes ligam o modo
+  // servidor sozinhas, e ai as imagens passam a depender de um endpoint que
+  // nao existe num site estatico.
+  output: 'static',
   trailingSlash: 'never',
   integrations: [sitemap()],
   build: {
     format: 'directory',
   },
   image: {
-    // Rascunhos e itens ocultos nao geram pagina, logo nao geram imagem.
+    // Sharp declarado na mao pelo mesmo motivo: garante que a otimizacao
+    // aconteca no build e gere arquivos, em vez de virar /_image?... .
+    service: { entrypoint: 'astro/assets/services/sharp' },
     responsiveStyles: true,
   },
 });

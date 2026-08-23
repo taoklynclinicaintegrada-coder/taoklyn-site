@@ -113,8 +113,21 @@ git push origin main
 1. Entre em **https://dash.cloudflare.com**.
 2. No menu da esquerda, clique em **Workers & Pages**.
 3. Clique em **Create application** (botão azul, canto superior direito).
-4. Escolha a aba **Pages**.
+4. **Escolha a aba `Pages`.** Não siga pelo caminho de *Workers*.
 5. Clique em **Connect to Git**.
+
+> **Este é o passo mais importante da página, e é fácil errar.** O Cloudflare
+> hoje oferece *Workers* em primeiro plano e *Pages* em segundo. Se o projeto
+> nascer como Worker, o endereço termina em **`.workers.dev`** em vez de
+> **`.pages.dev`** — e o Cloudflare monta o site em modo servidor, o que faz
+> **todas as imagens do site quebrarem**: elas passam a ser pedidas a um
+> endereço `/_image?…` que não existe num site estático.
+>
+> **Como saber se errou:** o endereço do site termina em `.workers.dev`, e o
+> site abre com textos e cores certos, mas sem nenhuma imagem.
+>
+> **Como corrigir:** apague o projeto (**Settings → Delete project**) e refaça
+> a partir do passo 3, escolhendo a aba **Pages**.
 
 ### 4.2 Autorizar o GitHub
 
@@ -484,6 +497,20 @@ Clique no envio e leia as últimas linhas do registro:
 
 Quase sempre é o **Build output directory** errado. Confira em **Settings →
 Builds & deployments** se está `dist`.
+
+### O site abre sem nenhuma imagem
+
+Olhe o endereço: se termina em **`.workers.dev`**, o projeto foi criado como
+*Worker* em vez de *Pages*. O Cloudflare monta o site em modo servidor e as
+imagens passam a apontar para `/_image?…`, que não existe num site estático —
+todas dão 404.
+
+Apague o projeto em **Settings → Delete project** e refaça pelo
+[passo 4](#4-publicar-no-cloudflare-pages), escolhendo a aba **Pages**.
+
+> O projeto já se defende disso: `npm run verificar` falha se qualquer página
+> gerada apontar para `/_image?…`. Se o build passar na sua máquina e o site
+> publicado estiver sem imagens, o problema está na hospedagem, não no código.
 
 ### O domínio não abre / erro 522
 

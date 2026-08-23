@@ -73,6 +73,19 @@ for (const pagina of paginas) {
     }
   }
 
+  // Imagem apontando para /_image?... significa que a otimização virou endpoint
+  // sob demanda — coisa de site com servidor. Num site estático esse endereço
+  // não existe, e TODA imagem da página quebra com 404. Já aconteceu em
+  // produção: a hospedagem ligou o modo servidor sozinha e o site foi ao ar
+  // sem uma única imagem.
+  const sobDemanda = (html.match(/\/_image\?/g) ?? []).length;
+  if (sobDemanda > 0) {
+    problemas.push(
+      `${url}: ${sobDemanda} imagem(ns) apontando para /_image?… — a otimização não ` +
+        `aconteceu no build. Num site estático esse endereço devolve 404`,
+    );
+  }
+
   // JSON-LD precisa ser JSON válido, senão o Google descarta em silêncio.
   for (const bloco of html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g) ?? []) {
     const conteudo = bloco.replace(/^<script[^>]*>/, '').replace(/<\/script>$/, '');
