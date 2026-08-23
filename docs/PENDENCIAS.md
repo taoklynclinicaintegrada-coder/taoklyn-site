@@ -42,7 +42,7 @@ se esconde sozinha. Cada item abaixo é uma decisão que só a clínica pode tom
 
 | # | Pendência | Detalhe |
 |---|---|---|
-| 3.1 | **Repositório no GitHub** | O projeto ainda **não foi enviado**. Atenção: `taoklyn/taoklyn-site` **já existe e está ocupado pelo VITORDIS** (sistema de gestão de alunos), cuja `main` está publicada lá. O site vai para um repositório **novo** — decisão de 23/08/2026. O remote local foi removido para que nenhum push acidental sobrescreva o VITORDIS. |
+| 3.1 | **Repositório no GitHub** | ✅ Feito em 23/08/2026: `taoklyn/taoklyn-site`, privado. A `main` anterior era o VITORDIS e foi **substituída** por decisão do cliente — o código do VITORDIS continua no computador dele. |
 | 3.2 | **Cloudflare Pages** | Criar o projeto apontando para o repositório. Build: `npm run build`. Saída: `dist`. Variáveis: `SITE_URL` e, se quiser medição, `PUBLIC_GA_ID`. |
 | 3.3 | **Pages CMS** | Instalar o GitHub App na organização `taoklyn` e **limitar ao repositório do site** (passo a passo em `docs/CMS.md`). Limitar importa: quem cuida do conteúdo não deve alcançar o repositório do VITORDIS, que trata de dados de alunos e menores. |
 | 3.4 | **Google Analytics 4** | Sem `PUBLIC_GA_ID`, nenhum script é carregado e nenhum cookie é gravado. Ao configurar, os eventos já estão prontos: `click_whatsapp`, `click_phone`, `click_maps`, `click_instagram`, `click_service`, `click_professional`, `click_room_rental`, `view_post`. |
@@ -58,7 +58,7 @@ se esconde sozinha. Cada item abaixo é uma decisão que só a clínica pode tom
 |---|---|
 | 23/08/2026 | A grafia oficial é **Fernando Picciguelli** (dois L), como nas artes de divulgação. O endereço da página é `/profissionais/fernando-picciguelli`. |
 | 23/08/2026 | O termo truncado na arte do Robson é **Hipnose ericksoniana**, e foi publicado entre as áreas de atuação. |
-| 23/08/2026 | O site vai para um **repositório novo**, e não para `taoklyn/taoklyn-site` — que está ocupado pelo VITORDIS. |
+| 23/08/2026 | O site fica em **`taoklyn/taoklyn-site`**, substituindo o VITORDIS que estava publicado ali. O VITORDIS segue íntegro no computador; se voltar ao GitHub, precisa de outro repositório. |
 
 ---
 

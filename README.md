@@ -175,6 +175,8 @@ Copie `.env.example` para `.env`. O `.env` **não** vai para o Git.
 
 ## Deploy no Cloudflare Pages
 
+Repositório: **https://github.com/taoklyn/taoklyn-site** (privado).
+
 1. Cloudflare Pages → **Create a project** → conectar o repositório
    `taoklyn/taoklyn-site`.
 2. Configurar:
