@@ -76,9 +76,9 @@ Medidos com `node scripts/inspecionar-video.mjs`. Todos H.264 (avc1) + AAC
 
 | # | Pendência | Detalhe |
 |---|---|---|
-| 4.1 | **Repositório no GitHub** | ✅ Feito em 23/08/2026: `taoklyn/taoklyn-site`, privado. A `main` anterior era o VITORDIS e foi substituída por decisão do cliente. |
+| 4.1 | **Repositório no GitHub** | ✅ `taoklynclinicaintegrada-coder/taoklyn-site`, na conta da clínica. Antes o site esteve em `taoklyn/taoklyn-site` (organização), mas instalar o Pages CMS numa organização exige ser owner e aprovar, o que travou o acesso — a conta pessoal removeu essa camada. O repositório antigo continua existindo, com o mesmo conteúdo. |
 | 4.2 | **Cloudflare Pages** | Criar o projeto apontando para o repositório. Build: `npm run build`. Saída: `dist`. Variáveis: `SITE_URL` e, se quiser medição, `PUBLIC_GA_ID`. |
-| 4.3 | **Pages CMS** | Instalar o GitHub App na organização `taoklyn` e limitar ao repositório do site (passo a passo em `docs/CMS.md`). |
+| 4.3 | **Pages CMS** | Instalar o GitHub App na conta `taoklynclinicaintegrada-coder` e limitar ao repositório do site (passo a passo em `docs/CMS.md`). |
 | 4.4 | **ZIPs no histórico do Git** | `taoklyn-profissionais-novos.zip` (6,7 MB) e `taoklyn-videos.zip` (29,5 MB) entraram por engano no commit `152d9ae` e já foram publicados. Foram removidos da árvore e o `.gitignore` passou a barrá-los, **mas os blobs seguem no histórico**. Limpá-los exige reescrever o histórico e um novo force-push — decisão sua. |
 | 4.5 | **Google Analytics 4** | Sem `PUBLIC_GA_ID`, nenhum script é carregado e nenhum cookie é gravado. Os eventos já estão prontos. |
 | 4.6 | **Fonte da marca** | O site usa fontes do sistema. Para usar a fonte das artes, é preciso licença de uso na web e auto-hospedagem. |
@@ -93,7 +93,8 @@ Medidos com `node scripts/inspecionar-video.mjs`. Todos H.264 (avc1) + AAC
 |---|---|
 | 23/08/2026 | A grafia oficial é **Fernando Picciguelli** (dois L), como nas artes. O endereço da página é `/profissionais/fernando-picciguelli`. |
 | 23/08/2026 | O termo truncado na arte do Robson é **Hipnose ericksoniana**, e foi publicado entre as áreas de atuação. |
-| 23/08/2026 | O site fica em **`taoklyn/taoklyn-site`**, substituindo o VITORDIS que estava publicado ali. O VITORDIS segue íntegro no computador; se voltar ao GitHub, precisa de outro repositório. |
+| 23/08/2026 | O site saiu da organização `taoklyn` e passou a viver em **`taoklynclinicaintegrada-coder/taoklyn-site`**, a conta da clínica — a organização exigia ser owner para instalar o Pages CMS, e isso travou o acesso. |
+| 23/08/2026 | O VITORDIS, que estava publicado em `taoklyn/taoklyn-site`, foi substituído ali por decisão do cliente. Ele segue íntegro no computador; se voltar ao GitHub, precisa de repositório próprio. |
 
 ---
 

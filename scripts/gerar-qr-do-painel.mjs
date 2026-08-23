@@ -9,7 +9,7 @@
 import { writeFileSync, mkdirSync } from 'node:fs';
 import QRCode from 'qrcode';
 
-const ENDERECO = 'https://app.pagescms.org/taoklyn/taoklyn-site';
+const ENDERECO = 'https://app.pagescms.org/taoklynclinicaintegrada-coder/taoklyn-site';
 const DESTINO = 'docs/qr-painel.svg';
 
 const svg = await QRCode.toString(ENDERECO, {

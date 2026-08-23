@@ -47,7 +47,7 @@ Para quem administra o site e precisa mexer na configuração.
 1. Clique em **Sign in with GitHub**.
 2. Entre com o usuário e a senha do GitHub.
 3. Se for a primeira vez, autorize o aplicativo.
-4. Na lista de repositórios, escolha **taoklyn / taoklyn-site**.
+4. Na lista de repositórios, escolha **taoklynclinicaintegrada-coder / taoklyn-site**.
 
 ### Forma B — com e-mail (recepção e equipe de conteúdo)
 
@@ -86,14 +86,12 @@ convidado. Peça a quem administra para convidá-lo em
 **Settings → Collaborators**, usando exatamente o endereço com que você tentou
 entrar.
 
-**Se você entrou pelo GitHub e mesmo assim não aparece nada**, o aplicativo foi
-instalado no lugar errado ou ainda não foi aprovado:
+**Se você entrou pelo GitHub e mesmo assim não aparece nada:**
 
 | Causa provável | Como confirmar | Solução |
 |---|---|---|
-| Instalado na conta pessoal, não na organização | abra **github.com/settings/installations** e veja onde o Pages CMS aparece | clique em **Configure** e acrescente a organização `taoklyn` |
-| Você não é administrador da organização | ao instalar, o GitHub avisa que precisa de aprovação | um administrador da organização precisa aprovar o pedido |
-| O repositório não foi marcado | **github.com/settings/installations** → Pages CMS → **Configure** | em **Repository access**, marque **taoklyn-site** |
+| Entrou com outra conta do GitHub | veja o nome de usuário no canto superior direito | saia e entre com **`taoklynclinicaintegrada-coder`** |
+| O repositório não foi marcado na instalação | **github.com/settings/installations** → Pages CMS → **Configure** | em **Repository access**, marque **taoklyn-site** |
 
 ---
 
@@ -146,23 +144,14 @@ senha de ninguém — cada pessoa entra com o próprio e-mail.
 
 ## 3. Primeira configuração (só o administrador)
 
-Feita **uma vez só**, por quem é dono da organização `taoklyn` no GitHub.
-
-> **O detalhe onde todo mundo trava:** `taoklyn` é uma **organização**, não uma
-> conta pessoal. O aplicativo precisa ser instalado **na organização**. Instalado
-> na conta pessoal, o repositório continua invisível e o painel mostra a mesma
-> tela vazia de antes.
+Feita **uma vez só**, por quem tem a conta `taoklynclinicaintegrada-coder` no
+GitHub — a conta da clínica, dona do repositório.
 
 1. Entre em **https://app.pagescms.org** e clique em **Sign in with GitHub** —
    o botão de cima, e **não** o campo de e-mail.
-2. Entre com a conta do GitHub que criou a organização.
-3. Aparece a tela **Install Pages CMS**, com a lista de onde instalar:
-
-   ```
-   ○ Sua conta pessoal
-   ○ taoklyn            ← escolha esta
-   ```
-
+2. Entre com a conta **`taoklynclinicaintegrada-coder`**, que é a dona do repositório.
+3. Clique em **Install GitHub App**. Como o repositório está numa conta pessoal,
+   não há organização a escolher — o GitHub oferece a própria conta.
 4. Em **Repository access**, marque **Only select repositories** e selecione
    apenas **taoklyn-site**.
 5. Clique em **Install** (ou **Install & Authorize**). O navegador volta ao
@@ -175,9 +164,8 @@ Feita **uma vez só**, por quem é dono da organização `taoklyn` no GitHub.
 
 | O que aconteceu | Significa | Solução |
 |---|---|---|
-| `taoklyn` não aparece na lista | você entrou com outra conta do GitHub | saia do GitHub e entre com a conta que criou a organização |
-| Aparece **Request installation** em vez de **Install** | você não é owner da organização | um owner precisa aprovar em `github.com/organizations/taoklyn/settings/installations` |
-| Instalou e o repositório não aparece | foi instalado na conta pessoal | `github.com/settings/installations` → Pages CMS → **Configure** → acrescente a organização |
+| `taoklyn-site` não aparece na lista | você entrou com outra conta do GitHub | saia e entre com **`taoklynclinicaintegrada-coder`** |
+| Instalou e o repositório não aparece | o repositório não foi marcado na instalação | `github.com/settings/installations` → Pages CMS → **Configure** → marque `taoklyn-site` |
 
 O painel já abre montado, porque o arquivo de configuração (`.pages.yml`) está
 no repositório. **Ele não precisa ser alterado no dia a dia.**
@@ -515,7 +503,7 @@ resolve.
 
 ### Jeito completo (histórico)
 
-1. Abra **https://github.com/taoklyn/taoklyn-site/commits/main**
+1. Abra **https://github.com/taoklynclinicaintegrada-coder/taoklyn-site/commits/main**
 2. Ache a alteração pela data e pela descrição
    (ex.: `content: atualiza pilates.md`).
 3. Clique nela: o vermelho é o que saiu, o verde é o que entrou.

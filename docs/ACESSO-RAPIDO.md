@@ -45,7 +45,7 @@ você entrou pelo botão errado: volte e use o campo de e-mail.
 Sem este passo, ninguém consegue entrar — nem você.
 
 1. Entre em **app.pagescms.org** com **Sign in with GitHub**.
-2. Abra o repositório **taoklyn/taoklyn-site**.
+2. Abra o repositório **taoklynclinicaintegrada-coder/taoklyn-site**.
 3. Vá em **Settings** → **Collaborators**.
 4. Informe o e-mail da pessoa e envie o convite.
 5. Repita para cada pessoa da equipe.

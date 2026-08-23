@@ -61,8 +61,8 @@ Nenhum servidor fica ligado. O site é um conjunto de arquivos prontos.
 
 ### 2.1 GitHub — já existe
 
-A organização **`taoklyn`** e o repositório **`taoklyn-site`** já estão criados,
-e o site inteiro já foi enviado.
+O repositório **`taoklynclinicaintegrada-coder/taoklyn-site`** já está criado, e o site inteiro já
+foi enviado. Ele pertence à conta **`taoklynclinicaintegrada-coder`**, que é a conta da clínica.
 
 Se precisar criar outra conta um dia: **github.com** → **Sign up** → e-mail,
 senha e nome de usuário → confirmar o código enviado por e-mail.
@@ -89,7 +89,7 @@ Veja o [passo 6](#6-domínio-próprio-comprar-na-hostinger).
 
 Confira que está tudo lá antes de publicar. Abra:
 
-**https://github.com/taoklyn/taoklyn-site**
+**https://github.com/taoklynclinicaintegrada-coder/taoklyn-site**
 
 Você deve ver, na raiz: `.pages.yml`, `README.md`, `astro.config.mjs`,
 `package.json`, e as pastas `docs`, `public`, `referencias`, `scripts`, `src`.
@@ -119,19 +119,14 @@ git push origin main
 ### 4.2 Autorizar o GitHub
 
 6. Clique em **Connect GitHub**. Abre uma janela do GitHub.
-7. Entre com a conta que tem acesso à organização `taoklyn`.
-8. O GitHub pergunta onde instalar. **Escolha a organização `taoklyn`**, e não
-   sua conta pessoal — o repositório é dela.
-9. Em **Repository access**, marque **Only select repositories** e escolha
+7. Entre com a conta **`taoklynclinicaintegrada-coder`**, dona do repositório.
+8. Em **Repository access**, marque **Only select repositories** e escolha
    **taoklyn-site**.
-10. Clique em **Install & Authorize**.
-
-> Esse é o mesmo tropeço do Pages CMS: instalar na conta pessoal faz o
-> repositório não aparecer na lista seguinte.
+9. Clique em **Install & Authorize**.
 
 ### 4.3 Escolher o repositório
 
-11. De volta ao Cloudflare, a lista mostra **taoklyn-site**. Selecione e clique
+10. De volta ao Cloudflare, a lista mostra **taoklyn-site**. Selecione e clique
     em **Begin setup**.
 
 ### 4.4 Configurar a construção
@@ -166,7 +161,7 @@ Por ora é esse endereço mesmo. Quando o domínio próprio existir, você troca
 
 ### 4.6 Publicar
 
-12. Clique em **Save and Deploy**.
+11. Clique em **Save and Deploy**.
 
 O Cloudflare mostra o registro em tempo real: baixa o código, roda
 `npm install`, roda `npm run build` e publica. **Leva de 1 a 3 minutos.**
@@ -437,10 +432,9 @@ Sem configurar mais nada, o site registra:
 ## 10. Ligar o painel de conteúdo
 
 1. Entre em **https://app.pagescms.org**.
-2. **Sign in with GitHub**, com a conta que administra a organização.
+2. **Sign in with GitHub**, com a conta `taoklynclinicaintegrada-coder`.
 3. Clique em **Install GitHub App**.
-4. **Escolha a organização `taoklyn`**, e não a conta pessoal.
-5. **Only select repositories** → **taoklyn-site** → **Install**.
+4. **Only select repositories** → **taoklyn-site** → **Install**.
 6. Abra o repositório: o painel aparece montado.
 7. **Convide a equipe:** **Settings** → **Collaborators** → informe o e-mail de
    cada pessoa. **Sem este passo, o login por e-mail delas não encontra nenhum

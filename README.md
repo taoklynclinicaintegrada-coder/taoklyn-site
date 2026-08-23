@@ -196,14 +196,14 @@ Copie `.env.example` para `.env`. O `.env` **não** vai para o Git.
 
 ## Deploy no Cloudflare Pages
 
-Repositório: **https://github.com/taoklyn/taoklyn-site** (privado).
+Repositório: **https://github.com/taoklynclinicaintegrada-coder/taoklyn-site** (privado).
 
 > **Passo a passo completo, com os rótulos exatos de cada tela, domínio próprio,
 > variáveis e resolução de problemas: [`docs/DEPLOY.md`](docs/DEPLOY.md).**
 > O resumo abaixo serve para quem já conhece o Cloudflare.
 
 1. Cloudflare Pages → **Create a project** → conectar o repositório
-   `taoklyn/taoklyn-site`.
+   `taoklynclinicaintegrada-coder/taoklyn-site`.
 2. Configurar:
    - **Framework preset:** Astro (ou None)
    - **Build command:** `npm run build`
