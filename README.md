@@ -10,7 +10,7 @@ fundada em 22 de dezembro de 2007.
 |---|---|---|
 | [`docs/ACESSO-RAPIDO.md`](docs/ACESSO-RAPIDO.md) | recepção | folha de 3 passos para entrar, com QR code. É o que se imprime |
 | [`docs/CMS.md`](docs/CMS.md) | recepção e equipe de conteúdo | manual completo: escrever, publicar, trocar imagem, desfazer |
-| [`docs/DEPLOY.md`](docs/DEPLOY.md) | quem administra | colocar o site no ar, domínio, variáveis, o que fazer quando falha |
+| [`docs/DEPLOY.md`](docs/DEPLOY.md) | quem administra | manual completo: contas, Cloudflare, variáveis, domínio na Hostinger, Analytics e falhas |
 | [`docs/PENDENCIAS.md`](docs/PENDENCIAS.md) | ambos | o que falta e o que deliberadamente não foi inventado |
 
 ---
