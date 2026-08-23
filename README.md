@@ -8,7 +8,8 @@ fundada em 22 de dezembro de 2007.
 
 | Documento | Para quem | Assunto |
 |---|---|---|
-| [`docs/CMS.md`](docs/CMS.md) | recepção e equipe de conteúdo | entrar no painel, escrever, publicar, trocar imagem, desfazer |
+| [`docs/ACESSO-RAPIDO.md`](docs/ACESSO-RAPIDO.md) | recepção | folha de 3 passos para entrar, com QR code. É o que se imprime |
+| [`docs/CMS.md`](docs/CMS.md) | recepção e equipe de conteúdo | manual completo: escrever, publicar, trocar imagem, desfazer |
 | [`docs/DEPLOY.md`](docs/DEPLOY.md) | quem administra | colocar o site no ar, domínio, variáveis, o que fazer quando falha |
 | [`docs/PENDENCIAS.md`](docs/PENDENCIAS.md) | ambos | o que falta e o que deliberadamente não foi inventado |
 
@@ -94,6 +95,7 @@ O site sobe em `http://localhost:4321`.
 | `npm run verificar:site` | Audita o `dist/` gerado: links internos, `alt`, H1, canonical, JSON-LD, sitemap |
 | `npm run verificar` | Roda tudo: tipos, CMS, contraste, build e auditoria do `dist/` |
 | `npm run assets:marca` | Regera logos, ícones, imagem social e recortes a partir de `referencias/` |
+| `node scripts/gerar-qr-do-painel.mjs` | Regera o QR code que abre o painel de conteúdo |
 | `node scripts/inspecionar-video.mjs <arquivo>` | Mede duração, resolução, codec e bitrate de um MP4 antes de publicá-lo |
 
 ## Estrutura de diretórios
@@ -103,6 +105,7 @@ taoklyn-site/
 ├── .pages.yml                 configuração do CMS (rótulos em português)
 ├── astro.config.mjs
 ├── docs/
+│   ├── ACESSO-RAPIDO.md       folha de 3 passos (com QR) para entrar
 │   ├── CMS.md                 manual da recepção
 │   ├── DEPLOY.md              publicação passo a passo
 │   └── PENDENCIAS.md          o que falta e o que não foi inventado

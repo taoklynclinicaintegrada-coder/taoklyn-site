@@ -10,6 +10,11 @@ minutos** — não existe um botão "publicar site" separado.
 > **Endereço do painel:** https://app.pagescms.org
 > Guarde nos favoritos. É sempre o mesmo.
 
+> ### Só quer entrar e escrever?
+> A folha de 3 passos é o [`ACESSO-RAPIDO.md`](ACESSO-RAPIDO.md) — é o que se
+> imprime e cola na recepção. Este manual aqui é a referência completa, para
+> consultar quando surgir dúvida.
+
 ---
 
 ## Índice
@@ -141,14 +146,38 @@ senha de ninguém — cada pessoa entra com o próprio e-mail.
 
 ## 3. Primeira configuração (só o administrador)
 
-Feita **uma vez só**, por quem administra a conta do GitHub da clínica.
+Feita **uma vez só**, por quem é dono da organização `taoklyn` no GitHub.
 
-1. Entre em **https://app.pagescms.org** com **Sign in with GitHub**.
-2. O Pages CMS pede para instalar um aplicativo do GitHub. Autorize.
-3. Na tela do GitHub, escolha a organização **taoklyn**.
+> **O detalhe onde todo mundo trava:** `taoklyn` é uma **organização**, não uma
+> conta pessoal. O aplicativo precisa ser instalado **na organização**. Instalado
+> na conta pessoal, o repositório continua invisível e o painel mostra a mesma
+> tela vazia de antes.
+
+1. Entre em **https://app.pagescms.org** e clique em **Sign in with GitHub** —
+   o botão de cima, e **não** o campo de e-mail.
+2. Entre com a conta do GitHub que criou a organização.
+3. Aparece a tela **Install Pages CMS**, com a lista de onde instalar:
+
+   ```
+   ○ Sua conta pessoal
+   ○ taoklyn            ← escolha esta
+   ```
+
 4. Em **Repository access**, marque **Only select repositories** e selecione
    apenas **taoklyn-site**.
-5. Confirme. Volte ao Pages CMS e abra o repositório.
+5. Clique em **Install** (ou **Install & Authorize**). O navegador volta ao
+   Pages CMS com o repositório na lista.
+6. **Convide a equipe:** dentro do repositório, **Settings** →
+   **Collaborators** → informe o e-mail de cada pessoa. Sem isso, o login por
+   e-mail delas não encontra nenhum site.
+
+### Se o passo 3 não sair como esperado
+
+| O que aconteceu | Significa | Solução |
+|---|---|---|
+| `taoklyn` não aparece na lista | você entrou com outra conta do GitHub | saia do GitHub e entre com a conta que criou a organização |
+| Aparece **Request installation** em vez de **Install** | você não é owner da organização | um owner precisa aprovar em `github.com/organizations/taoklyn/settings/installations` |
+| Instalou e o repositório não aparece | foi instalado na conta pessoal | `github.com/settings/installations` → Pages CMS → **Configure** → acrescente a organização |
 
 O painel já abre montado, porque o arquivo de configuração (`.pages.yml`) está
 no repositório. **Ele não precisa ser alterado no dia a dia.**

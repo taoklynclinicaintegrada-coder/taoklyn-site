@@ -215,10 +215,12 @@ certo.
 É o passo que permite à clínica editar o site sem programador.
 
 1. Entre em **https://app.pagescms.org**.
-2. Clique em **Sign in with GitHub** e entre com a conta que tem acesso ao
-   repositório.
+2. Clique em **Sign in with GitHub** e entre com a conta que criou a
+   organização `taoklyn`.
 3. O Pages CMS pede para instalar um aplicativo do GitHub. Autorize.
-4. Na tela do GitHub, escolha a organização **taoklyn**.
+4. Na tela do GitHub, **escolha a organização `taoklyn`, e não a sua conta
+   pessoal**. Instalar na conta pessoal deixa o repositório invisível — é o
+   engano mais comum deste passo.
 5. Em **Repository access**, marque **Only select repositories** e selecione
    apenas **taoklyn-site**.
 6. Confirme. De volta ao Pages CMS, abra o repositório **taoklyn-site**.
@@ -226,8 +228,13 @@ certo.
 O painel abre já mostrando o conteúdo, porque o arquivo `.pages.yml` já está no
 repositório.
 
-**O manual de uso do painel, para quem cuida do conteúdo, é o
-[`CMS.md`](CMS.md).**
+6. Ainda no Pages CMS, abra **Settings** → **Collaborators** e convide a equipe
+   por e-mail. **Sem este passo, o login por e-mail delas não encontra nenhum
+   site.**
+
+**Manuais de uso:** a folha de 3 passos para a recepção é o
+[`ACESSO-RAPIDO.md`](ACESSO-RAPIDO.md); a referência completa é o
+[`CMS.md`](CMS.md).
 
 ---
 
