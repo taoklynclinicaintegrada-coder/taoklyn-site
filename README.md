@@ -79,7 +79,8 @@ O site sobe em `http://localhost:4321`.
 | `npm run check` | Verificação de tipos e de template (Astro + TypeScript) |
 | `npm run verificar:cms` | Confere se o `.pages.yml` bate com os schemas e com as pastas |
 | `npm run verificar:contraste` | Confere os pares de cor contra o mínimo da WCAG AA |
-| `npm run verificar` | Roda os três acima e o build |
+| `npm run verificar:site` | Audita o `dist/` gerado: links internos, `alt`, H1, canonical, JSON-LD, sitemap |
+| `npm run verificar` | Roda tudo: tipos, CMS, contraste, build e auditoria do `dist/` |
 | `npm run assets:marca` | Regera logos, ícones, imagem social e recortes a partir de `referencias/` |
 
 ## Estrutura de diretórios
@@ -92,12 +93,15 @@ taoklyn-site/
 │   ├── CMS.md                 manual da recepção
 │   └── PENDENCIAS.md          o que falta e o que não foi inventado
 ├── public/                    servido como está (favicons, logos, manifest)
+│   ├── _headers               cabeçalhos HTTP aplicados pelo Cloudflare
 │   └── images/brand/
 ├── referencias/               material de origem — NUNCA modificado pelo site
 ├── scripts/
-│   ├── preparar-assets.mjs    referencias/ → public/ e src/assets/
+│   ├── preparar-assets.mjs      referencias/ → public/ e src/assets/
+│   ├── servir-como-producao.mjs dist/ com os cabeçalhos do Cloudflare
 │   ├── verificar-cms.mjs
-│   └── verificar-contraste.mjs
+│   ├── verificar-contraste.mjs
+│   └── verificar-site.mjs
 └── src/
     ├── assets/uploads/        imagens enviadas pelo CMS (otimizadas no build)
     ├── components/
