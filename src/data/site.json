@@ -1,0 +1,65 @@
+{
+  "nome": "Tao Klyn",
+  "nomeInstitucional": "Tao Klyn | Clínica Integrada",
+  "fundacao": "2007-12-22",
+  "mensagemPrincipal": "Cuidado que acolhe. Saúde de forma integral.",
+  "textoHero": "Desde 2007, promovendo saúde, movimento e bem-estar por meio de atendimento multiprofissional, integrado e humanizado em Maceió.",
+  "textoInstitucional": "A Tao Klyn reúne, em um mesmo espaço, profissionais de diferentes áreas da saúde. Aqui, cada pessoa é atendida de forma única e integral, com atenção, escuta e respeito, promovendo saúde, equilíbrio e bem-estar para corpo, mente e emoções.",
+  "missao": "Oferecer atendimento multiprofissional, integrado, humanizado e inclusivo, fundamentado em evidências científicas, promovendo a saúde física, mental, emocional e espiritual de forma completa, respeitando a individualidade de cada pessoa.",
+  "contato": {
+    "telefone": "(82) 3221-6064",
+    "whatsapp": "(82) 99131-1477",
+    "email": "taoklynclinicaintegrada@gmail.com",
+    "mensagemWhatsApp": "Olá! Conheci a Tao Klyn pelo site e gostaria de mais informações sobre os atendimentos."
+  },
+  "endereco": {
+    "logradouro": "Rua Princesa Isabel, 473",
+    "bairro": "Farol",
+    "cidade": "Maceió",
+    "estado": "AL",
+    "cep": "57051-520",
+    "complemento": "",
+    "mapaUrl": "",
+    "comoChegar": ""
+  },
+  "horarios": {
+    "exibir": false,
+    "observacao": "",
+    "itens": []
+  },
+  "redes": {
+    "instagram": "https://www.instagram.com/taoklyn",
+    "instagramUsuario": "@taoklyn",
+    "facebook": "",
+    "youtube": ""
+  },
+  "locacao": {
+    "exibir": true,
+    "titulo": "Um espaço para cuidar e trabalhar",
+    "texto": "A Tao Klyn disponibiliza salas para profissionais de saúde e bem-estar que buscam um ambiente preparado, tranquilo e bem localizado no Farol, em Maceió.",
+    "mensagemWhatsApp": "Olá! Conheci pelo site as salas disponíveis na Tao Klyn e gostaria de informações sobre locação."
+  },
+  "destaques": [
+    {
+      "titulo": "Desde 2007",
+      "texto": "Mais de quinze anos de atuação em Maceió."
+    },
+    {
+      "titulo": "Equipe multiprofissional",
+      "texto": "Profissionais de diferentes áreas, com registro em seus conselhos."
+    },
+    {
+      "titulo": "Cuidado integrado",
+      "texto": "Corpo, mente e emoções acompanhados em um mesmo lugar."
+    },
+    {
+      "titulo": "Atendimento humanizado",
+      "texto": "Escuta, respeito e atenção à individualidade de cada pessoa."
+    }
+  ],
+  "seo": {
+    "titulo": "Tao Klyn | Clínica Integrada em Maceió",
+    "descricao": "Clínica integrada no Farol, em Maceió. Atendimento multiprofissional e humanizado: psicologia, fisioterapia, pilates, acupuntura, terapias integrativas e mais.",
+    "imagem": "/images/brand/og-taoklyn.png"
+  }
+}

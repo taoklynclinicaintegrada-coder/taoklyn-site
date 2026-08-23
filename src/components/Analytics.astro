@@ -1,0 +1,37 @@
+---
+/**
+ * Google Analytics 4 — opcional.
+ *
+ * Sem a variavel PUBLIC_GA_ID nada e enviado ao navegador: nenhum script,
+ * nenhuma requisicao, nenhum cookie. O site funciona igual, apenas sem medicao.
+ *
+ * Os eventos sao capturados por delegacao a partir de data-evento="nome",
+ * entao um link novo so precisa do atributo — nunca de codigo novo.
+ */
+const idDoGA = import.meta.env.PUBLIC_GA_ID?.trim();
+---
+
+{
+  idDoGA && (
+    <>
+      <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${idDoGA}`} />
+      <script is:inline define:vars={{ idDoGA }}>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+          window.dataLayer.push(arguments);
+        }
+        window.gtag = gtag;
+        gtag('js', new Date());
+        gtag('config', idDoGA, { anonymize_ip: true });
+
+        document.addEventListener('click', function (evento) {
+          var alvo = evento.target instanceof Element ? evento.target.closest('[data-evento]') : null;
+          if (!alvo) return;
+          gtag('event', alvo.getAttribute('data-evento'), {
+            rotulo: alvo.getAttribute('data-evento-rotulo') || alvo.textContent.trim().slice(0, 80),
+          });
+        });
+      </script>
+    </>
+  )
+}

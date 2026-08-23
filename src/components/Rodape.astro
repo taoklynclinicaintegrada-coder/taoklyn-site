@@ -1,0 +1,281 @@
+---
+import {
+  site,
+  linkWhatsApp,
+  linkTelefone,
+  linkEmail,
+  linkMapa,
+  enderecoEmUmaLinha,
+  anoDeFundacao,
+} from '../lib/site';
+import Icone from './Icone.astro';
+import { Image } from 'astro:assets';
+import marcaBranca from '../assets/marca/marca-branca.png';
+
+const ano = new Date().getFullYear();
+const fundacao = anoDeFundacao();
+const horarios = site.horarios.exibir ? site.horarios.itens.filter((h) => h.dias || h.horario) : [];
+---
+
+<footer class="rodape">
+  <div class="container rodape__grade">
+    <div>
+      <Image
+        class="rodape__marca"
+        src={marcaBranca}
+        alt={site.nomeInstitucional}
+        width={136}
+        densities={[1, 2]}
+        loading="lazy"
+      />
+      <p class="rodape__texto">{site.textoInstitucional}</p>
+      {fundacao && <p class="rodape__desde">Fundada em {fundacao}</p>}
+    </div>
+
+    <div>
+      <h2 class="rodape__titulo">Navegação</h2>
+      <ul class="rodape__lista">
+        <li><a href="/sobre">Sobre a clínica</a></li>
+        <li><a href="/servicos">Serviços</a></li>
+        <li><a href="/profissionais">Profissionais</a></li>
+        <li><a href="/espacos">Espaços e locação</a></li>
+        <li><a href="/blog">Conteúdos</a></li>
+        <li><a href="/contato">Contato</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h2 class="rodape__titulo">Contato</h2>
+      <ul class="rodape__lista rodape__lista--icones">
+        {
+          site.contato.whatsapp && (
+            <li>
+              <Icone nome="whatsapp" tamanho={18} />
+              <a
+                href={linkWhatsApp()}
+                target="_blank"
+                rel="noopener"
+                data-evento="click_whatsapp"
+                data-evento-rotulo="rodape"
+              >
+                WhatsApp {site.contato.whatsapp}
+              </a>
+            </li>
+          )
+        }
+        {
+          site.contato.telefone && (
+            <li>
+              <Icone nome="telefone" tamanho={18} />
+              <a href={linkTelefone()} data-evento="click_phone" data-evento-rotulo="rodape">
+                {site.contato.telefone}
+              </a>
+            </li>
+          )
+        }
+        {
+          site.contato.email && (
+            <li>
+              <Icone nome="email" tamanho={18} />
+              <a href={linkEmail()}>{site.contato.email}</a>
+            </li>
+          )
+        }
+        {
+          site.redes.instagram && (
+            <li>
+              <Icone nome="instagram" tamanho={18} />
+              <a
+                href={site.redes.instagram}
+                target="_blank"
+                rel="noopener"
+                data-evento="click_instagram"
+                data-evento-rotulo="rodape"
+              >
+                {site.redes.instagramUsuario || 'Instagram'}
+              </a>
+            </li>
+          )
+        }
+      </ul>
+    </div>
+
+    <div>
+      <h2 class="rodape__titulo">Onde estamos</h2>
+      <address class="rodape__endereco">
+        <Icone nome="local" tamanho={18} />
+        <span>{enderecoEmUmaLinha()}</span>
+      </address>
+      <a
+        class="rodape__mapa"
+        href={linkMapa()}
+        target="_blank"
+        rel="noopener"
+        data-evento="click_maps"
+        data-evento-rotulo="rodape"
+      >
+        Como chegar
+      </a>
+
+      {
+        horarios.length > 0 && (
+          <>
+            <h2 class="rodape__titulo rodape__titulo--espacado">Horário de funcionamento</h2>
+            <ul class="rodape__lista">
+              {horarios.map((h) => (
+                <li>
+                  <span class="rodape__dias">{h.dias}</span> {h.horario}
+                </li>
+              ))}
+            </ul>
+            {site.horarios.observacao && <p class="rodape__nota">{site.horarios.observacao}</p>}
+          </>
+        )
+      }
+    </div>
+  </div>
+
+  <div class="container rodape__base">
+    <p>© {ano} {site.nomeInstitucional}. Todos os direitos reservados.</p>
+    <ul class="rodape__legais">
+      <li><a href="/politica-de-privacidade">Política de Privacidade</a></li>
+      <li><a href="/politica-de-cookies">Política de Cookies</a></li>
+    </ul>
+  </div>
+</footer>
+
+<style>
+  .rodape {
+    background-color: var(--verde-escuro);
+    color: var(--creme);
+    padding-block: 3.5rem 1.5rem;
+  }
+
+  .rodape a {
+    color: var(--dourado-claro);
+    text-decoration: none;
+  }
+
+  .rodape a:hover {
+    text-decoration: underline;
+  }
+
+  .rodape__grade {
+    display: grid;
+    gap: 2.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  }
+
+  .rodape__marca {
+    width: 8.5rem;
+    height: auto;
+    margin-bottom: 1.25rem;
+  }
+
+  .rodape__texto {
+    max-width: 28rem;
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  .rodape__desde {
+    margin-top: 0.75rem;
+    color: var(--dourado-claro);
+    font-size: 0.875rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .rodape__titulo {
+    margin-bottom: 1rem;
+    color: var(--branco);
+    font-size: 1.05rem;
+  }
+
+  .rodape__titulo--espacado {
+    margin-top: 1.75rem;
+  }
+
+  .rodape__lista {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 0.95rem;
+  }
+
+  .rodape__lista li + li {
+    margin-top: 0.35rem;
+  }
+
+  /* Alvo de toque confortável: o link ocupa a linha inteira, não só o texto. */
+  .rodape__lista a,
+  .rodape__legais a,
+  .rodape__mapa {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+  }
+
+  .rodape__lista--icones li {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+  }
+
+  .rodape__lista--icones :global(svg) {
+    flex: 0 0 auto;
+    color: var(--dourado-claro);
+  }
+
+  .rodape__endereco {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.55rem;
+    font-size: 0.95rem;
+    font-style: normal;
+    line-height: 1.6;
+  }
+
+  .rodape__endereco :global(svg) {
+    flex: 0 0 auto;
+    margin-top: 0.2rem;
+    color: var(--dourado-claro);
+  }
+
+  .rodape__mapa {
+    display: inline-block;
+    margin-top: 0.75rem;
+    font-weight: 600;
+  }
+
+  .rodape__dias {
+    font-weight: 600;
+  }
+
+  .rodape__nota {
+    margin-top: 0.6rem;
+    font-size: 0.85rem;
+    opacity: 0.85;
+  }
+
+  .rodape__base {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgb(243 232 221 / 18%);
+    font-size: 0.85rem;
+  }
+
+  .rodape__legais {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+</style>

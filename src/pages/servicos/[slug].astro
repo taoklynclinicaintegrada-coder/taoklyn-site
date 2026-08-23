@@ -1,0 +1,118 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Migalhas from '../../components/Migalhas.astro';
+import Figura from '../../components/Figura.astro';
+import Icone from '../../components/Icone.astro';
+import CartaoProfissional from '../../components/CartaoProfissional.astro';
+import { listarServicos, listarProfissionais, profissionaisDoServico } from '../../lib/conteudo';
+import { migalhas, descricaoSegura } from '../../lib/seo';
+import { linkWhatsApp } from '../../lib/site';
+
+export const getStaticPaths = (async () => {
+  const servicos = await listarServicos();
+  return servicos.map((servico) => ({ params: { slug: servico.id }, props: { servico } }));
+}) satisfies GetStaticPaths;
+
+const { servico } = Astro.props;
+const { Content } = await render(servico);
+
+const profissionais = profissionaisDoServico(servico, await listarProfissionais());
+const caminho = [
+  { nome: 'Início', href: '/' },
+  { nome: 'Serviços', href: '/servicos' },
+  { nome: servico.data.nome, href: `/servicos/${servico.id}` },
+];
+---
+
+<Base
+  titulo={servico.data.seoTitle || servico.data.nome}
+  descricao={descricaoSegura(servico.data.seoDescription, servico.data.resumo)}
+  imagem={servico.data.seoImagem}
+  dadosEstruturados={[migalhas(caminho, Astro.site ?? Astro.url)]}
+>
+  <Migalhas itens={caminho} />
+
+  <article>
+    <section class="secao secao--creme">
+      <div class="container cabecalho-servico">
+        <div>
+          <p class="rotulo">Serviço</p>
+          <h1>{servico.data.nome}</h1>
+          {servico.data.resumo && <p class="subtitulo">{servico.data.resumo}</p>}
+          <div class="acoes" style="margin-top:2rem">
+            <a
+              class="botao botao--principal"
+              href={linkWhatsApp(servico.data.mensagemWhatsApp)}
+              target="_blank"
+              rel="noopener"
+              data-evento="click_whatsapp"
+              data-evento-rotulo={`servico:${servico.data.nome}`}
+            >
+              <Icone nome="whatsapp" tamanho={20} />
+              Agendar pelo WhatsApp
+            </a>
+            <a class="botao botao--secundario" href="/servicos">Ver outros serviços</a>
+          </div>
+        </div>
+        {
+          servico.data.imagem && (
+            <Figura
+              src={servico.data.imagem}
+              alt={`Imagem do serviço ${servico.data.nome}`}
+              proporcao="4 / 3"
+              sizes="(max-width: 56rem) 100vw, 26rem"
+              prioridade
+              class="cabecalho-servico__imagem"
+            />
+          )
+        }
+      </div>
+    </section>
+
+    <section class="secao secao--branca">
+      <div class="container">
+        <div class="prosa">
+          <Content />
+        </div>
+      </div>
+    </section>
+
+    {
+      profissionais.length > 0 && (
+        <section class="secao secao--creme" aria-labelledby="titulo-quem-atende">
+          <div class="container">
+            <div class="secao__cabecalho">
+              <p class="rotulo">Equipe</p>
+              <h2 id="titulo-quem-atende">Quem atende</h2>
+            </div>
+            <div class="grade">
+              {profissionais.map((profissional) => (
+                <CartaoProfissional profissional={profissional} />
+              ))}
+            </div>
+          </div>
+        </section>
+      )
+    }
+  </article>
+</Base>
+
+<style>
+  .cabecalho-servico {
+    display: grid;
+    gap: 2.5rem;
+    align-items: center;
+  }
+
+  .cabecalho-servico__imagem {
+    border-radius: var(--raio-grande);
+  }
+
+  @media (min-width: 56rem) {
+    .cabecalho-servico {
+      grid-template-columns: 1.3fr 1fr;
+    }
+  }
+</style>

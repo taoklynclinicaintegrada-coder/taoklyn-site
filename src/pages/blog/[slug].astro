@@ -1,0 +1,194 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Migalhas from '../../components/Migalhas.astro';
+import Figura from '../../components/Figura.astro';
+import CartaoPost from '../../components/CartaoPost.astro';
+import {
+  listarPosts,
+  listarProfissionais,
+  autorDoPost,
+  formatarData,
+  dataISO,
+  paraSlug,
+} from '../../lib/conteudo';
+import { migalhas, descricaoSegura, artigo } from '../../lib/seo';
+
+export const getStaticPaths = (async () => {
+  const posts = await listarPosts();
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}) satisfies GetStaticPaths;
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const profissionais = await listarProfissionais();
+const autor = autorDoPost(post, profissionais);
+const todos = await listarPosts();
+const relacionados = todos.filter((p) => p.id !== post.id).slice(0, 3);
+
+const base = Astro.site ?? Astro.url;
+const caminho = [
+  { nome: 'Início', href: '/' },
+  { nome: 'Conteúdos', href: '/blog' },
+  { nome: post.data.titulo, href: `/blog/${post.id}` },
+];
+
+const urlDaPagina = new URL(`/blog/${post.id}`, base).toString();
+const compartilharWhatsApp = `https://wa.me/?text=${encodeURIComponent(`${post.data.titulo} — ${urlDaPagina}`)}`;
+---
+
+<Base
+  titulo={post.data.seoTitle || post.data.titulo}
+  descricao={descricaoSegura(post.data.seoDescription, post.data.resumo)}
+  imagem={post.data.seoImagem || post.data.imagemCapa}
+  tipo="article"
+  dadosEstruturados={[
+    migalhas(caminho, base),
+    artigo({
+      titulo: post.data.titulo,
+      descricao: post.data.resumo,
+      imagem: post.data.seoImagem || post.data.imagemCapa,
+      url: `/blog/${post.id}`,
+      publicadoEm: post.data.data,
+      atualizadoEm: post.data.ultimaAtualizacao,
+      autor: autor?.data.nome,
+      base,
+    }),
+  ]}
+>
+  <Migalhas itens={caminho} />
+
+  <article class="secao secao--branca">
+    <div class="container">
+      <header class="prosa">
+        <p class="publicacao__meta">
+          {
+            post.data.categoria && (
+              <a class="selo" href={`/blog/categoria/${paraSlug(post.data.categoria)}`}>
+                {post.data.categoria}
+              </a>
+            )
+          }
+          <time datetime={dataISO(post.data.data)}>{formatarData(post.data.data)}</time>
+          {
+            post.data.ultimaAtualizacao && (
+              <span>· atualizado em {formatarData(post.data.ultimaAtualizacao)}</span>
+            )
+          }
+        </p>
+        <h1>{post.data.titulo}</h1>
+        {post.data.resumo && <p class="subtitulo">{post.data.resumo}</p>}
+        {
+          autor && (
+            <p class="publicacao__autor">
+              Por <a href={`/profissionais/${autor.id}`}>{autor.data.nome}</a> —{' '}
+              {autor.data.profissao}
+            </p>
+          )
+        }
+      </header>
+
+      {
+        post.data.imagemCapa && (
+          <Figura
+            src={post.data.imagemCapa}
+            alt={`Imagem da publicação: ${post.data.titulo}`}
+            proporcao="16 / 9"
+            sizes="(max-width: 48rem) 100vw, 42rem"
+            larguras={[480, 720, 960, 1280]}
+            prioridade
+            class="publicacao__capa"
+          />
+        )
+      }
+
+      <div class="prosa publicacao__corpo">
+        <Content />
+      </div>
+
+      <footer class="prosa publicacao__rodape">
+        <h2>Compartilhar</h2>
+        <div class="acoes">
+          <a class="botao botao--secundario" href={compartilharWhatsApp} target="_blank" rel="noopener">
+            WhatsApp
+          </a>
+          <a
+            class="botao botao--secundario"
+            href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(urlDaPagina)}`}
+            target="_blank"
+            rel="noopener"
+          >
+            Facebook
+          </a>
+          <a class="botao botao--secundario" href={`mailto:?subject=${encodeURIComponent(post.data.titulo)}&body=${encodeURIComponent(urlDaPagina)}`}>
+            E-mail
+          </a>
+        </div>
+      </footer>
+    </div>
+  </article>
+
+  {
+    relacionados.length > 0 && (
+      <section class="secao secao--creme" aria-labelledby="titulo-relacionados">
+        <div class="container">
+          <div class="secao__cabecalho">
+            <p class="rotulo">Continue lendo</p>
+            <h2 id="titulo-relacionados">Outras publicações</h2>
+          </div>
+          <div class="grade">
+            {relacionados.map((outro) => (
+              <CartaoPost post={outro} />
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+</Base>
+
+<style>
+  .publicacao__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 1rem;
+    color: var(--texto-suave);
+    font-size: 0.875rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .publicacao__meta .selo {
+    text-decoration: none;
+  }
+
+  .publicacao__autor {
+    margin-top: 1rem;
+    color: var(--texto-suave);
+    font-size: 0.9375rem;
+  }
+
+  .publicacao__capa {
+    max-width: var(--largura-texto);
+    margin-block: 2rem;
+    border-radius: var(--raio-grande);
+  }
+
+  .publicacao__corpo {
+    margin-top: 2rem;
+  }
+
+  .publicacao__rodape {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--borda);
+  }
+
+  .publicacao__rodape h2 {
+    margin-top: 0;
+    font-size: 1.1rem;
+  }
+</style>

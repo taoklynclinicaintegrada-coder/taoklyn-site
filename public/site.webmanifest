@@ -1,0 +1,20 @@
+{
+  "name": "Tao Klyn | Clínica Integrada",
+  "short_name": "Tao Klyn",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#F3E8DD",
+  "theme_color": "#123326",
+  "icons": [
+    {
+      "src": "/images/brand/icone-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/brand/icone-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

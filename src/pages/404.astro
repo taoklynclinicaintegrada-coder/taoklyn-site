@@ -1,0 +1,52 @@
+---
+import Base from '../layouts/Base.astro';
+import Icone from '../components/Icone.astro';
+import { linkWhatsApp } from '../lib/site';
+---
+
+<Base
+  titulo="Página não encontrada"
+  descricao="A página que você procurava não existe ou mudou de endereço."
+  naoIndexar
+>
+  <section class="secao secao--creme">
+    <div class="container centro" style="max-width:38rem">
+      <p class="rotulo">Erro 404</p>
+      <h1>Não encontramos esta página</h1>
+      <p class="subtitulo">
+        O endereço pode ter mudado ou o conteúdo pode ter sido retirado do ar. Você pode voltar
+        ao início ou falar com a recepção.
+      </p>
+      <div class="acoes acoes--centro" style="margin-top:2rem">
+        <a class="botao botao--principal" href="/">Voltar ao início</a>
+        <a
+          class="botao botao--secundario"
+          href={linkWhatsApp()}
+          target="_blank"
+          rel="noopener"
+          data-evento="click_whatsapp"
+          data-evento-rotulo="pagina-404"
+        >
+          <Icone nome="whatsapp" tamanho={20} />
+          Falar pelo WhatsApp
+        </a>
+      </div>
+
+      <nav aria-label="Páginas principais" style="margin-top:2.5rem">
+        <ul class="lista-etiquetas" style="justify-content:center">
+          <li><a class="selo" href="/servicos">Serviços</a></li>
+          <li><a class="selo" href="/profissionais">Profissionais</a></li>
+          <li><a class="selo" href="/espacos">Espaços</a></li>
+          <li><a class="selo" href="/blog">Conteúdos</a></li>
+          <li><a class="selo" href="/contato">Contato</a></li>
+        </ul>
+      </nav>
+    </div>
+  </section>
+</Base>
+
+<style>
+  a.selo {
+    text-decoration: none;
+  }
+</style>

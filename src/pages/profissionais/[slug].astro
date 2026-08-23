@@ -1,0 +1,168 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Migalhas from '../../components/Migalhas.astro';
+import Figura from '../../components/Figura.astro';
+import Icone from '../../components/Icone.astro';
+import CartaoServico from '../../components/CartaoServico.astro';
+import {
+  listarProfissionais,
+  listarServicos,
+  servicosDoProfissional,
+  registroDoProfissional,
+} from '../../lib/conteudo';
+import { migalhas, descricaoSegura, pessoa } from '../../lib/seo';
+import { linkWhatsApp } from '../../lib/site';
+
+export const getStaticPaths = (async () => {
+  const profissionais = await listarProfissionais();
+  return profissionais.map((profissional) => ({
+    params: { slug: profissional.id },
+    props: { profissional },
+  }));
+}) satisfies GetStaticPaths;
+
+const { profissional } = Astro.props;
+const { Content } = await render(profissional);
+
+const servicos = servicosDoProfissional(profissional, await listarServicos());
+const registro = registroDoProfissional(profissional);
+const base = Astro.site ?? Astro.url;
+const caminho = [
+  { nome: 'Início', href: '/' },
+  { nome: 'Profissionais', href: '/profissionais' },
+  { nome: profissional.data.nome, href: `/profissionais/${profissional.id}` },
+];
+
+const mensagem = `Olá! Conheci a Tao Klyn pelo site e gostaria de informações sobre atendimento com ${profissional.data.nome}.`;
+---
+
+<Base
+  titulo={profissional.data.seoTitle || `${profissional.data.nome} — ${profissional.data.profissao}`}
+  descricao={descricaoSegura(
+    profissional.data.seoDescription,
+    profissional.data.descricaoCurta,
+    `${profissional.data.nome}, ${profissional.data.profissao} na Tao Klyn | Clínica Integrada, em Maceió.`,
+  )}
+  imagem={profissional.data.seoImagem}
+  dadosEstruturados={[
+    migalhas(caminho, base),
+    pessoa({
+      nome: profissional.data.nome,
+      cargo: profissional.data.profissao,
+      descricao: profissional.data.descricaoCurta,
+      url: `/profissionais/${profissional.id}`,
+      base,
+    }),
+  ]}
+>
+  <Migalhas itens={caminho} />
+
+  <article>
+    <section class="secao secao--creme">
+      <div class="container perfil">
+        {
+          profissional.data.foto && (
+            <Figura
+              src={profissional.data.foto}
+              alt={`Retrato de ${profissional.data.nome}`}
+              proporcao="1 / 1"
+              sizes="(max-width: 56rem) 60vw, 20rem"
+              prioridade
+              class="perfil__foto"
+            />
+          )
+        }
+        <div>
+          <p class="rotulo">{profissional.data.profissao}</p>
+          <h1>{profissional.data.nome}</h1>
+          {registro && <p class="perfil__registro">{registro}</p>}
+          {profissional.data.descricaoCurta && (
+            <p class="subtitulo">{profissional.data.descricaoCurta}</p>
+          )}
+
+          {
+            profissional.data.areasDeAtuacao.length > 0 && (
+              <ul class="lista-etiquetas" style="margin-top:1.5rem">
+                {profissional.data.areasDeAtuacao.map((area) => (
+                  <li>
+                    <span class="selo">{area}</span>
+                  </li>
+                ))}
+              </ul>
+            )
+          }
+
+          <div class="acoes" style="margin-top:2rem">
+            <a
+              class="botao botao--principal"
+              href={linkWhatsApp(mensagem)}
+              target="_blank"
+              rel="noopener"
+              data-evento="click_whatsapp"
+              data-evento-rotulo={`profissional:${profissional.data.nome}`}
+            >
+              <Icone nome="whatsapp" tamanho={20} />
+              Agendar pelo WhatsApp
+            </a>
+            <a class="botao botao--secundario" href="/profissionais">Ver a equipe</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="secao secao--branca">
+      <div class="container">
+        <div class="prosa">
+          <Content />
+        </div>
+      </div>
+    </section>
+
+    {
+      servicos.length > 0 && (
+        <section class="secao secao--creme" aria-labelledby="titulo-atendimentos">
+          <div class="container">
+            <div class="secao__cabecalho">
+              <p class="rotulo">Atendimentos</p>
+              <h2 id="titulo-atendimentos">Serviços relacionados</h2>
+            </div>
+            <div class="grade">
+              {servicos.map((servico) => (
+                <CartaoServico servico={servico} />
+              ))}
+            </div>
+          </div>
+        </section>
+      )
+    }
+  </article>
+</Base>
+
+<style>
+  .perfil {
+    display: grid;
+    gap: 2.5rem;
+    align-items: center;
+  }
+
+  .perfil__foto {
+    max-width: 20rem;
+    border-radius: var(--raio-grande);
+    border: 1px solid var(--borda);
+  }
+
+  .perfil__registro {
+    margin-top: 0.5rem;
+    color: var(--texto-suave);
+    font-size: 1rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  @media (min-width: 56rem) {
+    .perfil {
+      grid-template-columns: 20rem 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,52 @@
+---
+import Icone from './Icone.astro';
+import type { Servico } from '../lib/conteudo';
+
+interface Props {
+  servico: Servico;
+}
+
+const { servico } = Astro.props;
+const { nome, resumo, icone } = servico.data;
+---
+
+<article class="cartao cartao--clicavel cartao-servico">
+  <div class="cartao__corpo">
+    <span class="cartao-servico__icone" aria-hidden="true">
+      <Icone nome={icone} tamanho={26} />
+    </span>
+    <h3>
+      <a
+        class="cartao__link"
+        href={`/servicos/${servico.id}`}
+        data-evento="click_service"
+        data-evento-rotulo={nome}>{nome}</a
+      >
+    </h3>
+    {resumo && <p class="cartao__texto">{resumo}</p>}
+    <p class="cartao__acao" aria-hidden="true">Saiba mais</p>
+  </div>
+</article>
+
+<style>
+  .cartao-servico__icone {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    margin-bottom: 0.35rem;
+    background-color: var(--creme);
+    border: 1px solid var(--borda);
+    border-radius: 50%;
+    color: var(--verde-profundo);
+  }
+
+  .cartao-servico h3 {
+    font-size: 1.25rem;
+  }
+
+  .cartao-servico a {
+    text-decoration: none;
+  }
+</style>

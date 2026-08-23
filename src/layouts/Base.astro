@@ -1,0 +1,84 @@
+---
+import '../styles/global.css';
+import Cabecalho from '../components/Cabecalho.astro';
+import Rodape from '../components/Rodape.astro';
+import BotaoWhatsAppFlutuante from '../components/BotaoWhatsAppFlutuante.astro';
+import Analytics from '../components/Analytics.astro';
+import { site } from '../lib/site';
+import { organizacao } from '../lib/seo';
+
+interface Props {
+  titulo: string;
+  descricao?: string;
+  imagem?: string;
+  tipo?: 'website' | 'article';
+  naoIndexar?: boolean;
+  /** Blocos JSON-LD adicionais desta pagina. */
+  dadosEstruturados?: Record<string, unknown>[];
+}
+
+const {
+  titulo,
+  descricao = site.seo.descricao,
+  imagem = site.seo.imagem || '/images/brand/og-taoklyn.png',
+  tipo = 'website',
+  naoIndexar = false,
+  dadosEstruturados = [],
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname.replace(/\/$/, '') || '/', Astro.site ?? Astro.url);
+const imagemAbsoluta = new URL(imagem, Astro.site ?? Astro.url).toString();
+const tituloCompleto = titulo.includes(site.nome) ? titulo : `${titulo} | ${site.nome}`;
+
+const blocos = [organizacao({ base: Astro.site ?? Astro.url }), ...dadosEstruturados];
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{tituloCompleto}</title>
+    <meta name="description" content={descricao} />
+    <link rel="canonical" href={canonical.toString()} />
+    {naoIndexar && <meta name="robots" content="noindex, nofollow" />}
+
+    <meta property="og:type" content={tipo} />
+    <meta property="og:site_name" content={site.nomeInstitucional} />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:title" content={tituloCompleto} />
+    <meta property="og:description" content={descricao} />
+    <meta property="og:url" content={canonical.toString()} />
+    <meta property="og:image" content={imagemAbsoluta} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={tituloCompleto} />
+    <meta name="twitter:description" content={descricao} />
+    <meta name="twitter:image" content={imagemAbsoluta} />
+
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#123326" />
+
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    {
+      blocos.map((bloco) => (
+        <script type="application/ld+json" is:inline set:html={JSON.stringify(bloco)} />
+      ))
+    }
+
+    <Analytics />
+  </head>
+  <body>
+    <a class="pular-para-conteudo" href="#conteudo">Pular para o conteúdo</a>
+    <Cabecalho />
+    <main id="conteudo">
+      <slot />
+    </main>
+    <Rodape />
+    <BotaoWhatsAppFlutuante />
+  </body>
+</html>

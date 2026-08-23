@@ -1,0 +1,28 @@
+{
+  "name": "taoklyn-site",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Site institucional da Tao Klyn | Clinica Integrada",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "verificar:cms": "node scripts/verificar-cms.mjs",
+    "verificar:contraste": "node scripts/verificar-contraste.mjs",
+    "verificar": "npm run check && npm run verificar:cms && npm run verificar:contraste && npm run build && npm run verificar:site",
+    "assets:marca": "node scripts/preparar-assets.mjs",
+    "verificar:site": "node scripts/verificar-site.mjs"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.3",
+    "astro": "^7.2.4",
+    "sharp": "^0.35.3"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.4",
+    "typescript": "^5.9.3",
+    "yaml": "^2.9.0"
+  }
+}

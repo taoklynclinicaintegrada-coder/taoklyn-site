@@ -1,0 +1,262 @@
+---
+import { Image } from 'astro:assets';
+import marcaHorizontal from '../assets/marca/marca-horizontal.png';
+import { site, linkWhatsApp } from '../lib/site';
+import Icone from './Icone.astro';
+
+/**
+ * Cabecalho fixo. O menu do celular e um <details>: abre e fecha sem uma linha
+ * de JavaScript, funciona com teclado e continua funcionando se o script falhar.
+ */
+const caminho = Astro.url.pathname.replace(/\/$/, '') || '/';
+
+const itens = [
+  { texto: 'Início', href: '/' },
+  { texto: 'Sobre', href: '/sobre' },
+  { texto: 'Serviços', href: '/servicos' },
+  { texto: 'Profissionais', href: '/profissionais' },
+  { texto: 'Espaços', href: '/espacos' },
+  { texto: 'Conteúdos', href: '/blog' },
+  { texto: 'Contato', href: '/contato' },
+];
+
+const estaAtivo = (href: string) =>
+  href === '/' ? caminho === '/' : caminho === href || caminho.startsWith(`${href}/`);
+---
+
+<header class="cabecalho">
+  <div class="container cabecalho__interno">
+    <a class="cabecalho__marca" href="/" aria-label={`${site.nomeInstitucional} — página inicial`}>
+      <Image
+        src={marcaHorizontal}
+        alt={site.nomeInstitucional}
+        width={200}
+        densities={[1, 2]}
+        loading="eager"
+        fetchpriority="high"
+      />
+    </a>
+
+    <nav class="cabecalho__nav" aria-label="Navegação principal">
+      <ul>
+        {
+          itens.map((item) => (
+            <li>
+              <a href={item.href} aria-current={estaAtivo(item.href) ? 'page' : undefined}>
+                {item.texto}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <a
+      class="botao botao--principal cabecalho__cta"
+      href={linkWhatsApp()}
+      target="_blank"
+      rel="noopener"
+      data-evento="click_whatsapp"
+      data-evento-rotulo="cabecalho"
+    >
+      <Icone nome="whatsapp" tamanho={20} />
+      Agendar
+    </a>
+
+    <details class="menu-movel">
+      <summary aria-label="Abrir menu">
+        <span class="menu-movel__barras" aria-hidden="true"></span>
+        <span class="menu-movel__texto">Menu</span>
+      </summary>
+      <nav class="menu-movel__painel" aria-label="Navegação principal (celular)">
+        <ul>
+          {
+            itens.map((item) => (
+              <li>
+                <a href={item.href} aria-current={estaAtivo(item.href) ? 'page' : undefined}>
+                  {item.texto}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+        <a
+          class="botao botao--principal"
+          href={linkWhatsApp()}
+          target="_blank"
+          rel="noopener"
+          data-evento="click_whatsapp"
+          data-evento-rotulo="menu-celular"
+        >
+          <Icone nome="whatsapp" tamanho={20} />
+          Agendar pelo WhatsApp
+        </a>
+      </nav>
+    </details>
+  </div>
+</header>
+
+<style>
+  .cabecalho {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background-color: rgb(243 232 221 / 92%);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--borda);
+  }
+
+  .cabecalho__interno {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    min-height: 4.5rem;
+  }
+
+  .cabecalho__marca {
+    display: block;
+    flex: 0 0 auto;
+    margin-right: auto;
+  }
+
+  .cabecalho__marca img {
+    width: clamp(9rem, 24vw, 12.5rem);
+    height: auto;
+  }
+
+  .cabecalho__nav {
+    display: none;
+  }
+
+  .cabecalho__nav ul {
+    display: flex;
+    align-items: center;
+    gap: 1.35rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .cabecalho__nav a {
+    display: inline-block;
+    padding-block: 0.35rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+  }
+
+  .cabecalho__nav a:hover,
+  .cabecalho__nav a[aria-current='page'] {
+    border-bottom-color: var(--dourado);
+  }
+
+  .cabecalho__cta {
+    display: none;
+    min-height: 2.75rem;
+    padding-inline: 1.15rem;
+    font-size: 0.95rem;
+  }
+
+  /* ---- Menu do celular ---- */
+
+  .menu-movel > summary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 3rem;
+    padding: 0.5rem 0.9rem;
+    border: 1px solid var(--borda-forte);
+    border-radius: 999px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .menu-movel > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .menu-movel__barras {
+    position: relative;
+    display: block;
+    width: 1.15rem;
+    height: 2px;
+    background-color: currentcolor;
+  }
+
+  .menu-movel__barras::before,
+  .menu-movel__barras::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: currentcolor;
+  }
+
+  .menu-movel__barras::before {
+    top: -6px;
+  }
+
+  .menu-movel__barras::after {
+    top: 6px;
+  }
+
+  .menu-movel[open] > summary {
+    background-color: var(--verde-profundo);
+    color: var(--creme);
+    border-color: var(--verde-profundo);
+  }
+
+  .menu-movel__painel {
+    /* Ancorado no cabeçalho (sticky, logo é o bloco contido): abre logo abaixo
+       dele, sem cobrir a própria barra. */
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    padding: 1rem 1.25rem 1.75rem;
+    background-color: var(--creme);
+    border-bottom: 1px solid var(--borda);
+    box-shadow: var(--sombra);
+  }
+
+  .menu-movel__painel ul {
+    margin: 0 0 1rem;
+    padding: 0;
+    list-style: none;
+  }
+
+  .menu-movel__painel li + li {
+    border-top: 1px solid var(--borda);
+  }
+
+  .menu-movel__painel a:not(.botao) {
+    display: block;
+    padding: 0.9rem 0.25rem;
+    font-size: 1.05rem;
+    text-decoration: none;
+  }
+
+  .menu-movel__painel a[aria-current='page'] {
+    color: var(--foco);
+    font-weight: 600;
+  }
+
+  .menu-movel__painel .botao {
+    width: 100%;
+  }
+
+  @media (min-width: 64rem) {
+    .cabecalho__nav,
+    .cabecalho__cta {
+      display: inline-flex;
+    }
+
+    .menu-movel {
+      display: none;
+    }
+  }
+</style>

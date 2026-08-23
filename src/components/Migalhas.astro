@@ -1,0 +1,64 @@
+---
+import type { Migalha } from '../lib/seo';
+
+interface Props {
+  itens: Migalha[];
+}
+
+const { itens } = Astro.props;
+const ultimo = itens.length - 1;
+---
+
+<nav class="migalhas" aria-label="Você está em">
+  <div class="container">
+    <ol>
+      {
+        itens.map((item, indice) => (
+          <li>
+            {indice === ultimo ? (
+              <span aria-current="page">{item.nome}</span>
+            ) : (
+              <a href={item.href}>{item.nome}</a>
+            )}
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</nav>
+
+<style>
+  .migalhas {
+    padding-block: 1rem;
+    background-color: var(--creme);
+    border-bottom: 1px solid var(--borda);
+    font-size: 0.875rem;
+  }
+
+  .migalhas ol {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .migalhas li + li::before {
+    content: '›';
+    margin-right: 0.5rem;
+    color: var(--borda-forte);
+  }
+
+  .migalhas a {
+    text-decoration: none;
+  }
+
+  .migalhas a:hover {
+    text-decoration: underline;
+  }
+
+  .migalhas [aria-current='page'] {
+    color: var(--texto-suave);
+  }
+</style>

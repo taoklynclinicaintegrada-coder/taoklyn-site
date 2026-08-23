@@ -1,0 +1,51 @@
+---
+import { getEntry, render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Migalhas from './Migalhas.astro';
+import { migalhas, descricaoSegura } from '../lib/seo';
+import { formatarData } from '../lib/conteudo';
+
+/**
+ * Renderiza uma pagina de texto longo vinda da colecao "paginas".
+ * Se o arquivo nao existir, o build falha aqui — e melhor do que publicar um
+ * link de politica que leva a lugar nenhum.
+ */
+interface Props {
+  slug: string;
+  href: string;
+}
+
+const { slug, href } = Astro.props;
+const pagina = await getEntry('paginas', slug);
+if (!pagina) throw new Error(`Pagina "${slug}" nao encontrada em src/content/paginas/`);
+
+const { Content } = await render(pagina);
+const caminho = [
+  { nome: 'Início', href: '/' },
+  { nome: pagina.data.titulo, href },
+];
+---
+
+<Base
+  titulo={pagina.data.seoTitle || pagina.data.titulo}
+  descricao={descricaoSegura(pagina.data.seoDescription, pagina.data.resumo)}
+  dadosEstruturados={[migalhas(caminho, Astro.site ?? Astro.url)]}
+>
+  <Migalhas itens={caminho} />
+
+  <section class="secao secao--branca">
+    <div class="container">
+      <div class="prosa">
+        <h1>{pagina.data.titulo}</h1>
+        {
+          pagina.data.atualizadoEm && (
+            <p class="cartao__texto">
+              Atualizada em {formatarData(pagina.data.atualizadoEm)}
+            </p>
+          )
+        }
+        <Content />
+      </div>
+    </div>
+  </section>
+</Base>

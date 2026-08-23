@@ -1,0 +1,198 @@
+# Tao Klyn | Clínica Integrada — site institucional
+
+Site institucional da Tao Klyn, clínica integrada no Farol, em Maceió (AL),
+fundada em 22 de dezembro de 2007.
+
+**Quem cuida do conteúdo não precisa deste arquivo.** O manual da recepção é o
+[`docs/CMS.md`](docs/CMS.md).
+
+---
+
+## Sumário
+
+- [Stack](#stack)
+- [Arquitetura](#arquitetura)
+- [Rodando o projeto](#rodando-o-projeto)
+- [Comandos](#comandos)
+- [Estrutura de diretórios](#estrutura-de-diretórios)
+- [Conteúdo](#conteúdo)
+- [CMS](#cms)
+- [Imagens](#imagens)
+- [Variáveis de ambiente](#variáveis-de-ambiente)
+- [Deploy no Cloudflare Pages](#deploy-no-cloudflare-pages)
+- [Decisões de projeto](#decisões-de-projeto)
+
+---
+
+## Stack
+
+| Camada | Escolha |
+|---|---|
+| Framework | [Astro](https://astro.build) 7, saída **estática** |
+| Linguagem | TypeScript em modo `strict` |
+| Estilo | CSS próprio com custom properties. Sem framework, sem build extra |
+| JavaScript no cliente | **Nenhum** — exceto o Google Analytics, se configurado |
+| Conteúdo | Content Collections (Markdown + JSON), validado com Zod |
+| Imagens | `astro:assets` + sharp (AVIF/WebP, tamanhos responsivos) |
+| SEO | `@astrojs/sitemap`, JSON-LD, Open Graph |
+| CMS | [Pages CMS](https://pagescms.org) (aplicação hospedada, sobre o GitHub) |
+| Hospedagem | Cloudflare Pages |
+
+O menu do celular é um `<details>`, os cartões são links: nenhuma interação
+depende de JavaScript.
+
+## Arquitetura
+
+```
+ Administração da clínica
+          │
+          ▼
+    Pages CMS (pagescms.org)
+          │  grava arquivos no repositório
+          ▼
+        GitHub  ──▶  Cloudflare Pages  ──▶  site atualizado
+                        (npm run build)
+```
+
+Não existe backend, banco de dados, autenticação própria nem API. O site é um
+conjunto de arquivos HTML gerados no build.
+
+## Rodando o projeto
+
+Requer Node.js 20 ou superior.
+
+```bash
+npm install
+npm run dev
+```
+
+O site sobe em `http://localhost:4321`.
+
+## Comandos
+
+| Comando | O que faz |
+|---|---|
+| `npm run dev` | Servidor de desenvolvimento |
+| `npm run build` | Gera o site estático em `dist/` |
+| `npm run preview` | Serve o que foi gerado, como em produção |
+| `npm run check` | Verificação de tipos e de template (Astro + TypeScript) |
+| `npm run verificar:cms` | Confere se o `.pages.yml` bate com os schemas e com as pastas |
+| `npm run verificar:contraste` | Confere os pares de cor contra o mínimo da WCAG AA |
+| `npm run verificar` | Roda os três acima e o build |
+| `npm run assets:marca` | Regera logos, ícones, imagem social e recortes a partir de `referencias/` |
+
+## Estrutura de diretórios
+
+```
+taoklyn-site/
+├── .pages.yml                 configuração do CMS (rótulos em português)
+├── astro.config.mjs
+├── docs/
+│   ├── CMS.md                 manual da recepção
+│   └── PENDENCIAS.md          o que falta e o que não foi inventado
+├── public/                    servido como está (favicons, logos, manifest)
+│   └── images/brand/
+├── referencias/               material de origem — NUNCA modificado pelo site
+├── scripts/
+│   ├── preparar-assets.mjs    referencias/ → public/ e src/assets/
+│   ├── verificar-cms.mjs
+│   └── verificar-contraste.mjs
+└── src/
+    ├── assets/uploads/        imagens enviadas pelo CMS (otimizadas no build)
+    ├── components/
+    ├── content/               profissionais, servicos, posts, paginas
+    ├── content.config.ts      schemas Zod das coleções
+    ├── data/                  site.json, galeria.json, espacos.json
+    ├── layouts/Base.astro     <head>, SEO, JSON-LD, cabeçalho e rodapé
+    ├── lib/                   site.ts, conteudo.ts, imagens.ts, seo.ts
+    ├── pages/
+    └── styles/global.css      tokens da paleta e componentes visuais
+```
+
+## Conteúdo
+
+| Tipo | Onde | Formato |
+|---|---|---|
+| Configurações institucionais | `src/data/site.json` | JSON, validado em `src/lib/site.ts` |
+| Profissionais | `src/content/profissionais/*.md` | frontmatter YAML + corpo |
+| Serviços | `src/content/servicos/*.md` | frontmatter YAML + corpo |
+| Publicações | `src/content/posts/*.md` | frontmatter YAML + corpo |
+| Políticas | `src/content/paginas/*.md` | frontmatter YAML + corpo |
+| Galeria | `src/data/galeria.json` | lista |
+| Espaços | `src/data/espacos.json` | lista |
+
+Regras que valem para todo o conteúdo:
+
+- **O nome do arquivo é o endereço da página.** Não existe campo "slug", e
+  renomear está desativado no CMS — endereço que já circula não deve mudar.
+- **Nada aparece por engano.** Profissionais e serviços têm `ativo`;
+  publicações têm `publicado`, que nasce **falso**. O que está oculto não entra
+  em listagem, página nem sitemap.
+- **Conteúdo malformado derruba o build**, com mensagem apontando o arquivo e o
+  campo. Melhor do que sumir em silêncio de uma seção.
+- Nenhuma página chama `getCollection` direto: os filtros vivem em
+  `src/lib/conteudo.ts`.
+
+## CMS
+
+O painel é a aplicação hospedada do Pages CMS, em **https://pagescms.org**, que
+lê o `.pages.yml` do repositório. Não há `/admin` neste projeto, nem tela de
+login própria, nem usuários próprios.
+
+Depois de alterar `.pages.yml` ou os schemas, rode:
+
+```bash
+npm run verificar:cms
+```
+
+Ele acusa campo que existe no CMS e não no schema, pasta de upload inexistente,
+mídia não declarada e referência a coleção que não existe.
+
+## Imagens
+
+Imagens enviadas pelo CMS vão para `src/assets/uploads/**`. Estando dentro de
+`src/`, o Astro gera AVIF/WebP em vários tamanhos e escreve `width`/`height`
+(sem deslocamento de layout). O componente `Figura.astro` resolve o caminho
+gravado pelo CMS; se apontar para `public/` ou para um endereço externo, cai em
+`<img>` simples em vez de quebrar.
+
+`referencias/` é **somente leitura**: o script `preparar-assets.mjs` lê de lá e
+escreve em `public/` e `src/assets/`, nunca o contrário.
+
+## Variáveis de ambiente
+
+Copie `.env.example` para `.env`. O `.env` **não** vai para o Git.
+
+| Variável | Obrigatória | Para quê |
+|---|---|---|
+| `SITE_URL` | recomendada | Endereço público final. Alimenta canonical, Open Graph e sitemap. Sem ela, o build avisa e usa `https://taoklyn-site.pages.dev` |
+| `PUBLIC_GA_ID` | não | Google Analytics 4 (`G-XXXXXXXXXX`). Sem ela, **nenhum** script de terceiro é carregado e nenhum cookie é gravado |
+
+## Deploy no Cloudflare Pages
+
+1. Cloudflare Pages → **Create a project** → conectar o repositório
+   `taoklyn/taoklyn-site`.
+2. Configurar:
+   - **Framework preset:** Astro (ou None)
+   - **Build command:** `npm run build`
+   - **Build output directory:** `dist`
+3. Em **Environment variables**, definir `SITE_URL` (e `PUBLIC_GA_ID`, se houver).
+4. Salvar. Cada commit em `main` dispara um build novo.
+
+Não é preciso servidor rodando nem webhook próprio: o Pages CMS grava no GitHub
+e o Cloudflare reage ao commit.
+
+## Decisões de projeto
+
+- **Zero JavaScript por padrão.** Menu, navegação e cartões funcionam só com
+  HTML e CSS.
+- **Contraste conferido por script**, não por impressão: `verificar:contraste`
+  falha se algum par usado na interface ficar abaixo do mínimo da WCAG AA.
+- **Sem formulário de contato.** Formulário em site de clínica convida a
+  escrever queixa de saúde, criando tratamento de dado sensível sem necessidade.
+  O contato é por WhatsApp, telefone e e-mail.
+- **Sem embed do Instagram.** O widget oficial traz scripts de terceiros e
+  cookies; há um convite com link para o perfil.
+- **Nada inventado.** Horário, Place ID, registro profissional, preço,
+  avaliação e depoimento ausentes ficaram vazios, e a interface se adapta.
+  O que falta está em [`docs/PENDENCIAS.md`](docs/PENDENCIAS.md).

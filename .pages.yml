@@ -1,0 +1,655 @@
+# Configuração do Pages CMS — Tao Klyn | Clínica Integrada
+#
+# Este arquivo define o que a administração da clínica pode editar e como cada
+# campo aparece no painel. Ele NÃO precisa ser alterado no dia a dia.
+#
+# Endereço do painel: https://pagescms.org  (entrar com a conta do GitHub)
+# Passo a passo para quem vai usar: docs/CMS.md
+
+media:
+  - name: uploads
+    label: Imagens do site
+    input: src/assets/uploads
+    output: /src/assets/uploads
+    categories: [image]
+    # Renomeia o arquivo enviado para um nome seguro (sem acento e sem espaço).
+    rename: safe
+    commit:
+      templates:
+        create: 'media: adiciona {filename}'
+        update: 'media: atualiza {filename}'
+        delete: 'media: remove {filename}'
+
+content:
+  # ------------------------------------------------------------------ GERAL --
+  - name: geral
+    label: Geral
+    type: group
+    items:
+      - name: configuracoes
+        label: Configurações do site
+        type: file
+        path: src/data/site.json
+        format: json
+        # Estes dados sustentam o site inteiro: não podem ser apagados nem
+        # renomeados por engano. Só edição de campos.
+        operations:
+          delete: false
+          rename: false
+        fields:
+          - name: nome
+            label: Nome curto
+            type: string
+            required: true
+            description: 'Como a clínica é chamada no dia a dia. Ex.: Tao Klyn'
+
+          - name: nomeInstitucional
+            label: Nome completo
+            type: string
+            required: true
+            description: Nome oficial, usado no rodapé e no Google.
+
+          - name: fundacao
+            label: Data de fundação
+            type: date
+            options:
+              format: yyyy-MM-dd
+
+          - name: mensagemPrincipal
+            label: Frase principal da página inicial
+            type: string
+            required: true
+            description: É o primeiro texto grande que a pessoa lê ao abrir o site.
+
+          - name: textoHero
+            label: Texto abaixo da frase principal
+            type: text
+
+          - name: textoInstitucional
+            label: Texto de apresentação da clínica
+            type: text
+            description: Aparece na página inicial, na página Sobre e no rodapé.
+
+          - name: missao
+            label: Missão
+            type: text
+
+          - name: contato
+            label: Contato
+            type: object
+            fields:
+              - name: telefone
+                label: Telefone fixo
+                type: string
+                description: 'Escreva com DDD, assim: (82) 3221-6064'
+              - name: whatsapp
+                label: WhatsApp
+                type: string
+                description: 'Escreva com DDD, assim: (82) 99131-1477'
+              - name: email
+                label: E-mail
+                type: string
+              - name: mensagemWhatsApp
+                label: Mensagem que já vem escrita no WhatsApp
+                type: text
+                description: É o texto que aparece pronto quando alguém clica em Agendar.
+
+          - name: endereco
+            label: Endereço
+            type: object
+            fields:
+              - name: logradouro
+                label: Rua e número
+                type: string
+              - name: bairro
+                label: Bairro
+                type: string
+              - name: cidade
+                label: Cidade
+                type: string
+              - name: estado
+                label: Estado (sigla)
+                type: string
+              - name: cep
+                label: CEP
+                type: string
+              - name: complemento
+                label: Complemento
+                type: string
+                description: Sala, andar, ponto de referência. Pode ficar vazio.
+              - name: mapaUrl
+                label: Link oficial do Google Maps
+                type: string
+                description: >-
+                  Cole aqui o link do perfil da clínica no Google Maps. Enquanto
+                  estiver vazio, o botão "Como chegar" faz uma busca pelo endereço.
+              - name: comoChegar
+                label: Orientações de como chegar
+                type: text
+                description: Estacionamento, referência, acessibilidade. Pode ficar vazio.
+
+          - name: horarios
+            label: Horário de funcionamento
+            type: object
+            fields:
+              - name: exibir
+                label: Mostrar o horário no site
+                type: boolean
+                description: Deixe desmarcado enquanto o horário oficial não estiver confirmado.
+              - name: observacao
+                label: Observação
+                type: string
+                description: 'Ex.: atendimentos com hora marcada.'
+              - name: itens
+                label: Faixas de horário
+                type: object
+                list:
+                  collapsible:
+                    summary: '{dias} {horario}'
+                fields:
+                  - name: dias
+                    label: Dias
+                    type: string
+                    description: 'Ex.: Segunda a sexta'
+                  - name: horario
+                    label: Horário
+                    type: string
+                    description: 'Ex.: 8h às 18h'
+
+          - name: redes
+            label: Redes sociais
+            type: object
+            fields:
+              - name: instagram
+                label: Link do Instagram
+                type: string
+              - name: instagramUsuario
+                label: Usuário do Instagram
+                type: string
+                description: 'Com o arroba. Ex.: @taoklyn'
+              - name: facebook
+                label: Link do Facebook
+                type: string
+              - name: youtube
+                label: Link do YouTube
+                type: string
+
+          - name: locacao
+            label: Locação de salas
+            type: object
+            fields:
+              - name: exibir
+                label: Mostrar a seção de locação no site
+                type: boolean
+              - name: titulo
+                label: Título da seção
+                type: string
+              - name: texto
+                label: Texto da seção
+                type: text
+              - name: mensagemWhatsApp
+                label: Mensagem que já vem escrita no WhatsApp
+                type: text
+
+          - name: destaques
+            label: Destaques de confiança
+            type: object
+            list:
+              max: 6
+              collapsible:
+                summary: '{titulo}'
+            fields:
+              - name: titulo
+                label: Título
+                type: string
+              - name: texto
+                label: Texto
+                type: text
+
+          - name: seo
+            label: Google e redes sociais
+            type: object
+            description: Como o site aparece nos resultados de busca e ao ser compartilhado.
+            fields:
+              - name: titulo
+                label: Título para o Google
+                type: string
+                required: true
+              - name: descricao
+                label: Descrição para o Google
+                type: text
+                required: true
+              - name: imagem
+                label: Imagem de compartilhamento
+                type: image
+                options:
+                  media: uploads
+                  path: src/assets/uploads/geral
+
+  # --------------------------------------------------------------- CONTEÚDO --
+  - name: conteudo
+    label: Conteúdo
+    type: group
+    items:
+      - name: profissionais
+        label: Profissionais
+        type: collection
+        path: src/content/profissionais
+        format: yaml-frontmatter
+        subfolders: false
+        filename: '{primary}.md'
+        # Renomear muda o endereço da página, que já pode estar circulando.
+        # Para tirar alguém do site, use "Mostrar no site" — nunca apagar.
+        operations:
+          rename: false
+        view:
+          fields: [nome, profissao, ordem, ativo]
+          primary: nome
+          sort: [ordem, nome]
+          search: [nome, profissao]
+          default:
+            sort: ordem
+            order: asc
+        fields:
+          - name: nome
+            label: Nome do profissional
+            type: string
+            required: true
+
+          - name: profissao
+            label: Profissão
+            type: string
+            required: true
+            description: 'Ex.: Médica, Psicólogo, Fisioterapeuta.'
+
+          - name: registro
+            label: Conselho
+            type: string
+            description: 'Ex.: CRM, CRP, CREFITO. Deixe vazio se não houver.'
+
+          - name: registroNumero
+            label: Número do registro
+            type: string
+            description: 'Ex.: 2468 AL. Deixe vazio se não houver.'
+
+          - name: foto
+            label: Foto
+            type: image
+            options:
+              media: uploads
+              path: src/assets/uploads/profissionais
+
+          - name: descricaoCurta
+            label: Apresentação curta
+            type: text
+            description: Uma ou duas frases. Aparece no cartão da lista.
+
+          - name: areasDeAtuacao
+            label: Áreas de atuação
+            type: string
+            list: true
+            description: Uma por linha. Aparecem como etiquetas na página do profissional.
+
+          - name: servicosRelacionados
+            label: Serviços que atende
+            type: reference
+            options:
+              collection: servicos
+              multiple: true
+              value: '{name}'
+              label: '{nome}'
+              search: 'fields.nome'
+
+          - name: ordem
+            label: Ordem de exibição
+            type: number
+            default: 100
+            description: Menor número aparece primeiro.
+
+          - name: destaque
+            label: Mostrar na página inicial
+            type: boolean
+
+          - name: ativo
+            label: Mostrar no site
+            type: boolean
+            default: true
+            description: Desmarque para tirar do site sem apagar o cadastro.
+
+          - name: seoTitle
+            label: Título para o Google
+            type: string
+            description: Opcional. Se ficar vazio, usamos o nome do profissional.
+
+          - name: seoDescription
+            label: Descrição para o Google
+            type: text
+            description: Opcional. Se ficar vazio, usamos a apresentação curta.
+
+          - name: body
+            label: Texto da página
+            type: rich-text
+            options:
+              format: markdown
+              media: uploads
+              path: src/assets/uploads/profissionais
+
+      - name: servicos
+        label: Serviços
+        type: collection
+        path: src/content/servicos
+        format: yaml-frontmatter
+        subfolders: false
+        filename: '{primary}.md'
+        operations:
+          rename: false
+        view:
+          fields: [nome, ordem, destaque, ativo]
+          primary: nome
+          sort: [ordem, nome]
+          search: [nome, resumo]
+          default:
+            sort: ordem
+            order: asc
+        fields:
+          - name: nome
+            label: Nome do serviço
+            type: string
+            required: true
+
+          - name: resumo
+            label: Resumo
+            type: text
+            description: Uma ou duas frases. Aparece no cartão da lista.
+
+          - name: imagem
+            label: Imagem
+            type: image
+            options:
+              media: uploads
+              path: src/assets/uploads/servicos
+
+          - name: icone
+            label: Ícone
+            type: select
+            default: folha
+            options:
+              values:
+                - name: folha
+                  label: Folha
+                - name: agulha
+                  label: Agulhas
+                - name: mente
+                  label: Mente
+                - name: movimento
+                  label: Movimento
+                - name: coracao
+                  label: Coração
+                - name: equilibrio
+                  label: Equilíbrio
+                - name: maos
+                  label: Mãos
+                - name: grupo
+                  label: Grupo
+
+          - name: profissionaisRelacionados
+            label: Quem atende
+            type: reference
+            options:
+              collection: profissionais
+              multiple: true
+              value: '{name}'
+              label: '{nome}'
+              search: 'fields.nome'
+
+          - name: mensagemWhatsApp
+            label: Mensagem que já vem escrita no WhatsApp
+            type: text
+            description: Usada no botão de agendamento desta página.
+
+          - name: ordem
+            label: Ordem de exibição
+            type: number
+            default: 100
+
+          - name: destaque
+            label: Mostrar na página inicial
+            type: boolean
+
+          - name: ativo
+            label: Mostrar no site
+            type: boolean
+            default: true
+
+          - name: seoTitle
+            label: Título para o Google
+            type: string
+
+          - name: seoDescription
+            label: Descrição para o Google
+            type: text
+
+          - name: body
+            label: Texto da página
+            type: rich-text
+            options:
+              format: markdown
+              media: uploads
+              path: src/assets/uploads/servicos
+
+      - name: publicacoes
+        label: Publicações
+        type: collection
+        path: src/content/posts
+        format: yaml-frontmatter
+        subfolders: false
+        filename: '{primary}.md'
+        operations:
+          rename: false
+        view:
+          fields: [titulo, data, categoria, publicado]
+          primary: titulo
+          sort: [data, titulo]
+          search: [titulo, resumo]
+          default:
+            sort: data
+            order: desc
+        fields:
+          - name: titulo
+            label: Título
+            type: string
+            required: true
+
+          - name: resumo
+            label: Resumo
+            type: text
+            description: Aparece na lista de conteúdos e no Google.
+
+          - name: imagemCapa
+            label: Imagem de capa
+            type: image
+            options:
+              media: uploads
+              path: src/assets/uploads/posts
+
+          - name: categoria
+            label: Categoria
+            type: string
+            description: 'Ex.: Avisos, Saúde, Bem-estar. Publicações com a mesma categoria ficam agrupadas.'
+
+          - name: autor
+            label: Autor
+            type: reference
+            options:
+              collection: profissionais
+              value: '{name}'
+              label: '{nome}'
+              search: 'fields.nome'
+
+          - name: data
+            label: Data de publicação
+            type: date
+            required: true
+            options:
+              format: yyyy-MM-dd
+
+          - name: ultimaAtualizacao
+            label: Data da última atualização
+            type: date
+            default: ''
+            options:
+              format: yyyy-MM-dd
+
+          - name: destaque
+            label: Destacar
+            type: boolean
+
+          - name: publicado
+            label: Publicado no site
+            type: boolean
+            description: >-
+              Desmarcado, o texto fica salvo como rascunho: não aparece no site,
+              nem na busca do Google. Marque quando estiver pronto.
+
+          - name: seoTitle
+            label: Título para o Google
+            type: string
+
+          - name: seoDescription
+            label: Descrição para o Google
+            type: text
+
+          - name: body
+            label: Texto
+            type: rich-text
+            options:
+              format: markdown
+              media: uploads
+              path: src/assets/uploads/posts
+
+      - name: galeria
+        label: Galeria
+        type: file
+        path: src/data/galeria.json
+        format: json
+        list: true
+        operations:
+          delete: false
+          rename: false
+        fields:
+          - name: titulo
+            label: Título
+            type: string
+          - name: imagem
+            label: Imagem
+            type: image
+            required: true
+            options:
+              media: uploads
+              path: src/assets/uploads/galeria
+          - name: alt
+            label: Descrição da imagem (acessibilidade)
+            type: string
+            required: true
+            description: >-
+              Descreva o que aparece na foto. É lido por quem usa leitor de tela
+              e aparece se a imagem não carregar.
+          - name: categoria
+            label: Categoria
+            type: select
+            options:
+              values: [Clínica, Recepção, Consultórios, Pilates, Funcional, Equipe, Eventos, Outros]
+          - name: descricao
+            label: Descrição
+            type: text
+          - name: ativo
+            label: Mostrar no site
+            type: boolean
+            default: true
+
+      - name: espacos
+        label: Espaços
+        type: file
+        path: src/data/espacos.json
+        format: json
+        list: true
+        operations:
+          delete: false
+          rename: false
+        fields:
+          - name: nome
+            label: Nome do espaço
+            type: string
+            required: true
+            description: 'Ex.: Sala de Pilates, Consultório 1, Recepção.'
+          - name: descricao
+            label: Descrição
+            type: text
+          - name: imagem
+            label: Foto
+            type: image
+            options:
+              media: uploads
+              path: src/assets/uploads/galeria
+          - name: alt
+            label: Descrição da foto (acessibilidade)
+            type: string
+          - name: disponivelParaLocacao
+            label: Disponível para locação
+            type: boolean
+          - name: ativo
+            label: Mostrar no site
+            type: boolean
+            default: true
+
+      - name: paginas
+        label: Páginas de texto
+        type: collection
+        path: src/content/paginas
+        format: yaml-frontmatter
+        subfolders: false
+        # As políticas são exigidas por lei e têm endereço fixo no rodapé.
+        # Criar, renomear ou apagar aqui quebraria links do site.
+        operations:
+          create: false
+          rename: false
+          delete: false
+        view:
+          fields: [titulo, atualizadoEm]
+          primary: titulo
+        fields:
+          - name: titulo
+            label: Título
+            type: string
+            required: true
+          - name: resumo
+            label: Resumo
+            type: text
+          - name: atualizadoEm
+            label: Atualizada em
+            type: date
+            options:
+              format: yyyy-MM-dd
+          - name: seoTitle
+            label: Título para o Google
+            type: string
+          - name: seoDescription
+            label: Descrição para o Google
+            type: text
+          - name: body
+            label: Texto
+            type: rich-text
+            options:
+              format: markdown
+              media: false
+
+settings:
+  # Grava exatamente os campos definidos acima, sem manter sobras de edições
+  # antigas nos arquivos.
+  content: false
+  commit:
+    templates:
+      create: 'content: adiciona {filename}'
+      update: 'content: atualiza {filename}'
+      delete: 'content: remove {filename}'
+      rename: 'content: renomeia {oldPath} para {newPath}'

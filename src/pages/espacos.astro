@@ -1,0 +1,177 @@
+---
+import Base from '../layouts/Base.astro';
+import Migalhas from '../components/Migalhas.astro';
+import Figura from '../components/Figura.astro';
+import Icone from '../components/Icone.astro';
+import { site, espacos, galeria, linkWhatsApp } from '../lib/site';
+import { migalhas } from '../lib/seo';
+
+const caminho = [
+  { nome: 'Início', href: '/' },
+  { nome: 'Espaços', href: '/espacos' },
+];
+
+/** A galeria e agrupada pela categoria escolhida no CMS; sem categoria, cai em "Outros". */
+const categorias = new Map<string, typeof galeria>();
+for (const item of galeria) {
+  const chave = item.categoria?.trim() || 'Outros';
+  const atual = categorias.get(chave);
+  if (atual) atual.push(item);
+  else categorias.set(chave, [item]);
+}
+const grupos = [...categorias.entries()];
+---
+
+<Base
+  titulo="Espaços e locação de salas"
+  descricao="Conheça o espaço da Tao Klyn no Farol, em Maceió, e as salas disponíveis para locação por profissionais de saúde e bem-estar."
+  dadosEstruturados={[migalhas(caminho, Astro.site ?? Astro.url)]}
+>
+  <Migalhas itens={caminho} />
+
+  <section class="secao secao--creme">
+    <div class="container">
+      <div class="secao__cabecalho">
+        <p class="rotulo">O espaço</p>
+        <h1>Um ambiente preparado para acolher</h1>
+        <p class="subtitulo">
+          Consultórios e salas pensados para atendimento tranquilo e reservado, no bairro do
+          Farol, em Maceió.
+        </p>
+      </div>
+
+      {
+        espacos.length > 0 ? (
+          <div class="grade">
+            {espacos.map((espaco) => (
+              <article class="cartao">
+                {espaco.imagem && (
+                  <Figura
+                    src={espaco.imagem}
+                    alt={espaco.alt || espaco.nome}
+                    proporcao="4 / 3"
+                    sizes="(max-width: 48rem) 100vw, 22rem"
+                  />
+                )}
+                <div class="cartao__corpo">
+                  <h2 style="font-size:1.25rem">{espaco.nome}</h2>
+                  {espaco.descricao && <p class="cartao__texto">{espaco.descricao}</p>}
+                  {espaco.disponivelParaLocacao && (
+                    <p style="margin-top:auto;padding-top:.75rem">
+                      <span class="selo selo--dourado">Disponível para locação</span>
+                    </p>
+                  )}
+                </div>
+              </article>
+            ))}
+          </div>
+        ) : (
+          <p class="subtitulo">
+            As fotos e a descrição dos ambientes serão publicadas assim que estiverem
+            disponíveis. Para conhecer a clínica, fale com a recepção e agende uma visita.
+          </p>
+        )
+      }
+    </div>
+  </section>
+
+  {
+    grupos.length > 0 && (
+      <section class="secao secao--branca" aria-labelledby="titulo-galeria">
+        <div class="container">
+          <div class="secao__cabecalho">
+            <p class="rotulo">Galeria</p>
+            <h2 id="titulo-galeria">Nossa estrutura em imagens</h2>
+          </div>
+
+          {grupos.map(([categoria, itens]) => (
+            <div class="galeria__grupo">
+              <h3>{categoria}</h3>
+              <div class="galeria">
+                {itens.map((item) => (
+                  <figure class="galeria__item">
+                    <Figura
+                      src={item.imagem}
+                      alt={item.alt}
+                      proporcao="4 / 3"
+                      sizes="(max-width: 48rem) 50vw, 18rem"
+                    />
+                    {(item.titulo || item.descricao) && (
+                      <figcaption>
+                        {item.titulo && <strong>{item.titulo}</strong>}
+                        {item.descricao && <span>{item.descricao}</span>}
+                      </figcaption>
+                    )}
+                  </figure>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    )
+  }
+
+  {
+    site.locacao.exibir && (
+      <section class="secao secao--escura" aria-labelledby="titulo-locacao">
+        <div class="container" style="max-width:46rem">
+          <p class="rotulo">Locação de salas</p>
+          <h2 id="titulo-locacao">{site.locacao.titulo}</h2>
+          <p class="subtitulo">{site.locacao.texto}</p>
+          <p class="subtitulo">
+            Valores, horários e condições são informados diretamente pela clínica.
+          </p>
+          <div class="acoes" style="margin-top:2rem">
+            <a
+              class="botao botao--principal"
+              href={linkWhatsApp(site.locacao.mensagemWhatsApp)}
+              target="_blank"
+              rel="noopener"
+              data-evento="click_room_rental"
+              data-evento-rotulo="pagina-espacos"
+            >
+              <Icone nome="whatsapp" tamanho={20} />
+              Consultar disponibilidade
+            </a>
+          </div>
+        </div>
+      </section>
+    )
+  }
+</Base>
+
+<style>
+  .galeria__grupo + .galeria__grupo {
+    margin-top: 3rem;
+  }
+
+  .galeria__grupo h3 {
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--borda);
+  }
+
+  .galeria {
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
+  }
+
+  .galeria__item {
+    margin: 0;
+  }
+
+  .galeria__item :global(img) {
+    border-radius: var(--raio);
+  }
+
+  .galeria__item figcaption {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    margin-top: 0.6rem;
+    color: var(--texto-suave);
+    font-size: 0.875rem;
+  }
+</style>

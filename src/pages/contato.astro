@@ -1,0 +1,230 @@
+---
+import Base from '../layouts/Base.astro';
+import Migalhas from '../components/Migalhas.astro';
+import Icone from '../components/Icone.astro';
+import {
+  site,
+  linkWhatsApp,
+  linkTelefone,
+  linkEmail,
+  linkMapa,
+  enderecoEmUmaLinha,
+} from '../lib/site';
+import { migalhas } from '../lib/seo';
+
+const caminho = [
+  { nome: 'Início', href: '/' },
+  { nome: 'Contato', href: '/contato' },
+];
+const horarios = site.horarios.exibir ? site.horarios.itens.filter((h) => h.dias || h.horario) : [];
+---
+
+<Base
+  titulo="Contato"
+  descricao={`Fale com a Tao Klyn | Clínica Integrada: WhatsApp, telefone, e-mail e endereço no Farol, em Maceió.`}
+  dadosEstruturados={[migalhas(caminho, Astro.site ?? Astro.url)]}
+>
+  <Migalhas itens={caminho} />
+
+  <section class="secao secao--creme">
+    <div class="container">
+      <div class="secao__cabecalho">
+        <p class="rotulo">Fale com a gente</p>
+        <h1>Contato</h1>
+        <p class="subtitulo">
+          O agendamento é feito pela recepção, por WhatsApp ou telefone. Não há formulário nem
+          cadastro: nenhum dado de saúde é enviado por este site.
+        </p>
+      </div>
+
+      <div class="grade">
+        {
+          site.contato.whatsapp && (
+            <a
+              class="cartao contato__cartao"
+              href={linkWhatsApp()}
+              target="_blank"
+              rel="noopener"
+              data-evento="click_whatsapp"
+              data-evento-rotulo="pagina-contato"
+            >
+              <div class="cartao__corpo">
+                <span class="contato__icone">
+                  <Icone nome="whatsapp" tamanho={24} />
+                </span>
+                <h2>WhatsApp</h2>
+                <p class="cartao__texto">{site.contato.whatsapp}</p>
+                <p class="cartao__acao">Abrir conversa</p>
+              </div>
+            </a>
+          )
+        }
+
+        {
+          site.contato.telefone && (
+            <a
+              class="cartao contato__cartao"
+              href={linkTelefone()}
+              data-evento="click_phone"
+              data-evento-rotulo="pagina-contato"
+            >
+              <div class="cartao__corpo">
+                <span class="contato__icone">
+                  <Icone nome="telefone" tamanho={24} />
+                </span>
+                <h2>Telefone</h2>
+                <p class="cartao__texto">{site.contato.telefone}</p>
+                <p class="cartao__acao">Ligar agora</p>
+              </div>
+            </a>
+          )
+        }
+
+        {
+          site.contato.email && (
+            <a class="cartao contato__cartao" href={linkEmail()}>
+              <div class="cartao__corpo">
+                <span class="contato__icone">
+                  <Icone nome="email" tamanho={24} />
+                </span>
+                <h2>E-mail</h2>
+                <p class="cartao__texto">{site.contato.email}</p>
+                <p class="cartao__acao">Enviar mensagem</p>
+              </div>
+            </a>
+          )
+        }
+
+        {
+          site.redes.instagram && (
+            <a
+              class="cartao contato__cartao"
+              href={site.redes.instagram}
+              target="_blank"
+              rel="noopener"
+              data-evento="click_instagram"
+              data-evento-rotulo="pagina-contato"
+            >
+              <div class="cartao__corpo">
+                <span class="contato__icone">
+                  <Icone nome="instagram" tamanho={24} />
+                </span>
+                <h2>Instagram</h2>
+                <p class="cartao__texto">{site.redes.instagramUsuario || '@taoklyn'}</p>
+                <p class="cartao__acao">Ver perfil</p>
+              </div>
+            </a>
+          )
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="secao secao--branca" aria-labelledby="titulo-endereco">
+    <div class="container endereco">
+      <div>
+        <p class="rotulo">Onde estamos</p>
+        <h2 id="titulo-endereco">{site.endereco.logradouro}</h2>
+        <address class="endereco__linhas">
+          <span>{site.endereco.bairro}</span>
+          <span>{site.endereco.cidade} - {site.endereco.estado}</span>
+          <span>CEP {site.endereco.cep}</span>
+          {site.endereco.complemento && <span>{site.endereco.complemento}</span>}
+        </address>
+
+        {
+          site.endereco.comoChegar && <p class="subtitulo">{site.endereco.comoChegar}</p>
+        }
+
+        {
+          horarios.length > 0 ? (
+            <>
+              <h3 style="margin-top:2rem">Horário de funcionamento</h3>
+              <ul class="endereco__horarios">
+                {horarios.map((h) => (
+                  <li>
+                    <Icone nome="relogio" tamanho={18} />
+                    <span>
+                      <strong>{h.dias}</strong> {h.horario}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+              {site.horarios.observacao && <p class="cartao__texto">{site.horarios.observacao}</p>}
+            </>
+          ) : (
+            <p class="subtitulo">
+              Para confirmar horários de atendimento, fale com a recepção.
+            </p>
+          )
+        }
+
+        <div class="acoes" style="margin-top:2rem">
+          <a
+            class="botao botao--principal"
+            href={linkMapa()}
+            target="_blank"
+            rel="noopener"
+            data-evento="click_maps"
+            data-evento-rotulo="pagina-contato"
+          >
+            <Icone nome="local" tamanho={20} />
+            Como chegar
+          </a>
+        </div>
+        <p class="endereco__completo">{enderecoEmUmaLinha()}</p>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .contato__cartao {
+    text-decoration: none;
+  }
+
+  .contato__cartao h2 {
+    font-size: 1.25rem;
+  }
+
+  .contato__icone {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    margin-bottom: 0.35rem;
+    background-color: var(--creme);
+    border: 1px solid var(--borda);
+    border-radius: 50%;
+  }
+
+  .endereco__linhas {
+    display: flex;
+    flex-direction: column;
+    margin-top: 0.75rem;
+    font-size: 1.05rem;
+    font-style: normal;
+    line-height: 1.7;
+  }
+
+  .endereco__horarios {
+    margin: 1rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .endereco__horarios li {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding-block: 0.35rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .endereco__completo {
+    margin-top: 1.5rem;
+    color: var(--texto-suave);
+    font-size: 0.875rem;
+  }
+</style>

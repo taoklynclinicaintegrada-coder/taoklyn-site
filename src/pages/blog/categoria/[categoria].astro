@@ -1,0 +1,55 @@
+---
+import type { GetStaticPaths } from 'astro';
+import Base from '../../../layouts/Base.astro';
+import Migalhas from '../../../components/Migalhas.astro';
+import CartaoPost from '../../../components/CartaoPost.astro';
+import { listarPosts, categoriasDePosts, paraSlug } from '../../../lib/conteudo';
+import { migalhas } from '../../../lib/seo';
+
+export const getStaticPaths = (async () => {
+  const posts = await listarPosts();
+  return categoriasDePosts(posts).map((categoria) => ({
+    params: { categoria: categoria.slug },
+    props: {
+      categoria,
+      posts: posts.filter((post) => paraSlug(post.data.categoria ?? '') === categoria.slug),
+    },
+  }));
+}) satisfies GetStaticPaths;
+
+const { categoria, posts } = Astro.props;
+const caminho = [
+  { nome: 'Início', href: '/' },
+  { nome: 'Conteúdos', href: '/blog' },
+  { nome: categoria.nome, href: `/blog/categoria/${categoria.slug}` },
+];
+---
+
+<Base
+  titulo={`${categoria.nome} — Conteúdos`}
+  descricao={`Publicações da Tao Klyn na categoria ${categoria.nome}.`}
+  dadosEstruturados={[migalhas(caminho, Astro.site ?? Astro.url)]}
+>
+  <Migalhas itens={caminho} />
+
+  <section class="secao secao--creme">
+    <div class="container">
+      <div class="secao__cabecalho">
+        <p class="rotulo">Categoria</p>
+        <h1>{categoria.nome}</h1>
+        <p class="subtitulo">
+          {categoria.total === 1 ? '1 publicação' : `${categoria.total} publicações`} nesta
+          categoria.
+        </p>
+      </div>
+
+      <div class="grade">
+        {posts.map((post) => <CartaoPost post={post} />)}
+      </div>
+
+      <div class="acoes" style="margin-top:2.5rem">
+        <a class="botao botao--secundario" href="/blog">Ver todos os conteúdos</a>
+      </div>
+    </div>
+  </section>
+</Base>

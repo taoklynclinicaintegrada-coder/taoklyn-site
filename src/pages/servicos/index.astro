@@ -1,0 +1,62 @@
+---
+import Base from '../../layouts/Base.astro';
+import Migalhas from '../../components/Migalhas.astro';
+import CartaoServico from '../../components/CartaoServico.astro';
+import Icone from '../../components/Icone.astro';
+import { listarServicos } from '../../lib/conteudo';
+import { migalhas } from '../../lib/seo';
+import { linkWhatsApp } from '../../lib/site';
+
+const servicos = await listarServicos();
+const caminho = [
+  { nome: 'Início', href: '/' },
+  { nome: 'Serviços', href: '/servicos' },
+];
+---
+
+<Base
+  titulo="Serviços"
+  descricao="Atendimentos e práticas oferecidos na Tao Klyn: psicologia, fisioterapia, pilates, acupuntura, terapias integrativas e mais, no Farol, em Maceió."
+  dadosEstruturados={[migalhas(caminho, Astro.site ?? Astro.url)]}
+>
+  <Migalhas itens={caminho} />
+
+  <section class="secao secao--creme">
+    <div class="container">
+      <div class="secao__cabecalho">
+        <p class="rotulo">O que oferecemos</p>
+        <h1>Serviços</h1>
+        <p class="subtitulo">
+          Atendimentos individuais e práticas em grupo, reunidos em um mesmo espaço. Para saber
+          sobre horários, valores e disponibilidade, fale com a recepção.
+        </p>
+      </div>
+
+      {
+        servicos.length > 0 ? (
+          <div class="grade">
+            {servicos.map((servico) => (
+              <CartaoServico servico={servico} />
+            ))}
+          </div>
+        ) : (
+          <p class="subtitulo">Os serviços serão publicados em breve.</p>
+        )
+      }
+
+      <div class="acoes" style="margin-top:2.5rem">
+        <a
+          class="botao botao--principal"
+          href={linkWhatsApp()}
+          target="_blank"
+          rel="noopener"
+          data-evento="click_whatsapp"
+          data-evento-rotulo="lista-servicos"
+        >
+          <Icone nome="whatsapp" tamanho={20} />
+          Tirar dúvidas pelo WhatsApp
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>

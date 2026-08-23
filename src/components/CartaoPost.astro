@@ -1,0 +1,68 @@
+---
+import Figura from './Figura.astro';
+import { formatarData, dataISO, type Post } from '../lib/conteudo';
+
+interface Props {
+  post: Post;
+}
+
+const { post } = Astro.props;
+const { titulo, resumo, imagemCapa, categoria, data } = post.data;
+---
+
+<article class="cartao cartao--clicavel cartao-post">
+  {
+    imagemCapa && (
+      <Figura
+        src={imagemCapa}
+        alt={`Imagem da publicação: ${titulo}`}
+        proporcao="16 / 9"
+        sizes="(max-width: 48rem) 100vw, 22rem"
+      />
+    )
+  }
+  <div class="cartao__corpo">
+    <p class="cartao-post__meta">
+      {categoria && <span class="cartao-post__categoria">{categoria}</span>}
+      <time datetime={dataISO(data)}>{formatarData(data)}</time>
+    </p>
+    <h3>
+      <a
+        class="cartao__link"
+        href={`/blog/${post.id}`}
+        data-evento="view_post"
+        data-evento-rotulo={titulo}>{titulo}</a
+      >
+    </h3>
+    {resumo && <p class="cartao__texto">{resumo}</p>}
+    <p class="cartao__acao" aria-hidden="true">Ler publicação</p>
+  </div>
+</article>
+
+<style>
+  .cartao-post__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem;
+    color: var(--texto-suave);
+    font-size: 0.8125rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .cartao-post__categoria {
+    padding: 0.15rem 0.6rem;
+    background-color: var(--creme);
+    border-radius: 999px;
+    color: var(--verde-profundo);
+    font-weight: 600;
+  }
+
+  .cartao-post h3 {
+    font-size: 1.25rem;
+  }
+
+  .cartao-post a {
+    text-decoration: none;
+  }
+</style>

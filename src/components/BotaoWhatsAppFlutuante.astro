@@ -1,0 +1,73 @@
+---
+import { linkWhatsApp, site } from '../lib/site';
+import Icone from './Icone.astro';
+
+const href = linkWhatsApp();
+---
+
+{
+  href && (
+    <a
+      class="whatsapp-flutuante"
+      href={href}
+      target="_blank"
+      rel="noopener"
+      data-evento="click_whatsapp"
+      data-evento-rotulo="botao-flutuante"
+      aria-label={`Falar com a ${site.nome} pelo WhatsApp`}
+    >
+      <Icone nome="whatsapp" tamanho={26} />
+      <span class="whatsapp-flutuante__texto">WhatsApp</span>
+    </a>
+  )
+}
+
+<style>
+  .whatsapp-flutuante {
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 60;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 3.25rem;
+    padding: 0.75rem 1.15rem;
+    background-color: var(--verde-profundo);
+    color: var(--creme);
+    border: 1px solid var(--dourado);
+    border-radius: 999px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: var(--sombra-forte);
+    transition: background-color var(--transicao), transform var(--transicao);
+  }
+
+  .whatsapp-flutuante:hover {
+    background-color: var(--verde-escuro);
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 30rem) {
+    .whatsapp-flutuante__texto {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+
+    .whatsapp-flutuante {
+      padding: 0.9rem;
+      border-radius: 50%;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .whatsapp-flutuante:hover {
+      transform: none;
+    }
+  }
+</style>

@@ -1,0 +1,60 @@
+---
+import { Image } from 'astro:assets';
+import { resolverImagem } from '../lib/imagens';
+
+/**
+ * Uma imagem vinda do CMS.
+ *
+ * Se o arquivo estiver dentro de src/assets/uploads, o Astro gera AVIF/WebP em
+ * varios tamanhos. Se apontar para public/ ou para um endereco externo, cai em
+ * <img> simples — o site nao quebra por causa de um caminho fora do padrao.
+ */
+interface Props {
+  src?: string;
+  alt: string;
+  class?: string;
+  sizes?: string;
+  larguras?: number[];
+  prioridade?: boolean;
+  /** Proporcao aplicada por CSS, ex.: "1 / 1" ou "4 / 3". */
+  proporcao?: string;
+}
+
+const {
+  src,
+  alt,
+  class: classe,
+  sizes = '(max-width: 48rem) 100vw, 22rem',
+  larguras = [320, 480, 720, 960],
+  prioridade = false,
+  proporcao,
+} = Astro.props;
+
+const imagem = resolverImagem(src);
+const estilo = proporcao ? `aspect-ratio:${proporcao};object-fit:cover;width:100%` : undefined;
+---
+
+{
+  imagem ? (
+    <Image
+      src={imagem}
+      alt={alt}
+      class={classe}
+      style={estilo}
+      widths={larguras.filter((l) => l <= (imagem.width ?? 4000))}
+      sizes={sizes}
+      loading={prioridade ? 'eager' : 'lazy'}
+      decoding={prioridade ? 'sync' : 'async'}
+      fetchpriority={prioridade ? 'high' : 'auto'}
+    />
+  ) : src ? (
+    <img
+      src={src}
+      alt={alt}
+      class={classe}
+      style={estilo}
+      loading={prioridade ? 'eager' : 'lazy'}
+      decoding="async"
+    />
+  ) : null
+}

@@ -1,0 +1,71 @@
+---
+import Base from '../../layouts/Base.astro';
+import Migalhas from '../../components/Migalhas.astro';
+import CartaoPost from '../../components/CartaoPost.astro';
+import { listarPosts, categoriasDePosts } from '../../lib/conteudo';
+import { migalhas } from '../../lib/seo';
+
+const posts = await listarPosts();
+const categorias = categoriasDePosts(posts);
+const caminho = [
+  { nome: 'Início', href: '/' },
+  { nome: 'Conteúdos', href: '/blog' },
+];
+---
+
+<Base
+  titulo="Conteúdos"
+  descricao="Publicações e avisos da Tao Klyn | Clínica Integrada, em Maceió."
+  dadosEstruturados={[migalhas(caminho, Astro.site ?? Astro.url)]}
+>
+  <Migalhas itens={caminho} />
+
+  <section class="secao secao--creme">
+    <div class="container">
+      <div class="secao__cabecalho">
+        <p class="rotulo">Blog</p>
+        <h1>Conteúdos</h1>
+        <p class="subtitulo">Textos, avisos e novidades publicados pela equipe da clínica.</p>
+      </div>
+
+      {
+        categorias.length > 0 && (
+          <ul class="lista-etiquetas" style="margin-bottom:2rem">
+            {categorias.map((categoria) => (
+              <li>
+                <a class="selo" href={`/blog/categoria/${categoria.slug}`}>
+                  {categoria.nome} ({categoria.total})
+                </a>
+              </li>
+            ))}
+          </ul>
+        )
+      }
+
+      {
+        posts.length > 0 ? (
+          <div class="grade">
+            {posts.map((post) => (
+              <CartaoPost post={post} />
+            ))}
+          </div>
+        ) : (
+          <p class="subtitulo">
+            Ainda não há publicações no ar. Assim que a equipe publicar o primeiro conteúdo, ele
+            aparece aqui.
+          </p>
+        )
+      }
+    </div>
+  </section>
+</Base>
+
+<style>
+  a.selo {
+    text-decoration: none;
+  }
+
+  a.selo:hover {
+    background-color: var(--creme);
+  }
+</style>

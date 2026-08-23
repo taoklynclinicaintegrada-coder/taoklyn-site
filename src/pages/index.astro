@@ -1,0 +1,516 @@
+---
+import Base from '../layouts/Base.astro';
+import Icone from './../components/Icone.astro';
+import CartaoServico from '../components/CartaoServico.astro';
+import CartaoProfissional from '../components/CartaoProfissional.astro';
+import CartaoPost from '../components/CartaoPost.astro';
+import Figura from '../components/Figura.astro';
+import { Image } from 'astro:assets';
+import marcaSelo from '../assets/marca/marca-selo.png';
+import simbolo from '../assets/marca/simbolo.png';
+import { site, linkWhatsApp, linkTelefone, linkMapa, enderecoEmUmaLinha, espacos } from '../lib/site';
+import { listarServicos, listarProfissionais, listarPosts } from '../lib/conteudo';
+
+const servicos = await listarServicos();
+const profissionais = await listarProfissionais();
+const posts = (await listarPosts()).slice(0, 3);
+
+const servicosEmDestaque = servicos.filter((s) => s.data.destaque);
+const servicosNaHome = (servicosEmDestaque.length ? servicosEmDestaque : servicos).slice(0, 6);
+const profissionaisNaHome = profissionais.filter((p) => p.data.destaque).length
+  ? profissionais.filter((p) => p.data.destaque)
+  : profissionais;
+const espacosNaHome = espacos.slice(0, 3);
+const horarios = site.horarios.exibir ? site.horarios.itens.filter((h) => h.dias || h.horario) : [];
+---
+
+<Base titulo={site.seo.titulo} descricao={site.seo.descricao}>
+  <!-- 2. Hero -->
+  <section class="hero">
+    <div class="container hero__interno">
+      <p class="hero__local">
+        <Icone nome="local" tamanho={16} />
+        {site.endereco.bairro} • {site.endereco.cidade} - {site.endereco.estado}
+      </p>
+      <h1>{site.mensagemPrincipal}</h1>
+      <p class="hero__texto">{site.textoHero}</p>
+      <div class="acoes">
+        <a
+          class="botao botao--principal"
+          href={linkWhatsApp()}
+          target="_blank"
+          rel="noopener"
+          data-evento="click_whatsapp"
+          data-evento-rotulo="hero"
+        >
+          <Icone nome="whatsapp" tamanho={20} />
+          Agendar pelo WhatsApp
+        </a>
+        <a class="botao botao--secundario" href="/servicos">Conhecer nossos serviços</a>
+      </div>
+    </div>
+    <Image
+      class="hero__ornamento"
+      src={simbolo}
+      alt=""
+      aria-hidden="true"
+      width={420}
+      loading="lazy"
+    />
+  </section>
+
+  <!-- 3. Destaques de confiança -->
+  {
+    site.destaques.length > 0 && (
+      <section class="secao secao--branca" aria-label="Por que a Tao Klyn">
+        <div class="container">
+          <ul class="destaques">
+            {site.destaques.map((destaque) => (
+              <li>
+                <h2>{destaque.titulo}</h2>
+                <p>{destaque.texto}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+
+  <!-- 4. Sobre -->
+  <section class="secao secao--creme" aria-labelledby="titulo-sobre">
+    <div class="container sobre">
+      <div>
+        <p class="rotulo">A clínica</p>
+        <h2 id="titulo-sobre">Um cuidado que reúne corpo, mente e emoções</h2>
+        <p class="subtitulo">{site.textoInstitucional}</p>
+        <div class="acoes" style="margin-top:1.75rem">
+          <a class="botao botao--secundario" href="/sobre">Sobre a Tao Klyn</a>
+        </div>
+      </div>
+      <Image
+        class="sobre__selo"
+        src={marcaSelo}
+        alt=""
+        aria-hidden="true"
+        width={288}
+        densities={[1, 2]}
+        loading="lazy"
+      />
+    </div>
+  </section>
+
+  <!-- 5. Serviços -->
+  {
+    servicosNaHome.length > 0 && (
+      <section class="secao secao--branca" aria-labelledby="titulo-servicos">
+        <div class="container">
+          <div class="secao__cabecalho secao__cabecalho--centro">
+            <p class="rotulo">O que oferecemos</p>
+            <h2 id="titulo-servicos">Serviços</h2>
+            <p class="subtitulo">
+              Atendimentos e práticas reunidos em um mesmo espaço, no Farol.
+            </p>
+          </div>
+          <div class="grade">
+            {servicosNaHome.map((servico) => (
+              <CartaoServico servico={servico} />
+            ))}
+          </div>
+          <div class="acoes acoes--centro" style="margin-top:2.5rem">
+            <a class="botao botao--secundario" href="/servicos">Ver todos os serviços</a>
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <!-- 6. Missão -->
+  {
+    site.missao && (
+      <section class="secao secao--escura" aria-labelledby="titulo-missao">
+        <div class="container missao">
+          {/* O titulo e a palavra "Missao"; o texto longo e paragrafo. Um
+              heading com 200 caracteres atrapalha quem navega por titulos. */}
+          <h2 id="titulo-missao" class="rotulo">Missão</h2>
+          <p class="missao__texto">{site.missao}</p>
+        </div>
+      </section>
+    )
+  }
+
+  <!-- 7. Profissionais -->
+  {
+    profissionaisNaHome.length > 0 && (
+      <section class="secao secao--creme" aria-labelledby="titulo-profissionais">
+        <div class="container">
+          <div class="secao__cabecalho secao__cabecalho--centro">
+            <p class="rotulo">Quem atende</p>
+            <h2 id="titulo-profissionais">Profissionais</h2>
+            <p class="subtitulo">
+              Equipe multiprofissional, cada um com registro em seu conselho de classe.
+            </p>
+          </div>
+          <div class="grade">
+            {profissionaisNaHome.map((profissional) => (
+              <CartaoProfissional profissional={profissional} />
+            ))}
+          </div>
+          <div class="acoes acoes--centro" style="margin-top:2.5rem">
+            <a class="botao botao--secundario" href="/profissionais">
+              Ver todos os profissionais
+            </a>
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <!-- 8. Espaços -->
+  <section class="secao secao--branca" aria-labelledby="titulo-espacos">
+    <div class="container">
+      <div class="secao__cabecalho secao__cabecalho--centro">
+        <p class="rotulo">O espaço</p>
+        <h2 id="titulo-espacos">Um ambiente preparado para acolher</h2>
+        <p class="subtitulo">
+          Salas e consultórios pensados para atendimento tranquilo e reservado, no bairro do
+          Farol, em Maceió.
+        </p>
+      </div>
+
+      {
+        espacosNaHome.length > 0 ? (
+          <div class="grade">
+            {espacosNaHome.map((espaco) => (
+              <article class="cartao">
+                {espaco.imagem && (
+                  <Figura
+                    src={espaco.imagem}
+                    alt={espaco.alt || espaco.nome}
+                    proporcao="4 / 3"
+                    sizes="(max-width: 48rem) 100vw, 22rem"
+                  />
+                )}
+                <div class="cartao__corpo">
+                  <h3>{espaco.nome}</h3>
+                  {espaco.descricao && <p class="cartao__texto">{espaco.descricao}</p>}
+                </div>
+              </article>
+            ))}
+          </div>
+        ) : (
+          <p class="centro subtitulo" style="margin-inline:auto;max-width:38rem">
+            As fotos do espaço serão publicadas em breve. Enquanto isso, fale com a recepção
+            para conhecer a clínica pessoalmente.
+          </p>
+        )
+      }
+
+      <div class="acoes acoes--centro" style="margin-top:2.5rem">
+        <a class="botao botao--secundario" href="/espacos">Conhecer os espaços</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. Locação de salas -->
+  {
+    site.locacao.exibir && (
+      <section class="secao secao--escura" aria-labelledby="titulo-locacao">
+        <div class="container locacao">
+          <div>
+            <p class="rotulo">Locação de salas</p>
+            <h2 id="titulo-locacao">{site.locacao.titulo}</h2>
+            <p class="subtitulo">{site.locacao.texto}</p>
+          </div>
+          <div class="acoes">
+            <a
+              class="botao botao--principal"
+              href={linkWhatsApp(site.locacao.mensagemWhatsApp)}
+              target="_blank"
+              rel="noopener"
+              data-evento="click_room_rental"
+              data-evento-rotulo="home"
+            >
+              <Icone nome="whatsapp" tamanho={20} />
+              Consultar disponibilidade
+            </a>
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <!-- 10. Conteúdos recentes -->
+  {
+    posts.length > 0 && (
+      <section class="secao secao--creme" aria-labelledby="titulo-conteudos">
+        <div class="container">
+          <div class="secao__cabecalho secao__cabecalho--centro">
+            <p class="rotulo">Conteúdos</p>
+            <h2 id="titulo-conteudos">Publicações recentes</h2>
+          </div>
+          <div class="grade">
+            {posts.map((post) => (
+              <CartaoPost post={post} />
+            ))}
+          </div>
+          <div class="acoes acoes--centro" style="margin-top:2.5rem">
+            <a class="botao botao--secundario" href="/blog">Ver todos os conteúdos</a>
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <!-- 11. Localização -->
+  <section class="secao secao--branca" aria-labelledby="titulo-localizacao">
+    <div class="container localizacao">
+      <div>
+        <p class="rotulo">Onde estamos</p>
+        <h2 id="titulo-localizacao">{enderecoEmUmaLinha()}</h2>
+        {
+          horarios.length > 0 ? (
+            <ul class="localizacao__horarios">
+              {horarios.map((h) => (
+                <li>
+                  <Icone nome="relogio" tamanho={18} />
+                  <span>
+                    <strong>{h.dias}</strong> {h.horario}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p class="subtitulo">
+              Para confirmar horários de atendimento, fale com a recepção pelo WhatsApp ou pelo
+              telefone.
+            </p>
+          )
+        }
+        <div class="acoes" style="margin-top:1.75rem">
+          <a
+            class="botao botao--principal"
+            href={linkMapa()}
+            target="_blank"
+            rel="noopener"
+            data-evento="click_maps"
+            data-evento-rotulo="home"
+          >
+            <Icone nome="local" tamanho={20} />
+            Como chegar
+          </a>
+          {
+            site.contato.telefone && (
+              <a
+                class="botao botao--secundario"
+                href={linkTelefone()}
+                data-evento="click_phone"
+                data-evento-rotulo="home"
+              >
+                <Icone nome="telefone" tamanho={20} />
+                {site.contato.telefone}
+              </a>
+            )
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12. Instagram -->
+  {
+    site.redes.instagram && (
+      <section class="secao secao--creme" aria-labelledby="titulo-instagram">
+        <div class="container centro">
+          <p class="rotulo">Instagram</p>
+          <h2 id="titulo-instagram">Acompanhe o dia a dia da clínica</h2>
+          <p class="subtitulo" style="margin-inline:auto;max-width:34rem">
+            Avisos, turmas, encontros e bastidores da Tao Klyn em {site.redes.instagramUsuario}.
+          </p>
+          <div class="acoes acoes--centro" style="margin-top:1.75rem">
+            <a
+              class="botao botao--secundario"
+              href={site.redes.instagram}
+              target="_blank"
+              rel="noopener"
+              data-evento="click_instagram"
+              data-evento-rotulo="home"
+            >
+              <Icone nome="instagram" tamanho={20} />
+              Ver no Instagram
+            </a>
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <!-- 13. Chamada final -->
+  <section class="secao secao--escura" aria-labelledby="titulo-cta">
+    <div class="container centro">
+      <h2 id="titulo-cta">Vamos conversar?</h2>
+      <p class="subtitulo" style="margin-inline:auto;max-width:34rem">
+        Fale com a recepção para tirar dúvidas, conhecer os atendimentos e agendar um horário.
+      </p>
+      <div class="acoes acoes--centro" style="margin-top:2rem">
+        <a
+          class="botao botao--principal"
+          href={linkWhatsApp()}
+          target="_blank"
+          rel="noopener"
+          data-evento="click_whatsapp"
+          data-evento-rotulo="cta-final"
+        >
+          <Icone nome="whatsapp" tamanho={20} />
+          Falar pelo WhatsApp
+        </a>
+        <a class="botao botao--secundario" href="/contato">Ver todas as formas de contato</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    position: relative;
+    overflow: hidden;
+    padding-block: clamp(3.5rem, 2rem + 8vw, 7rem);
+    background: linear-gradient(160deg, var(--verde-profundo) 0%, var(--verde-escuro) 100%);
+    color: var(--creme);
+  }
+
+  .hero__interno {
+    position: relative;
+    z-index: 1;
+    max-width: 46rem;
+  }
+
+  .hero h1 {
+    color: var(--branco);
+  }
+
+  .hero__local {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin-bottom: 1.25rem;
+    padding: 0.35rem 0.9rem;
+    border: 1px solid rgb(210 172 97 / 55%);
+    border-radius: 999px;
+    color: var(--dourado-claro);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .hero__texto {
+    max-width: 38rem;
+    margin-top: 1.25rem;
+    font-size: 1.125rem;
+    line-height: 1.7;
+  }
+
+  .hero .acoes {
+    margin-top: 2.25rem;
+  }
+
+  /* O hero tem fundo escuro sem ser .secao--escura: sem isto, o botao
+     secundario ficaria verde escuro sobre verde escuro. */
+  .hero .botao--secundario {
+    border-color: var(--dourado-claro);
+    color: var(--dourado-claro);
+  }
+
+  .hero .botao--secundario:hover {
+    background-color: var(--dourado-claro);
+    color: var(--verde-profundo);
+  }
+
+  .hero__ornamento {
+    position: absolute;
+    right: -4rem;
+    bottom: -6rem;
+    width: min(26rem, 55vw);
+    opacity: 0.06;
+    filter: brightness(0) invert(1);
+    pointer-events: none;
+  }
+
+  .destaques {
+    display: grid;
+    gap: 1.5rem 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .destaques h2 {
+    margin-bottom: 0.35rem;
+    font-size: 1.15rem;
+  }
+
+  .destaques li {
+    padding-left: 1rem;
+    border-left: 2px solid var(--dourado);
+    color: var(--texto-suave);
+    font-size: 0.95rem;
+  }
+
+  .sobre {
+    display: grid;
+    gap: 2.5rem;
+    grid-template-columns: 1fr;
+    align-items: center;
+  }
+
+  .sobre__selo {
+    width: min(18rem, 60%);
+    justify-self: center;
+    opacity: 0.95;
+  }
+
+  .missao {
+    max-width: 52rem;
+  }
+
+  .missao__texto {
+    margin-top: 0.25rem;
+    font-family: var(--fonte-titulo);
+    font-size: clamp(1.35rem, 1.05rem + 1.4vw, 1.9rem);
+    font-weight: 500;
+    line-height: 1.45;
+    color: var(--branco);
+  }
+
+  .locacao {
+    display: grid;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  .localizacao__horarios {
+    margin: 1.5rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .localizacao__horarios li {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding-block: 0.35rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  @media (min-width: 56rem) {
+    .sobre {
+      grid-template-columns: 1.4fr 1fr;
+    }
+
+    .locacao {
+      grid-template-columns: 1.6fr auto;
+    }
+  }
+</style>

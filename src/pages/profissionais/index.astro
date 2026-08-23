@@ -1,0 +1,45 @@
+---
+import Base from '../../layouts/Base.astro';
+import Migalhas from '../../components/Migalhas.astro';
+import CartaoProfissional from '../../components/CartaoProfissional.astro';
+import { listarProfissionais } from '../../lib/conteudo';
+import { migalhas } from '../../lib/seo';
+
+const profissionais = await listarProfissionais();
+const caminho = [
+  { nome: 'Início', href: '/' },
+  { nome: 'Profissionais', href: '/profissionais' },
+];
+---
+
+<Base
+  titulo="Profissionais"
+  descricao="Conheça a equipe multiprofissional da Tao Klyn | Clínica Integrada, no Farol, em Maceió."
+  dadosEstruturados={[migalhas(caminho, Astro.site ?? Astro.url)]}
+>
+  <Migalhas itens={caminho} />
+
+  <section class="secao secao--creme">
+    <div class="container">
+      <div class="secao__cabecalho">
+        <p class="rotulo">Quem atende</p>
+        <h1>Profissionais</h1>
+        <p class="subtitulo">
+          Equipe multiprofissional, cada um com registro em seu conselho de classe.
+        </p>
+      </div>
+
+      {
+        profissionais.length > 0 ? (
+          <div class="grade">
+            {profissionais.map((profissional) => (
+              <CartaoProfissional profissional={profissional} />
+            ))}
+          </div>
+        ) : (
+          <p class="subtitulo">A equipe será publicada em breve.</p>
+        )
+      }
+    </div>
+  </section>
+</Base>

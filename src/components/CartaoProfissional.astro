@@ -1,0 +1,69 @@
+---
+import Figura from './Figura.astro';
+import { registroDoProfissional, type Profissional } from '../lib/conteudo';
+
+interface Props {
+  profissional: Profissional;
+}
+
+const { profissional } = Astro.props;
+const { nome, profissao, foto, descricaoCurta } = profissional.data;
+const registro = registroDoProfissional(profissional);
+---
+
+<article class="cartao cartao--clicavel cartao-profissional">
+  {
+    foto && (
+      <Figura
+        src={foto}
+        alt={`Retrato de ${nome}`}
+        proporcao="1 / 1"
+        sizes="(max-width: 48rem) 100vw, 18rem"
+        class="cartao-profissional__foto"
+      />
+    )
+  }
+  <div class="cartao__corpo">
+    <p class="cartao-profissional__profissao">{profissao}</p>
+    <h3>
+      <a
+        class="cartao__link"
+        href={`/profissionais/${profissional.id}`}
+        data-evento="click_professional"
+        data-evento-rotulo={nome}>{nome}</a
+      >
+    </h3>
+    {registro && <p class="cartao-profissional__registro">{registro}</p>}
+    {descricaoCurta && <p class="cartao__texto">{descricaoCurta}</p>}
+    <p class="cartao__acao" aria-hidden="true">Ver perfil</p>
+  </div>
+</article>
+
+<style>
+  .cartao-profissional__foto {
+    width: 100%;
+    border-bottom: 1px solid var(--borda);
+  }
+
+  .cartao-profissional__profissao {
+    color: var(--foco);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .cartao-profissional h3 {
+    font-size: 1.35rem;
+  }
+
+  .cartao-profissional a {
+    text-decoration: none;
+  }
+
+  .cartao-profissional__registro {
+    color: var(--texto-suave);
+    font-size: 0.875rem;
+    font-variant-numeric: tabular-nums;
+  }
+</style>

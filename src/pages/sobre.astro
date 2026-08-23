@@ -1,0 +1,138 @@
+---
+import Base from '../layouts/Base.astro';
+import Migalhas from '../components/Migalhas.astro';
+import Icone from '../components/Icone.astro';
+import { site, linkWhatsApp, anoDeFundacao, enderecoEmUmaLinha } from '../lib/site';
+import { migalhas } from '../lib/seo';
+
+const caminho = [
+  { nome: 'Início', href: '/' },
+  { nome: 'Sobre', href: '/sobre' },
+];
+const fundacao = anoDeFundacao();
+---
+
+<Base
+  titulo="Sobre a clínica"
+  descricao={`A Tao Klyn | Clínica Integrada reúne atendimento multiprofissional e humanizado no Farol, em Maceió${fundacao ? `, desde ${fundacao}` : ''}.`}
+  dadosEstruturados={[migalhas(caminho, Astro.site ?? Astro.url)]}
+>
+  <Migalhas itens={caminho} />
+
+  <section class="secao secao--creme">
+    <div class="container">
+      <div class="secao__cabecalho">
+        <p class="rotulo">A clínica</p>
+        <h1>Sobre a Tao Klyn</h1>
+        <p class="subtitulo">{site.textoInstitucional}</p>
+      </div>
+
+      <dl class="fatos">
+        {
+          fundacao && (
+            <div>
+              <dt>Fundação</dt>
+              <dd>{fundacao}</dd>
+            </div>
+          )
+        }
+        <div>
+          <dt>Onde fica</dt>
+          <dd>{enderecoEmUmaLinha()}</dd>
+        </div>
+        <div>
+          <dt>Como funciona</dt>
+          <dd>Atendimento multiprofissional em um mesmo espaço</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  {
+    site.missao && (
+      <section class="secao secao--escura" aria-labelledby="titulo-missao">
+        <div class="container" style="max-width:52rem">
+          <h2 id="titulo-missao" class="rotulo">Missão</h2>
+          <p class="missao__texto">{site.missao}</p>
+        </div>
+      </section>
+    )
+  }
+
+  {
+    site.destaques.length > 0 && (
+      <section class="secao secao--branca" aria-labelledby="titulo-valores">
+        <div class="container">
+          <div class="secao__cabecalho">
+            <p class="rotulo">O que nos orienta</p>
+            <h2 id="titulo-valores">Nosso jeito de cuidar</h2>
+          </div>
+          <div class="grade">
+            {site.destaques.map((destaque) => (
+              <article class="cartao">
+                <div class="cartao__corpo">
+                  <h3>{destaque.titulo}</h3>
+                  <p class="cartao__texto">{destaque.texto}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <section class="secao secao--creme">
+    <div class="container centro">
+      <h2>Conheça quem atende</h2>
+      <p class="subtitulo" style="margin-inline:auto;max-width:34rem">
+        Cada profissional tem sua página, com formação, áreas de atuação e serviços relacionados.
+      </p>
+      <div class="acoes acoes--centro" style="margin-top:2rem">
+        <a class="botao botao--secundario" href="/profissionais">Ver profissionais</a>
+        <a
+          class="botao botao--principal"
+          href={linkWhatsApp()}
+          target="_blank"
+          rel="noopener"
+          data-evento="click_whatsapp"
+          data-evento-rotulo="sobre"
+        >
+          <Icone nome="whatsapp" tamanho={20} />
+          Falar pelo WhatsApp
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .fatos {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+    margin: 0;
+  }
+
+  .fatos dt {
+    color: var(--foco);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .fatos dd {
+    margin: 0.35rem 0 0;
+    font-size: 1.05rem;
+  }
+
+  .missao__texto {
+    margin-top: 0.25rem;
+    color: var(--branco);
+    font-family: var(--fonte-titulo);
+    font-size: clamp(1.35rem, 1.05rem + 1.4vw, 1.9rem);
+    font-weight: 500;
+    line-height: 1.45;
+  }
+</style>
