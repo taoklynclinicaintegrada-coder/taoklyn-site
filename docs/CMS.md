@@ -60,6 +60,36 @@ Para quem administra o site e precisa mexer na configuração.
 >
 > Se o e-mail não chegar em alguns minutos, **olhe no spam/lixo eletrônico**.
 
+### "No repositories yet" — entrei e não aparece nada
+
+Esta é a confusão mais comum na primeira vez:
+
+> *No repositories yet. You need an invitation to a repository before you can
+> collaborate. Ask a repository owner or organization admin to invite you.*
+
+Essa mensagem significa que **você entrou pela porta do colaborador** (Forma B,
+por e-mail) com um endereço que ninguém convidou.
+
+**Se você é o administrador**, saia e entre de novo pelo caminho certo:
+
+1. Clique no avatar redondo, canto superior direito → **Sign out**.
+2. Clique em **Sign in with GitHub** — o botão de cima, e não o campo de e-mail.
+3. Siga a [primeira configuração](#3-primeira-configuração-só-o-administrador).
+
+**Se você é da equipe de conteúdo**, quer dizer que seu e-mail ainda não foi
+convidado. Peça a quem administra para convidá-lo em
+**Settings → Collaborators**, usando exatamente o endereço com que você tentou
+entrar.
+
+**Se você entrou pelo GitHub e mesmo assim não aparece nada**, o aplicativo foi
+instalado no lugar errado ou ainda não foi aprovado:
+
+| Causa provável | Como confirmar | Solução |
+|---|---|---|
+| Instalado na conta pessoal, não na organização | abra **github.com/settings/installations** e veja onde o Pages CMS aparece | clique em **Configure** e acrescente a organização `taoklyn` |
+| Você não é administrador da organização | ao instalar, o GitHub avisa que precisa de aprovação | um administrador da organização precisa aprovar o pedido |
+| O repositório não foi marcado | **github.com/settings/installations** → Pages CMS → **Configure** | em **Repository access**, marque **taoklyn-site** |
+
 ---
 
 ## 2. Senha e segurança da conta
@@ -503,6 +533,7 @@ Em poucos minutos o site volta ao estado anterior.
 | **Salvei e o site não mudou** | espere de 1 a 3 minutos e recarregue com `Ctrl + F5` |
 | **Continua sem mudar depois de 5 minutos** | pode ter havido erro na publicação; peça a quem administra para olhar em *Cloudflare → Deployments* |
 | **O e-mail de acesso não chegou** | procure no spam; confirme que o endereço foi convidado |
+| **"No repositories yet"** | veja ["No repositories yet"](#no-repositories-yet--entrei-e-não-aparece-nada), na seção 1 |
 | **"Save" está apagado / não clica** | algum campo obrigatório está vazio. Procure a marcação em vermelho |
 | **A imagem não sobe** | arquivo grande demais ou formato incomum. Use JPG, PNG ou WEBP com menos de 5 MB |
 | **Apaguei sem querer** | veja [Desfazer uma alteração](#11-desfazer-uma-alteração) — nada se perde |
