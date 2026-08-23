@@ -27,14 +27,31 @@ troca fotos e publica. Ao salvar, o site se atualiza sozinho em poucos minutos.
 
 ## 1. Como entrar no painel
 
+Existem **duas formas de entrar**, dependendo de quem você é.
+
+### Você administra o site (tem conta no GitHub)
+
 1. Abra **https://pagescms.org**
 2. Clique em **Sign in with GitHub** (entrar com GitHub).
 3. Entre com a conta do GitHub que tem acesso ao repositório da clínica.
 4. Na lista de repositórios, escolha **taoklyn/taoklyn-site**.
 
-Pronto. O painel abre já mostrando o conteúdo do site.
+### Você foi convidada para cuidar do conteúdo (não precisa de GitHub)
 
-> Guarde esse endereço nos favoritos. É sempre o mesmo.
+1. Você recebe um **convite por e-mail**, enviado por quem administra o site.
+2. Siga o que o e-mail pede para ativar o acesso.
+3. Depois disso, entre em **https://pagescms.org** com **o mesmo e-mail** do
+   convite e o painel abre direto no site da clínica.
+
+**Não é preciso ter conta no GitHub, nem instalar nada, nem saber programar.**
+
+O que uma pessoa convidada pode fazer: escrever, editar e publicar conteúdo, e
+enviar imagens. O que ela **não** pode: mexer na configuração do painel, na
+lista de convidados ou em qualquer parte técnica — isso fica só com quem
+administra.
+
+> Guarde o endereço **pagescms.org** nos favoritos. É sempre o mesmo.
+> Como convidar alguém está na [seção 11](#11-convidar-outra-pessoa-para-editar).
 
 ---
 
@@ -269,15 +286,26 @@ Se preferir, é mais simples reabrir o item no painel e digitar o texto antigo.
 
 ## 11. Convidar outra pessoa para editar
 
-O Pages CMS permite convidar colaboradores por e-mail, direto no painel:
+O Pages CMS permite convidar pessoas por e-mail, direto no painel — **e elas
+não precisam de conta no GitHub**:
 
 1. Abra o repositório no Pages CMS.
 2. Vá em **Settings → Collaborators**.
 3. Informe o e-mail da pessoa e envie o convite.
-4. A pessoa aceita o convite e passa a acessar o painel com a própria conta.
+4. Ela recebe o e-mail, ativa o acesso e passa a entrar em pagescms.org com o
+   próprio e-mail.
 
-Assim ninguém precisa compartilhar senha. Para tirar o acesso, remova a pessoa
-da mesma lista.
+Assim ninguém compartilha senha. Para tirar o acesso, remova a pessoa da mesma
+lista — o acesso acaba na hora.
+
+**Quem é convidado pode:** escrever, editar e publicar conteúdo; enviar e
+trocar imagens.
+**Quem é convidado não pode:** alterar a configuração do painel, convidar ou
+remover outras pessoas, nem mexer em qualquer parte técnica. Isso continua
+exigindo uma conta do GitHub com acesso ao repositório.
+
+> Faça o primeiro convite para um e-mail seu, para conhecer o fluxo antes de
+> repassá-lo à recepção.
 
 ---
 
