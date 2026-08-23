@@ -1,5 +1,6 @@
 ---
 import Icone from './Icone.astro';
+import { dadosDoVideo } from '../lib/midia';
 import type { Video } from '../lib/site';
 
 /**
@@ -9,63 +10,90 @@ import type { Video } from '../lib/site';
  *
  * - **arquivo local** → <video> nativo, com `preload="none"`. O navegador só
  *   baixa o vídeo depois que a pessoa aperta play; antes disso, a página paga
- *   apenas o peso do poster (~20 KB). Nunca há autoplay.
- * - **endereço externo** → um link para assistir fora do site. Deliberadamente
- *   não é um iframe: o incorporado do YouTube traz scripts e cookies de
- *   terceiros, atrasa a página e não passa pela Content-Security-Policy.
+ *   apenas o peso da capa (~20 KB). Nunca há autoplay.
+ * - **endereço externo** → um cartão que leva ao vídeo hospedado fora.
+ *   Deliberadamente não é um player incorporado: o do YouTube traz scripts e
+ *   cookies de terceiros, atrasa a página e não passa pela Content-Security-Policy.
+ *
+ * A duração vem do próprio arquivo, lida no build (`src/lib/midia.ts`).
  */
 interface Props {
   video: Video;
-  /** Ocupa a largura toda quando o vídeo é o assunto principal da seção. */
+  /** Rótulo curto sobre a capa, como "Parte 1". */
+  etiqueta?: string;
   destaque?: boolean;
 }
 
-const { video, destaque = false } = Astro.props;
+const { video, etiqueta, destaque = false } = Astro.props;
+const dados = dadosDoVideo(video.arquivo);
 const rotulo = video.alt || video.titulo;
+
+/**
+ * "Conheça nossa clínica — Parte 1" vira título "Conheça nossa clínica" e
+ * etiqueta "Parte 1". Assim a recepção escreve um título só, e a numeração
+ * aparece sobre a capa em vez de repetir na legenda.
+ */
+const partido = video.titulo.match(/^(.*?)\s*[—–-]\s*(Parte\s*\d+)\s*$/i);
+const titulo = partido ? partido[1] : video.titulo;
+const etiquetaFinal = etiqueta ?? partido?.[2];
 ---
 
 <figure class:list={['video', destaque && 'video--destaque']}>
-  {
-    video.arquivo ? (
-      <video
-        class="video__player"
-        controls
-        preload="none"
-        playsinline
-        poster={video.poster || undefined}
-        aria-label={rotulo}
-      >
-        <source src={video.arquivo} type="video/mp4" />
-        <p>
-          Seu navegador não consegue exibir este vídeo.{' '}
-          <a href={video.arquivo} download>
-            Baixe o arquivo
-          </a>{' '}
-          para assistir.
-        </p>
-      </video>
-    ) : (
-      <a
-        class="video__externo"
-        href={video.url}
-        target="_blank"
-        rel="noopener"
-        aria-label={`Assistir: ${video.titulo} (abre em outra aba)`}
-      >
-        {video.poster && <img src={video.poster} alt="" loading="lazy" />}
-        <span class="video__jogar">
-          <Icone nome="seta" tamanho={22} />
-          Assistir ao vídeo
-        </span>
-      </a>
-    )
-  }
+  <div class="video__moldura">
+    {
+      video.arquivo ? (
+        <video
+          class="video__player"
+          controls
+          preload="none"
+          playsinline
+          poster={video.poster || undefined}
+          aria-label={rotulo}
+        >
+          <source src={video.arquivo} type="video/mp4" />
+          <p>
+            Seu navegador não consegue exibir este vídeo.{' '}
+            <a href={video.arquivo} download>
+              Baixe o arquivo
+            </a>{' '}
+            para assistir.
+          </p>
+        </video>
+      ) : (
+        <a
+          class="video__externo"
+          href={video.url}
+          target="_blank"
+          rel="noopener"
+          aria-label={`Assistir "${video.titulo}" (abre em outra aba)`}
+        >
+          {video.poster ? (
+            <img src={video.poster} alt="" loading="lazy" />
+          ) : (
+            <span class="video__semCapa" aria-hidden="true">
+              <Icone nome="seta" tamanho={28} />
+            </span>
+          )}
+          <span class="video__jogar">
+            <span class="video__jogarIcone" aria-hidden="true" />
+            Assistir ao vídeo
+          </span>
+        </a>
+      )
+    }
+
+    {etiquetaFinal && <span class="video__etiqueta">{etiquetaFinal}</span>}
+    {dados && <span class="video__duracao">{dados.duracao}</span>}
+  </div>
 
   {
-    (video.titulo || video.descricao) && (
+    (titulo || video.descricao) && (
       <figcaption>
-        <strong>{video.titulo}</strong>
+        <strong>{titulo}</strong>
         {video.descricao && <span>{video.descricao}</span>}
+        {!video.arquivo && video.url && (
+          <span class="video__aviso">Abre em outra aba, fora do site.</span>
+        )}
       </figcaption>
     )
   }
@@ -73,33 +101,80 @@ const rotulo = video.alt || video.titulo;
 
 <style>
   .video {
-    margin: 0;
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 0.85rem;
+    margin: 0;
+    width: 100%;
+    max-width: 21rem;
+  }
+
+  .video--destaque {
+    max-width: 24rem;
+  }
+
+  .video__moldura {
+    position: relative;
+    border-radius: var(--raio-grande);
+    overflow: hidden;
+    background-color: var(--verde-escuro);
+    box-shadow: var(--sombra);
+    line-height: 0;
   }
 
   .video__player,
   .video__externo img {
+    display: block;
     width: 100%;
-    max-width: 22rem;
     aspect-ratio: 9 / 16;
     object-fit: cover;
-    background-color: var(--verde-escuro);
-    border: 1px solid var(--borda);
-    border-radius: var(--raio-grande);
   }
 
-  .video--destaque .video__player,
-  .video--destaque .video__externo img {
-    max-width: 26rem;
+  /* ---- Selos sobre a capa ---- */
+
+  .video__etiqueta,
+  .video__duracao {
+    position: absolute;
+    z-index: 1;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1.5;
+    letter-spacing: 0.04em;
+    pointer-events: none;
   }
+
+  .video__etiqueta {
+    top: 0.75rem;
+    left: 0.75rem;
+    background-color: var(--dourado);
+    color: var(--verde-profundo);
+    text-transform: uppercase;
+  }
+
+  .video__duracao {
+    top: 0.75rem;
+    right: 0.75rem;
+    background-color: rgb(14 37 27 / 82%);
+    color: var(--creme);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ---- Vídeo hospedado fora ---- */
 
   .video__externo {
+    display: block;
     position: relative;
-    display: inline-block;
-    max-width: 22rem;
     text-decoration: none;
+  }
+
+  .video__semCapa {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 9 / 16;
+    color: var(--dourado-claro);
   }
 
   .video__jogar {
@@ -109,7 +184,7 @@ const rotulo = video.alt || video.titulo;
     transform: translateX(-50%);
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.55rem;
     min-height: 2.75rem;
     padding: 0.6rem 1.15rem;
     background-color: var(--dourado);
@@ -117,20 +192,45 @@ const rotulo = video.alt || video.titulo;
     border-radius: 999px;
     font-size: 0.9375rem;
     font-weight: 600;
+    line-height: 1.2;
     white-space: nowrap;
+    transition: background-color var(--transicao);
   }
+
+  .video__externo:hover .video__jogar {
+    background-color: var(--dourado-claro);
+  }
+
+  /* Triângulo de "play", desenhado em CSS. */
+  .video__jogarIcone {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 6px 0 6px 10px;
+    border-color: transparent transparent transparent currentcolor;
+  }
+
+  /* ---- Legenda ---- */
 
   .video figcaption {
     display: flex;
     flex-direction: column;
-    gap: 0.2rem;
-    max-width: 22rem;
+    gap: 0.25rem;
     color: var(--texto-suave);
     font-size: 0.9375rem;
+    line-height: 1.55;
   }
 
   .video figcaption strong {
     color: var(--texto);
+    font-family: var(--fonte-titulo);
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+
+  .video__aviso {
+    font-size: 0.8125rem;
+    opacity: 0.85;
   }
 
   :global(.secao--escura) .video figcaption {

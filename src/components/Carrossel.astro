@@ -1,0 +1,179 @@
+---
+import Icone from './Icone.astro';
+
+/**
+ * Carrossel horizontal.
+ *
+ * A rolagem é nativa (`scroll-snap`): funciona com o dedo, com trackpad e com
+ * as setas do teclado sem uma linha de JavaScript. Os botões de avançar e
+ * voltar são um acréscimo — nascem `hidden` e só aparecem se o script rodar,
+ * para nunca existir botão morto na tela.
+ */
+interface Props {
+  rotulo: string;
+  /** Largura de cada item; o padrão serve para cartões de pessoa. */
+  larguraDoItem?: string;
+  class?: string;
+}
+
+const { rotulo, larguraDoItem = 'min(78vw, 17rem)', class: classe } = Astro.props;
+const id = `carrossel-${Math.random().toString(36).slice(2, 8)}`;
+---
+
+<div class:list={['carrossel', classe]} data-carrossel style={`--largura-do-item:${larguraDoItem}`}>
+  <div class="carrossel__topo">
+    <p class="carrossel__dica" aria-hidden="true">Arraste para ver mais</p>
+    <div class="carrossel__controles" hidden data-carrossel-controles>
+      <button type="button" data-carrossel-voltar aria-controls={id} aria-label="Ver anteriores">
+        <Icone nome="seta" tamanho={20} />
+      </button>
+      <button type="button" data-carrossel-avancar aria-controls={id} aria-label="Ver próximos">
+        <Icone nome="seta" tamanho={20} />
+      </button>
+    </div>
+  </div>
+
+  <ul id={id} class="carrossel__trilho" tabindex="0" role="region" aria-label={rotulo}>
+    <slot />
+  </ul>
+</div>
+
+<script>
+  // Enriquecimento progressivo: sem este script o carrossel continua rolando
+  // normalmente, só não tem botões.
+  for (const carrossel of document.querySelectorAll<HTMLElement>('[data-carrossel]')) {
+    const trilho = carrossel.querySelector<HTMLElement>('.carrossel__trilho');
+    const controles = carrossel.querySelector<HTMLElement>('[data-carrossel-controles]');
+    const voltar = carrossel.querySelector<HTMLButtonElement>('[data-carrossel-voltar]');
+    const avancar = carrossel.querySelector<HTMLButtonElement>('[data-carrossel-avancar]');
+    if (!trilho || !controles || !voltar || !avancar) continue;
+
+    const passo = () => {
+      const item = trilho.querySelector<HTMLElement>('li');
+      return item ? item.getBoundingClientRect().width + 24 : trilho.clientWidth * 0.8;
+    };
+
+    const rolar = (direcao: number) => {
+      trilho.scrollBy({ left: passo() * direcao, behavior: 'smooth' });
+    };
+
+    voltar.addEventListener('click', () => rolar(-1));
+    avancar.addEventListener('click', () => rolar(1));
+
+    // Desabilita o botão quando não há mais para onde ir.
+    const atualizar = () => {
+      const fim = trilho.scrollWidth - trilho.clientWidth - 2;
+      voltar.disabled = trilho.scrollLeft <= 2;
+      avancar.disabled = trilho.scrollLeft >= fim;
+      // Se tudo cabe na tela, o carrossel não é carrossel.
+      controles.hidden = trilho.scrollWidth <= trilho.clientWidth + 2;
+    };
+
+    trilho.addEventListener('scroll', atualizar, { passive: true });
+    window.addEventListener('resize', atualizar);
+    controles.hidden = false;
+    atualizar();
+  }
+</script>
+
+<style>
+  .carrossel {
+    position: relative;
+  }
+
+  .carrossel__topo {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    min-height: 2.75rem;
+  }
+
+  .carrossel__dica {
+    margin-right: auto;
+    color: var(--texto-suave);
+    font-size: 0.8125rem;
+  }
+
+  :global(.secao--escura) .carrossel__dica {
+    color: var(--creme);
+  }
+
+  .carrossel__controles {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .carrossel__controles button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    background-color: transparent;
+    border: 1px solid var(--borda-forte);
+    border-radius: 50%;
+    color: var(--texto);
+    cursor: pointer;
+    transition: background-color var(--transicao), color var(--transicao),
+      opacity var(--transicao);
+  }
+
+  .carrossel__controles button:hover:not(:disabled) {
+    background-color: var(--verde-profundo);
+    border-color: var(--verde-profundo);
+    color: var(--creme);
+  }
+
+  .carrossel__controles button:disabled {
+    opacity: 0.35;
+    cursor: default;
+  }
+
+  [data-carrossel-voltar] :global(svg) {
+    transform: rotate(180deg);
+  }
+
+  .carrossel__trilho {
+    display: flex;
+    gap: 1.5rem;
+    margin: 0;
+    padding: 0.25rem 0 1.25rem;
+    list-style: none;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 0.25rem;
+    scrollbar-width: thin;
+    scrollbar-color: var(--borda-forte) transparent;
+    /* Deixa o cartão do meio "vazar" para a borda da tela, sinalizando que há
+       mais conteúdo à direita. */
+    scroll-behavior: smooth;
+  }
+
+  .carrossel__trilho:focus-visible {
+    outline: 3px solid var(--foco);
+    outline-offset: 4px;
+    border-radius: var(--raio);
+  }
+
+  .carrossel__trilho > :global(li) {
+    flex: 0 0 var(--largura-do-item);
+    scroll-snap-align: start;
+  }
+
+  .carrossel__trilho::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  .carrossel__trilho::-webkit-scrollbar-thumb {
+    background-color: var(--borda-forte);
+    border-radius: 999px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .carrossel__trilho {
+      scroll-behavior: auto;
+    }
+  }
+</style>

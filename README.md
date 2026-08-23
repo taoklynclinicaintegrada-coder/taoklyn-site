@@ -31,15 +31,21 @@ fundada em 22 de dezembro de 2007.
 | Framework | [Astro](https://astro.build) 7, saída **estática** |
 | Linguagem | TypeScript em modo `strict` |
 | Estilo | CSS próprio com custom properties. Sem framework, sem build extra |
-| JavaScript no cliente | **Nenhum** — exceto o Google Analytics, se configurado |
+| JavaScript no cliente | **~0,7 KB** — só os botões do carrossel. Mais o Google Analytics, se configurado |
 | Conteúdo | Content Collections (Markdown + JSON), validado com Zod |
 | Imagens | `astro:assets` + sharp (AVIF/WebP, tamanhos responsivos) |
 | SEO | `@astrojs/sitemap`, JSON-LD, Open Graph |
 | CMS | [Pages CMS](https://pagescms.org) (aplicação hospedada, sobre o GitHub) |
 | Hospedagem | Cloudflare Pages |
 
-O menu do celular é um `<details>`, os cartões são links: nenhuma interação
-depende de JavaScript.
+O menu do celular é um `<details>` e os cartões são links. O carrossel de
+profissionais rola de forma nativa (`scroll-snap`) — o dedo, o trackpad e as
+setas do teclado funcionam sem script; os botões de avançar e voltar são o
+único JavaScript da página e nascem escondidos, aparecendo só quando o script
+roda. Nenhum conteúdo depende de JavaScript para existir.
+
+`npm run verificar:site` impõe um **orçamento de 8 KB de JavaScript por
+página** — hoje o site usa 0,7 KB. Passar do teto quebra a verificação.
 
 ## Arquitetura
 
@@ -204,8 +210,13 @@ npm run build && npm run preview:producao
 
 ## Decisões de projeto
 
-- **Zero JavaScript por padrão.** Menu, navegação e cartões funcionam só com
-  HTML e CSS.
+- **JavaScript só onde ele acrescenta.** Menu, navegação, cartões e a rolagem do
+  carrossel funcionam com HTML e CSS. O único script são os botões do carrossel
+  (0,7 KB), e há orçamento automático de 8 KB por página para impedir que isso
+  cresça sem alguém decidir.
+- **Vídeo não é baixado antes do play.** `preload="none"` e nenhum autoplay: a
+  página paga só o peso da capa (~20 KB). A duração exibida é lida do próprio
+  arquivo durante o build, então nunca desatualiza.
 - **Contraste conferido por script**, não por impressão: `verificar:contraste`
   falha se algum par usado na interface ficar abaixo do mínimo da WCAG AA.
 - **Sem formulário de contato.** Formulário em site de clínica convida a

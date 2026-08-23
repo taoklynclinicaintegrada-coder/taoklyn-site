@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import Icone from './../components/Icone.astro';
 import CartaoServico from '../components/CartaoServico.astro';
 import CartaoProfissional from '../components/CartaoProfissional.astro';
+import Carrossel from '../components/Carrossel.astro';
 import CartaoPost from '../components/CartaoPost.astro';
 import Figura from '../components/Figura.astro';
 import VideoInstitucional from '../components/VideoInstitucional.astro';
@@ -26,13 +27,12 @@ const posts = (await listarPosts()).slice(0, 3);
 
 const servicosEmDestaque = servicos.filter((s) => s.data.destaque);
 const servicosNaHome = (servicosEmDestaque.length ? servicosEmDestaque : servicos).slice(0, 6);
-// Quem a clínica marcou como destaque vem primeiro; o resto completa por
-// ordem. Seis cabem na página inicial sem transformá-la numa listagem — a
-// equipe inteira fica em /profissionais.
+// Quem a clínica marcou como destaque vem primeiro; o resto segue por ordem.
+// Como é carrossel, a equipe inteira cabe sem alongar a página.
 const profissionaisNaHome = [
   ...profissionais.filter((p) => p.data.destaque),
   ...profissionais.filter((p) => !p.data.destaque),
-].slice(0, 6);
+];
 const espacosNaHome = espacos.slice(0, 3);
 const videosDoEspaco = videosPorCategoria('Conheça a clínica');
 const [videoComoChegar] = videosPorCategoria('Como chegar');
@@ -159,18 +159,21 @@ const horarios = site.horarios.exibir ? site.horarios.itens.filter((h) => h.dias
     profissionaisNaHome.length > 0 && (
       <section class="secao secao--creme" aria-labelledby="titulo-profissionais">
         <div class="container">
-          <div class="secao__cabecalho secao__cabecalho--centro">
+          <div class="secao__cabecalho">
             <p class="rotulo">Quem atende</p>
-            <h2 id="titulo-profissionais">Profissionais</h2>
+            <h2 id="titulo-profissionais">Nossa equipe</h2>
             <p class="subtitulo">
-              Equipe multiprofissional, cada um com registro em seu conselho de classe.
+              Profissionais de diferentes áreas da saúde, cada um com registro em seu conselho
+              de classe.
             </p>
           </div>
-          <div class="grade">
+          <Carrossel rotulo="Profissionais da Tao Klyn">
             {profissionaisNaHome.map((profissional) => (
-              <CartaoProfissional profissional={profissional} />
+              <li>
+                <CartaoProfissional profissional={profissional} />
+              </li>
             ))}
-          </div>
+          </Carrossel>
           <div class="acoes acoes--centro" style="margin-top:2.5rem">
             <a class="botao botao--secundario" href="/profissionais">
               Ver todos os profissionais

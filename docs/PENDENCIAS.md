@@ -106,7 +106,10 @@ Medidos com `node scripts/inspecionar-video.mjs`. Todos H.264 (avc1) + AAC
 | Vídeo externo abre em nova aba, **sem player incorporado** | O incorporado do YouTube traz scripts e cookies de terceiros, atrasa a página e não passa pela Content-Security-Policy. | Exigiria afrouxar a CSP em `public/_headers`. |
 | `preload="none"` em todo vídeo, **sem autoplay** | A página só paga o peso da capa (~20 KB) até alguém apertar play. | `src/components/VideoInstitucional.astro`. |
 | Endocrinologia e Urologia criados como serviços | As artes confirmam que a clínica os oferece; sem eles, as duas médicas ficariam sem serviço relacionado. | Basta desmarcar "Mostrar no site" nos dois. |
-| Página inicial mostra **até 6 profissionais** | Com nove, a home viraria uma listagem. Quem está marcado como destaque aparece primeiro; o resto completa por ordem. | `src/pages/index.astro`. |
+| Página inicial mostra a **equipe inteira em carrossel** | Com nove pessoas, uma grade alongaria demais a home. No carrossel cabem todos sem ninguém ficar de fora; quem está marcado como destaque aparece primeiro. A rolagem é nativa e funciona sem JavaScript — os botões são um acréscimo de 0,7 KB. | `src/components/Carrossel.astro`. |
+| `/profissionais` continua em **grade**, não em carrossel | Ali a intenção é comparar e escolher, não passear. Grade mostra todos de uma vez e é melhor para busca. | `src/pages/profissionais/index.astro`. |
+| Duração do vídeo **lida do arquivo no build** | Número digitado à mão desatualiza no dia em que alguém troca o vídeo e esquece de corrigir. | `src/lib/midia.ts`. |
+| "Parte 1"/"Parte 2" saem do **título** e viram selo sobre a capa | A recepção escreve um título só ("Conheça nossa clínica — Parte 1") e a numeração aparece na capa, sem repetir na legenda. | `src/components/VideoInstitucional.astro`. |
 | O **nome do arquivo é o endereço da página** — não há campo "slug" | Dois donos do mesmo endereço quebram links já compartilhados. Renomear está desativado no CMS. | Liberar `operations.rename` no `.pages.yml`. |
 | Relação profissional ↔ serviço gravada dos **dois lados**, mas **unida** na exibição | A recepção preenche por onde for mais natural e as duas telas nunca discordam. | `src/lib/conteudo.ts`. |
 | Políticas como conteúdo editável no CMS | A clínica atualiza junto com o advogado, sem programador. | — |

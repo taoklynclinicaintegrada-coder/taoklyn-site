@@ -11,6 +11,9 @@ import { readFileSync, readdirSync, existsSync, statSync } from 'node:fs';
 import { join, posix } from 'node:path';
 
 const DIST = 'dist';
+
+/** Teto de JavaScript por página. Subir este número é uma decisão, não um acidente. */
+const ORCAMENTO_DE_JS = 8 * 1024;
 if (!existsSync(DIST)) {
   console.error('dist/ não existe. Rode `npm run build` antes.');
   process.exit(1);
@@ -94,11 +97,28 @@ for (const pagina of paginas) {
     if (!urlsExistentes.has(alvo)) problemas.push(`${url}: link interno quebrado para ${alvo}`);
   }
 
-  // Sem JavaScript no cliente, exceto o do Analytics (que só existe se configurado).
-  for (const tag of html.match(/<script\b[^>]*>/g) ?? []) {
-    if (/type="application\/ld\+json"/.test(tag)) continue;
-    if (/googletagmanager\.com/.test(tag)) continue;
-    avisos.push(`${url}: script inesperado — ${tag.slice(0, 90)}`);
+  // Orçamento de JavaScript. O site é quase todo HTML e CSS; o pouco que existe
+  // (os botões do carrossel, e o Analytics quando configurado) precisa continuar
+  // pequeno. Medir o peso pega o que "só mais um script" faz ao longo do tempo —
+  // coisa que um aviso de "existe script" não pega.
+  let jsEmBytes = 0;
+  for (const [, atributos, corpo] of html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/g)) {
+    if (/type="application\/ld\+json"/.test(atributos)) continue;
+    if (/googletagmanager\.com/.test(atributos)) continue;
+
+    const src = atributos.match(/\ssrc="([^"]+)"/)?.[1];
+    if (src?.startsWith('/')) {
+      const arquivo = join(DIST, src);
+      jsEmBytes += existsSync(arquivo) ? statSync(arquivo).size : 0;
+    } else {
+      jsEmBytes += Buffer.byteLength(corpo, 'utf8');
+    }
+  }
+  if (jsEmBytes > ORCAMENTO_DE_JS) {
+    problemas.push(
+      `${url}: ${(jsEmBytes / 1024).toFixed(1)} KB de JavaScript — acima do orçamento de ` +
+        `${(ORCAMENTO_DE_JS / 1024).toFixed(0)} KB por página`,
+    );
   }
 }
 
