@@ -13,7 +13,8 @@
     "verificar:contraste": "node scripts/verificar-contraste.mjs",
     "verificar": "npm run check && npm run verificar:cms && npm run verificar:contraste && npm run build && npm run verificar:site",
     "assets:marca": "node scripts/preparar-assets.mjs",
-    "verificar:site": "node scripts/verificar-site.mjs"
+    "verificar:site": "node scripts/verificar-site.mjs",
+    "preview:producao": "node scripts/servir-como-producao.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",

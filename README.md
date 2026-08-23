@@ -74,7 +74,8 @@ O site sobe em `http://localhost:4321`.
 |---|---|
 | `npm run dev` | Servidor de desenvolvimento |
 | `npm run build` | Gera o site estático em `dist/` |
-| `npm run preview` | Serve o que foi gerado, como em produção |
+| `npm run preview` | Serve o que foi gerado |
+| `npm run preview:producao` | Serve `dist/` **com os cabeçalhos de `public/_headers`**, como o Cloudflare fará — é o único jeito de testar a Content-Security-Policy antes do deploy |
 | `npm run check` | Verificação de tipos e de template (Astro + TypeScript) |
 | `npm run verificar:cms` | Confere se o `.pages.yml` bate com os schemas e com as pastas |
 | `npm run verificar:contraste` | Confere os pares de cor contra o mínimo da WCAG AA |
@@ -181,6 +182,19 @@ Copie `.env.example` para `.env`. O `.env` **não** vai para o Git.
 
 Não é preciso servidor rodando nem webhook próprio: o Pages CMS grava no GitHub
 e o Cloudflare reage ao commit.
+
+### Cabeçalhos HTTP
+
+`public/_headers` define cabeçalhos de segurança (incluindo uma
+Content-Security-Policy que já prevê o Google Analytics) e cache imutável para
+`/_astro/*`. O Cloudflare lê esse arquivo automaticamente.
+
+Depois de mexer nele, teste **antes** de publicar — uma CSP errada só aparece em
+produção, e aparece como página em branco:
+
+```bash
+npm run build && npm run preview:producao
+```
 
 ## Decisões de projeto
 

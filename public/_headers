@@ -1,0 +1,33 @@
+# Cabeçalhos HTTP aplicados pelo Cloudflare Pages.
+# Copiado para dist/ no build e lido pelo Cloudflare.
+# https://developers.cloudflare.com/pages/configuration/headers/
+#
+# Os comentários ficam fora dos blocos de propósito: dentro deles, cada linha
+# indentada é lida como um cabeçalho.
+#
+# O que cada regra abaixo faz:
+#   X-Content-Type-Options  impede o navegador de "adivinhar" o tipo do arquivo
+#   X-Frame-Options         o site não pode ser embutido em iframe de terceiros
+#   Referrer-Policy         ao sair daqui, o destino recebe só o domínio
+#   Permissions-Policy      nada aqui usa câmera, microfone, local ou pagamento
+#   Content-Security-Policy o site só carrega o que é dele; a exceção é o Google
+#                           Analytics, que só age se PUBLIC_GA_ID existir — a
+#                           regra já está pronta para quando a medição for ligada
+
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()
+  Content-Security-Policy: default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; img-src 'self' data:; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; connect-src 'self' https://www.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com
+
+# Imagens, CSS e JS gerados pelo Astro trazem o conteúdo no próprio nome:
+# mudou o conteúdo, mudou o nome. Podem ser guardados para sempre.
+
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Ícones e logos trocam raramente, mas trocam sem mudar de nome.
+
+/images/*
+  Cache-Control: public, max-age=86400, must-revalidate
