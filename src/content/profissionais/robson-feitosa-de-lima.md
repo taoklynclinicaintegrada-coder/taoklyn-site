@@ -9,6 +9,7 @@ areasDeAtuacao:
   - Abordagem cognitiva
   - Abordagem comportamental
   - Bioenergética
+  - Hipnose ericksoniana
   - Psicoterapia breve
   - Palestras
   - Yoga e meditação

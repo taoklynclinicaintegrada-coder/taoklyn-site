@@ -3,7 +3,7 @@ nome: Treinamento Funcional
 resumo: Aulas de treinamento funcional com foco em força, mobilidade e bem-estar.
 icone: movimento
 profissionaisRelacionados:
-  - fernando-piccigueli
+  - fernando-picciguelli
 mensagemWhatsApp: "Olá! Conheci a Tao Klyn pelo site e gostaria de informações sobre Treinamento Funcional."
 ordem: 8
 destaque: true

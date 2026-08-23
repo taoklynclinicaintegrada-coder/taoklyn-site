@@ -1,7 +1,7 @@
 ---
-nome: Fernando Piccigueli
+nome: Fernando Picciguelli
 profissao: Instrutor de Treinamento Funcional
-foto: /src/assets/uploads/profissionais/fernando-piccigueli.webp
+foto: /src/assets/uploads/profissionais/fernando-picciguelli.webp
 descricaoCurta: Instrutor responsável pelas aulas de treinamento funcional na Tao Klyn.
 areasDeAtuacao:
   - Treinamento funcional

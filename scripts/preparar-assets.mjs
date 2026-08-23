@@ -89,8 +89,10 @@ const RETRATOS = [
     recorte: { left: 445, top: 245, width: 315, height: 315 },
   },
   {
+    // O arquivo em referencias/ veio com um L; a grafia confirmada pela
+    // clinica e Picciguelli, e e ela que vale no site.
     origem: ref('profissionais', 'fernando-piccigueli.png'),
-    destino: dest('src/assets/uploads/profissionais/fernando-piccigueli.webp'),
+    destino: dest('src/assets/uploads/profissionais/fernando-picciguelli.webp'),
     recorte: { left: 566, top: 206, width: 264, height: 264 },
   },
 ];

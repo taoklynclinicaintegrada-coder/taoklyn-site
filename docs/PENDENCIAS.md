@@ -13,10 +13,8 @@ se esconde sozinha. Cada item abaixo é uma decisão que só a clínica pode tom
 | # | Pendência | Por quê |
 |---|---|---|
 | 1.1 | **Domínio oficial** | Enquanto não houver domínio, o endereço canônico e o sitemap apontam para `https://taoklyn-site.pages.dev`. Basta definir `SITE_URL` no Cloudflare Pages. |
-| 1.2 | **Grafia do nome: Piccigueli ou Piccigu*ell*i?** | A arte de divulgação escreve **PICCIGUELLI**; o material enviado escreve **Piccigueli**. O site está com *Piccigueli*. Confirmar antes de divulgar, porque o endereço da página usa essa grafia. |
-| 1.3 | **Abordagem "NOSE ERICKSONIANA"** (Robson) | A arte lista esse termo, que aparenta ser **"Hipnose Ericksoniana"** truncado. **Não foi publicado.** Confirmar o termo correto antes de incluir — nomenclatura clínica errada no site é problema perante o conselho. |
-| 1.4 | **Revisão jurídica das políticas** | `Política de Privacidade` e `Política de Cookies` foram escritas descrevendo corretamente o funcionamento técnico do site, e trazem um aviso de que precisam de revisão. Um advogado deve validá-las. |
-| 1.5 | **Lista final de serviços** | Os 10 serviços publicados vieram dos destaques do Instagram e das artes. Confirmar se todos estão ativos hoje e se falta algum. |
+| 1.2 | **Revisão jurídica das políticas** | `Política de Privacidade` e `Política de Cookies` foram escritas descrevendo corretamente o funcionamento técnico do site, e trazem um aviso de que precisam de revisão. Um advogado deve validá-las. |
+| 1.3 | **Lista final de serviços** | Os 10 serviços publicados vieram dos destaques do Instagram e das artes. Confirmar se todos estão ativos hoje e se falta algum. |
 
 ---
 
@@ -36,6 +34,7 @@ se esconde sozinha. Cada item abaixo é uma decisão que só a clínica pode tom
 | 2.10 | **Acessibilidade física e estacionamento** | Campo "Orientações de como chegar", em Configurações → Endereço, está vazio. |
 | 2.11 | **Registro profissional do Fernando** | Nenhum CREF foi informado. O campo está vazio — nada foi inventado. |
 | 2.12 | **Primeira publicação do blog** | Existe apenas um **rascunho** chamado "Modelo de publicação", que não aparece no site. |
+| 2.13 | **Conferir "Hipnose ericksoniana" com o Robson** | O termo foi confirmado por você em 23/08/2026 e publicado. Vale uma confirmação direta com o profissional, já que a arte de origem trazia o termo truncado. |
 
 ---
 
@@ -53,7 +52,16 @@ se esconde sozinha. Cada item abaixo é uma decisão que só a clínica pode tom
 
 ---
 
-## 4. Decisões que tomei e que você pode reverter
+## 4. Decisões já tomadas pelo cliente
+
+| Data | Decisão |
+|---|---|
+| 23/08/2026 | A grafia oficial é **Fernando Picciguelli** (dois L), como nas artes de divulgação. O endereço da página é `/profissionais/fernando-picciguelli`. |
+| 23/08/2026 | O termo truncado na arte do Robson é **Hipnose ericksoniana**, e foi publicado entre as áreas de atuação. |
+
+---
+
+## 5. Decisões que tomei e que você pode reverter
 
 | Decisão | Por quê | Como reverter |
 |---|---|---|
