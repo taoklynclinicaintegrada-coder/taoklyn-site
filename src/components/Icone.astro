@@ -19,7 +19,8 @@ export type NomeDoIcone =
   | 'coracao'
   | 'equilibrio'
   | 'maos'
-  | 'grupo';
+  | 'grupo'
+  | 'estetoscopio';
 
 interface Props {
   nome: NomeDoIcone;
@@ -140,6 +141,16 @@ const { nome, tamanho = 24, class: classe } = Astro.props;
       <>
         <path d="M7 13.5 4.5 11a2 2 0 0 1 2.8-2.8L12 12.7l4.7-4.5A2 2 0 0 1 19.5 11L17 13.5" />
         <path d="M7 13.5c1.7 3 3.4 4.5 5 4.5s3.3-1.5 5-4.5" />
+      </>
+    )
+  }
+  {
+    nome === 'estetoscopio' && (
+      <>
+        <path d="M6 3v5.5a4.5 4.5 0 0 0 9 0V3" />
+        <path d="M4.6 3h2.8M13.6 3h2.8" />
+        <path d="M10.5 13v2.2a4.3 4.3 0 0 0 8.6 0v-2" />
+        <circle cx="19.1" cy="10.3" r="2.3" />
       </>
     )
   }

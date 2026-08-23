@@ -47,7 +47,17 @@ const servicos = defineCollection({
     resumo: z.string().trim().max(280).optional(),
     imagem: z.string().trim().optional(),
     icone: z
-      .enum(['folha', 'agulha', 'mente', 'movimento', 'coracao', 'equilibrio', 'maos', 'grupo'])
+      .enum([
+        'folha',
+        'agulha',
+        'mente',
+        'movimento',
+        'coracao',
+        'equilibrio',
+        'maos',
+        'grupo',
+        'estetoscopio',
+      ])
       .default('folha'),
     profissionaisRelacionados: z.array(referenciaDeConteudo).default([]),
     mensagemWhatsApp: z.string().trim().optional(),

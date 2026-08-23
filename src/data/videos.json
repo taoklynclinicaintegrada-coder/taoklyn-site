@@ -1,0 +1,32 @@
+[
+  {
+    "titulo": "Conheça nossa clínica — Parte 1",
+    "categoria": "Conheça a clínica",
+    "descricao": "Primeira parte do passeio pelos ambientes da Tao Klyn.",
+    "arquivo": "/uploads/videos/conhecendo-clinica-parte-1.mp4",
+    "url": "",
+    "poster": "/uploads/videos/posters/conhecendo-clinica-parte-1.jpg",
+    "alt": "Vídeo com um passeio pelos ambientes da Tao Klyn, primeira parte.",
+    "ativo": true
+  },
+  {
+    "titulo": "Conheça nossa clínica — Parte 2",
+    "categoria": "Conheça a clínica",
+    "descricao": "Segunda parte do passeio pelos ambientes da Tao Klyn.",
+    "arquivo": "/uploads/videos/conhecendo-clinica-parte-2.mp4",
+    "url": "",
+    "poster": "/uploads/videos/posters/conhecendo-clinica-parte-2.jpg",
+    "alt": "Vídeo com um passeio pelos ambientes da Tao Klyn, segunda parte.",
+    "ativo": true
+  },
+  {
+    "titulo": "Como chegar à Tao Klyn",
+    "categoria": "Como chegar",
+    "descricao": "Caminho até a clínica, no Farol, em Maceió.",
+    "arquivo": "",
+    "url": "",
+    "poster": "",
+    "alt": "Vídeo mostrando o caminho até a Tao Klyn.",
+    "ativo": true
+  }
+]

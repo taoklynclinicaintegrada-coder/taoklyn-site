@@ -20,6 +20,25 @@ media:
         update: 'media: atualiza {filename}'
         delete: 'media: remove {filename}'
 
+  - name: videos
+    label: Vídeos
+    input: public/uploads/videos
+    output: /uploads/videos
+    extensions: [mp4, webm]
+    rename: safe
+    commit:
+      templates:
+        create: 'media: adiciona vídeo {filename}'
+        update: 'media: atualiza vídeo {filename}'
+        delete: 'media: remove vídeo {filename}'
+
+  - name: capas_de_video
+    label: Capas de vídeo
+    input: public/uploads/videos/posters
+    output: /uploads/videos/posters
+    categories: [image]
+    rename: safe
+
 content:
   # ------------------------------------------------------------------ GERAL --
   - name: geral
@@ -391,6 +410,8 @@ content:
                   label: Mãos
                 - name: grupo
                   label: Grupo
+                - name: estetoscopio
+                  label: Estetoscópio (consulta médica)
 
           - name: profissionaisRelacionados
             label: Quem atende
@@ -562,6 +583,66 @@ content:
           - name: descricao
             label: Descrição
             type: text
+          - name: ativo
+            label: Mostrar no site
+            type: boolean
+            default: true
+
+      - name: videos
+        label: Vídeos
+        type: file
+        path: src/data/videos.json
+        format: json
+        list: true
+        operations:
+          delete: false
+          rename: false
+        fields:
+          - name: titulo
+            label: Título
+            type: string
+            required: true
+          - name: categoria
+            label: Categoria
+            type: select
+            options:
+              values:
+                - name: Conheça a clínica
+                  label: Conheça a clínica
+                - name: Como chegar
+                  label: Como chegar
+                - name: Institucional
+                  label: Institucional
+          - name: descricao
+            label: Descrição
+            type: text
+          - name: arquivo
+            label: Arquivo de vídeo
+            type: file
+            options:
+              media: videos
+            description: >-
+              Envie o arquivo apenas se ele for pequeno (até uns 5 MB). Vídeo
+              grande deixa o site pesado e estoura o limite da hospedagem —
+              nesse caso use o campo de endereço abaixo.
+          - name: url
+            label: Endereço do vídeo (YouTube ou similar)
+            type: string
+            description: >-
+              Cole o link do vídeo publicado fora do site. Use quando o arquivo
+              for grande demais para ser enviado aqui.
+          - name: poster
+            label: Imagem de capa
+            type: image
+            options:
+              media: capas_de_video
+            description: É o que aparece antes de a pessoa apertar play.
+          - name: alt
+            label: Descrição do vídeo (acessibilidade)
+            type: string
+            description: >-
+              Diga em uma frase o que o vídeo mostra. É lido por quem usa
+              leitor de tela.
           - name: ativo
             label: Mostrar no site
             type: boolean

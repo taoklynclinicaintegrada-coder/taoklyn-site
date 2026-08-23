@@ -2,6 +2,7 @@ import { z } from 'astro/zod';
 import dadosDoSite from '../data/site.json';
 import dadosDaGaleria from '../data/galeria.json';
 import dadosDosEspacos from '../data/espacos.json';
+import dadosDosVideos from '../data/videos.json';
 
 /**
  * Configuracoes institucionais e listas simples (galeria, espacos).
@@ -74,6 +75,19 @@ const itemDaGaleriaSchema = z.object({
   ativo: z.boolean().default(true),
 });
 
+const videoSchema = z.object({
+  titulo: z.string().trim().min(1),
+  categoria: textoOpcional,
+  descricao: textoOpcional,
+  /** Arquivo dentro de public/uploads/videos, servido pelo próprio site. */
+  arquivo: textoOpcional,
+  /** Endereço externo (YouTube, por exemplo), para vídeos pesados demais. */
+  url: textoOpcional,
+  poster: textoOpcional,
+  alt: textoOpcional,
+  ativo: z.boolean().default(true),
+});
+
 const espacoSchema = z.object({
   nome: z.string().trim().min(1),
   descricao: textoOpcional,
@@ -106,7 +120,22 @@ export const espacos = validar(
   'src/data/espacos.json',
 ).filter((item) => item.ativo);
 
+/**
+ * Um vídeo só entra no site se tiver de onde tocar: arquivo local ou endereço
+ * externo. Sem fonte, o bloco inteiro some — melhor do que um player vazio.
+ */
+export const videos = validar(
+  z.array(videoSchema),
+  dadosDosVideos,
+  'src/data/videos.json',
+).filter((video) => video.ativo && (video.arquivo || video.url));
+
+export function videosPorCategoria(categoria: string): Video[] {
+  return videos.filter((video) => video.categoria === categoria);
+}
+
 export type Site = z.infer<typeof siteSchema>;
+export type Video = z.infer<typeof videoSchema>;
 export type ItemDaGaleria = z.infer<typeof itemDaGaleriaSchema>;
 export type Espaco = z.infer<typeof espacoSchema>;
 

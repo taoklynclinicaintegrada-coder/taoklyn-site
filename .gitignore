@@ -11,6 +11,18 @@ dist/
 .env.local
 .env.*.local
 
+# material de origem compactado: serve para transportar arquivos, não para
+# viver no repositório. Extraia e versione o conteúdo, não o pacote.
+*.zip
+*.rar
+*.7z
+
+# Vídeos originais: ficam preservados no computador, mas fora do Git. Os dois
+# vídeos do tour já estão versionados em public/uploads/videos (3,8 MB, servidos
+# pelo site); o "como chegar" tem 24 MB e vai para hospedagem externa
+# (docs/PENDENCIAS.md §3.1). O LEIA-ME.txt continua versionado.
+referencias/videos/*.mp4
+
 # sistema operacional / editor
 .DS_Store
 Thumbs.db

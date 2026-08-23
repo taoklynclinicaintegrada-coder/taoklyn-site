@@ -8,7 +8,7 @@ areasDeAtuacao:
   - Condicionamento físico
 servicosRelacionados:
   - treinamento-funcional
-ordem: 3
+ordem: 9
 destaque: true
 ativo: true
 ---

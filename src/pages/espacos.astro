@@ -3,13 +3,16 @@ import Base from '../layouts/Base.astro';
 import Migalhas from '../components/Migalhas.astro';
 import Figura from '../components/Figura.astro';
 import Icone from '../components/Icone.astro';
-import { site, espacos, galeria, linkWhatsApp } from '../lib/site';
+import VideoInstitucional from '../components/VideoInstitucional.astro';
+import { site, espacos, galeria, linkWhatsApp, videosPorCategoria } from '../lib/site';
 import { migalhas } from '../lib/seo';
 
 const caminho = [
   { nome: 'Início', href: '/' },
   { nome: 'Espaços', href: '/espacos' },
 ];
+
+const videosDoEspaco = videosPorCategoria('Conheça a clínica');
 
 /** A galeria e agrupada pela categoria escolhida no CMS; sem categoria, cai em "Outros". */
 const categorias = new Map<string, typeof galeria>();
@@ -33,12 +36,22 @@ const grupos = [...categorias.entries()];
     <div class="container">
       <div class="secao__cabecalho">
         <p class="rotulo">O espaço</p>
-        <h1>Um ambiente preparado para acolher</h1>
+        <h1>Conheça nosso espaço</h1>
         <p class="subtitulo">
-          Consultórios e salas pensados para atendimento tranquilo e reservado, no bairro do
-          Farol, em Maceió.
+          Conheça um pouco da estrutura da Tao Klyn e dos ambientes preparados para receber
+          nossos pacientes e profissionais.
         </p>
       </div>
+
+      {
+        videosDoEspaco.length > 0 && (
+          <div class="videos" style="margin-bottom:3rem">
+            {videosDoEspaco.map((video) => (
+              <VideoInstitucional video={video} />
+            ))}
+          </div>
+        )
+      }
 
       {
         espacos.length > 0 ? (
@@ -65,12 +78,12 @@ const grupos = [...categorias.entries()];
               </article>
             ))}
           </div>
-        ) : (
+        ) : videosDoEspaco.length === 0 ? (
           <p class="subtitulo">
             As fotos e a descrição dos ambientes serão publicadas assim que estiverem
             disponíveis. Para conhecer a clínica, fale com a recepção e agende uma visita.
           </p>
-        )
+        ) : null
       }
     </div>
   </section>
@@ -142,6 +155,12 @@ const grupos = [...categorias.entries()];
 </Base>
 
 <style>
+  .videos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+
   .galeria__grupo + .galeria__grupo {
     margin-top: 3rem;
   }

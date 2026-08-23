@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Migalhas from '../components/Migalhas.astro';
 import Icone from '../components/Icone.astro';
+import VideoInstitucional from '../components/VideoInstitucional.astro';
 import {
   site,
   linkWhatsApp,
@@ -9,6 +10,7 @@ import {
   linkEmail,
   linkMapa,
   enderecoEmUmaLinha,
+  videosPorCategoria,
 } from '../lib/site';
 import { migalhas } from '../lib/seo';
 
@@ -17,6 +19,7 @@ const caminho = [
   { nome: 'Contato', href: '/contato' },
 ];
 const horarios = site.horarios.exibir ? site.horarios.itens.filter((h) => h.dias || h.horario) : [];
+const [videoComoChegar] = videosPorCategoria('Como chegar');
 ---
 
 <Base
@@ -159,7 +162,14 @@ const horarios = site.horarios.exibir ? site.horarios.itens.filter((h) => h.dias
           )
         }
 
-        <div class="acoes" style="margin-top:2rem">
+        <h3 style="margin-top:2rem">Como chegar à Tao Klyn</h3>
+        <p class="cartao__texto">
+          Abra o mapa para traçar a rota a partir de onde você está{
+            videoComoChegar ? ' ou assista ao caminho em vídeo' : ''
+          }.
+        </p>
+
+        <div class="acoes" style="margin-top:1.5rem">
           <a
             class="botao botao--principal"
             href={linkMapa()}
@@ -169,11 +179,26 @@ const horarios = site.horarios.exibir ? site.horarios.itens.filter((h) => h.dias
             data-evento-rotulo="pagina-contato"
           >
             <Icone nome="local" tamanho={20} />
-            Como chegar
+            Abrir no Google Maps
           </a>
+          {
+            videoComoChegar?.url && (
+              <a
+                class="botao botao--secundario"
+                href={videoComoChegar.url}
+                target="_blank"
+                rel="noopener"
+                data-evento="click_maps"
+                data-evento-rotulo="video-como-chegar"
+              >
+                Assistir como chegar
+              </a>
+            )
+          }
         </div>
         <p class="endereco__completo">{enderecoEmUmaLinha()}</p>
       </div>
+      {videoComoChegar?.arquivo && <VideoInstitucional video={videoComoChegar} destaque />}
     </div>
   </section>
 </Base>
@@ -197,6 +222,18 @@ const horarios = site.horarios.exibir ? site.horarios.itens.filter((h) => h.dias
     background-color: var(--creme);
     border: 1px solid var(--borda);
     border-radius: 50%;
+  }
+
+  .endereco {
+    display: grid;
+    gap: 2.5rem;
+    align-items: center;
+  }
+
+  @media (min-width: 56rem) {
+    .endereco:has(figure) {
+      grid-template-columns: 1.4fr auto;
+    }
   }
 
   .endereco__linhas {

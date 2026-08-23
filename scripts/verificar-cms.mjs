@@ -78,7 +78,7 @@ for (const entrada of entradas) {
 
   // Todo campo de imagem precisa apontar para uma media declarada.
   for (const { caminho, campo } of campos) {
-    if (campo.type === 'image' || campo.type === 'rich-text') {
+    if (campo.type === 'image' || campo.type === 'file' || campo.type === 'rich-text') {
       const media = campo.options?.media;
       if (media !== false && media !== undefined && !nomesDeMedia.has(media)) {
         problemas.push(`${rotulo}: campo "${caminho}" usa media "${media}", que não existe`);

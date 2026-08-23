@@ -16,7 +16,7 @@ troca fotos e publica. Ao salvar, o site se atualiza sozinho em poucos minutos.
 4. [Profissionais](#4-profissionais)
 5. [Serviços](#5-serviços)
 6. [Publicações (blog)](#6-publicações-blog)
-7. [Galeria e Espaços](#7-galeria-e-espaços)
+7. [Galeria, Espaços e Vídeos](#7-galeria-espaços-e-vídeos)
 8. [Configurações do site (telefone, WhatsApp, horários…)](#8-configurações-do-site)
 9. [Trocar uma imagem](#9-trocar-uma-imagem)
 10. [Desfazer uma alteração](#10-desfazer-uma-alteração)
@@ -84,6 +84,7 @@ No menu da esquerda aparecem duas áreas:
 - **Serviços** — o que a clínica oferece.
 - **Publicações** — textos e avisos do blog.
 - **Galeria** — fotos da clínica.
+- **Vídeos** — vídeos institucionais e o tour pela clínica.
 - **Espaços** — salas e ambientes.
 - **Páginas de texto** — Política de Privacidade e Política de Cookies.
 
@@ -180,9 +181,10 @@ Desmarque **Publicado no site** → **Save**. O texto sai do ar e continua salvo
 
 ---
 
-## 7. Galeria e Espaços
+## 7. Galeria, Espaços e Vídeos
 
-Estas duas são **listas**: tudo fica numa tela só.
+As três são **listas**: cada uma fica numa tela só, e a ordem da lista é a
+ordem que aparece no site.
 
 ### Galeria
 
@@ -204,6 +206,34 @@ ordem no site.
 
 Mesma lógica. Cada item é uma sala ou ambiente. Marque **Disponível para
 locação** para que apareça o selo correspondente.
+
+### Vídeos
+
+Também é uma lista. Cada item é um vídeo, e há **duas formas** de colocá-lo no
+site:
+
+**Vídeo pequeno (até uns 5 MB)** — envie o arquivo em "Arquivo de vídeo".
+
+**Vídeo grande** — publique primeiro no YouTube e cole o link em "Endereço do
+vídeo (YouTube ou similar)". Arquivo grande deixa o site pesado e pode estourar
+o limite da hospedagem.
+
+Preencha também:
+
+- **Categoria** — decide onde o vídeo aparece:
+  - *Conheça a clínica* → seção "Conheça nosso espaço"
+  - *Como chegar* → botão "Assistir como chegar", na Localização e no Contato
+  - *Institucional* → guardado para uso futuro
+- **Imagem de capa** — é o que aparece antes de a pessoa apertar play.
+- **Descrição do vídeo (acessibilidade)** — uma frase dizendo o que o vídeo
+  mostra.
+
+> Nenhum vídeo começa sozinho, e nenhum é baixado antes de a pessoa clicar.
+> Quem abre a página paga só o peso da capa.
+
+**O vídeo "Como chegar à Tao Klyn" está cadastrado e vazio de propósito**: o
+arquivo original tem 24 MB, grande demais para o site. Assim que ele estiver no
+YouTube, basta colar o endereço nesse item e o botão aparece sozinho.
 
 ---
 

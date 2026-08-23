@@ -5,10 +5,19 @@ import CartaoServico from '../components/CartaoServico.astro';
 import CartaoProfissional from '../components/CartaoProfissional.astro';
 import CartaoPost from '../components/CartaoPost.astro';
 import Figura from '../components/Figura.astro';
+import VideoInstitucional from '../components/VideoInstitucional.astro';
 import { Image } from 'astro:assets';
 import marcaSelo from '../assets/marca/marca-selo.png';
 import simbolo from '../assets/marca/simbolo.png';
-import { site, linkWhatsApp, linkTelefone, linkMapa, enderecoEmUmaLinha, espacos } from '../lib/site';
+import {
+  site,
+  linkWhatsApp,
+  linkTelefone,
+  linkMapa,
+  enderecoEmUmaLinha,
+  espacos,
+  videosPorCategoria,
+} from '../lib/site';
 import { listarServicos, listarProfissionais, listarPosts } from '../lib/conteudo';
 
 const servicos = await listarServicos();
@@ -17,10 +26,16 @@ const posts = (await listarPosts()).slice(0, 3);
 
 const servicosEmDestaque = servicos.filter((s) => s.data.destaque);
 const servicosNaHome = (servicosEmDestaque.length ? servicosEmDestaque : servicos).slice(0, 6);
-const profissionaisNaHome = profissionais.filter((p) => p.data.destaque).length
-  ? profissionais.filter((p) => p.data.destaque)
-  : profissionais;
+// Quem a clínica marcou como destaque vem primeiro; o resto completa por
+// ordem. Seis cabem na página inicial sem transformá-la numa listagem — a
+// equipe inteira fica em /profissionais.
+const profissionaisNaHome = [
+  ...profissionais.filter((p) => p.data.destaque),
+  ...profissionais.filter((p) => !p.data.destaque),
+].slice(0, 6);
 const espacosNaHome = espacos.slice(0, 3);
+const videosDoEspaco = videosPorCategoria('Conheça a clínica');
+const [videoComoChegar] = videosPorCategoria('Como chegar');
 const horarios = site.horarios.exibir ? site.horarios.itens.filter((h) => h.dias || h.horario) : [];
 ---
 
@@ -171,12 +186,22 @@ const horarios = site.horarios.exibir ? site.horarios.itens.filter((h) => h.dias
     <div class="container">
       <div class="secao__cabecalho secao__cabecalho--centro">
         <p class="rotulo">O espaço</p>
-        <h2 id="titulo-espacos">Um ambiente preparado para acolher</h2>
+        <h2 id="titulo-espacos">Conheça nosso espaço</h2>
         <p class="subtitulo">
-          Salas e consultórios pensados para atendimento tranquilo e reservado, no bairro do
-          Farol, em Maceió.
+          Conheça um pouco da estrutura da Tao Klyn e dos ambientes preparados para receber
+          nossos pacientes e profissionais.
         </p>
       </div>
+
+      {
+        videosDoEspaco.length > 0 && (
+          <div class="videos">
+            {videosDoEspaco.map((video) => (
+              <VideoInstitucional video={video} />
+            ))}
+          </div>
+        )
+      }
 
       {
         espacosNaHome.length > 0 ? (
@@ -198,12 +223,12 @@ const horarios = site.horarios.exibir ? site.horarios.itens.filter((h) => h.dias
               </article>
             ))}
           </div>
-        ) : (
+        ) : videosDoEspaco.length === 0 ? (
           <p class="centro subtitulo" style="margin-inline:auto;max-width:38rem">
             As fotos do espaço serão publicadas em breve. Enquanto isso, fale com a recepção
             para conhecer a clínica pessoalmente.
           </p>
-        )
+        ) : null
       }
 
       <div class="acoes acoes--centro" style="margin-top:2.5rem">
@@ -287,6 +312,13 @@ const horarios = site.horarios.exibir ? site.horarios.itens.filter((h) => h.dias
             </p>
           )
         }
+        <h3 class="localizacao__subtitulo">Como chegar à Tao Klyn</h3>
+        <p class="cartao__texto">
+          Estamos na Rua Princesa Isabel, no Farol. Abra o mapa para traçar a rota{
+            videoComoChegar ? ' ou assista ao caminho em vídeo' : ''
+          }.
+        </p>
+
         <div class="acoes" style="margin-top:1.75rem">
           <a
             class="botao botao--principal"
@@ -297,8 +329,22 @@ const horarios = site.horarios.exibir ? site.horarios.itens.filter((h) => h.dias
             data-evento-rotulo="home"
           >
             <Icone nome="local" tamanho={20} />
-            Como chegar
+            Abrir no Google Maps
           </a>
+          {
+            videoComoChegar?.url && (
+              <a
+                class="botao botao--secundario"
+                href={videoComoChegar.url}
+                target="_blank"
+                rel="noopener"
+                data-evento="click_maps"
+                data-evento-rotulo="video-como-chegar"
+              >
+                Assistir como chegar
+              </a>
+            )
+          }
           {
             site.contato.telefone && (
               <a
@@ -314,6 +360,7 @@ const horarios = site.horarios.exibir ? site.horarios.itens.filter((h) => h.dias
           }
         </div>
       </div>
+      {videoComoChegar?.arquivo && <VideoInstitucional video={videoComoChegar} destaque />}
     </div>
   </section>
 
@@ -490,10 +537,29 @@ const horarios = site.horarios.exibir ? site.horarios.itens.filter((h) => h.dias
     align-items: center;
   }
 
+  .videos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+  }
+
+  .localizacao__subtitulo {
+    margin-top: 2rem;
+    margin-bottom: 0.5rem;
+    font-size: 1.25rem;
+  }
+
   .localizacao__horarios {
     margin: 1.5rem 0 0;
     padding: 0;
     list-style: none;
+  }
+
+  .localizacao {
+    display: grid;
+    gap: 2.5rem;
+    align-items: center;
   }
 
   .localizacao__horarios li {
@@ -511,6 +577,10 @@ const horarios = site.horarios.exibir ? site.horarios.itens.filter((h) => h.dias
 
     .locacao {
       grid-template-columns: 1.6fr auto;
+    }
+
+    .localizacao:has(figure) {
+      grid-template-columns: 1.4fr auto;
     }
   }
 </style>

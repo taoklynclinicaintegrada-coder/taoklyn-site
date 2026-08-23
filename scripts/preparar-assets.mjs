@@ -95,6 +95,36 @@ const RETRATOS = [
     destino: dest('src/assets/uploads/profissionais/fernando-picciguelli.webp'),
     recorte: { left: 566, top: 206, width: 264, height: 264 },
   },
+  {
+    origem: ref('profissionais', 'margarida-maria-campos-ferreira.png'),
+    destino: dest('src/assets/uploads/profissionais/margarida-maria-campos-ferreira.webp'),
+    recorte: { left: 320, top: 250, width: 330, height: 330 },
+  },
+  {
+    origem: ref('profissionais', 'nicolie-lira-endocrinologia.png'),
+    destino: dest('src/assets/uploads/profissionais/nicolie-lira.webp'),
+    recorte: { left: 528, top: 72, width: 312, height: 312 },
+  },
+  {
+    origem: ref('profissionais', 'marilia-cavalcante-urologia.png'),
+    destino: dest('src/assets/uploads/profissionais/marilia-cavalcante.webp'),
+    recorte: { left: 548, top: 58, width: 296, height: 296 },
+  },
+  {
+    origem: ref('profissionais', 'tereza-feitosa-fisioterapia.png'),
+    destino: dest('src/assets/uploads/profissionais/tereza-feitosa.webp'),
+    recorte: { left: 430, top: 240, width: 340, height: 340 },
+  },
+  {
+    origem: ref('profissionais', 'alicya-loureiro-fisioterapia.png'),
+    destino: dest('src/assets/uploads/profissionais/alicya-loureiro.webp'),
+    recorte: { left: 320, top: 255, width: 310, height: 310 },
+  },
+  {
+    origem: ref('profissionais', 'adrienne-gusmao-psicologia.png'),
+    destino: dest('src/assets/uploads/profissionais/adrienne-gusmao.webp'),
+    recorte: { left: 380, top: 255, width: 330, height: 330 },
+  },
 ];
 
 async function main() {

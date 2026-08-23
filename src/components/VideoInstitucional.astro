@@ -1,0 +1,143 @@
+---
+import Icone from './Icone.astro';
+import type { Video } from '../lib/site';
+
+/**
+ * Um vídeo institucional.
+ *
+ * Duas formas, escolhidas pelo que o CMS preencheu:
+ *
+ * - **arquivo local** → <video> nativo, com `preload="none"`. O navegador só
+ *   baixa o vídeo depois que a pessoa aperta play; antes disso, a página paga
+ *   apenas o peso do poster (~20 KB). Nunca há autoplay.
+ * - **endereço externo** → um link para assistir fora do site. Deliberadamente
+ *   não é um iframe: o incorporado do YouTube traz scripts e cookies de
+ *   terceiros, atrasa a página e não passa pela Content-Security-Policy.
+ */
+interface Props {
+  video: Video;
+  /** Ocupa a largura toda quando o vídeo é o assunto principal da seção. */
+  destaque?: boolean;
+}
+
+const { video, destaque = false } = Astro.props;
+const rotulo = video.alt || video.titulo;
+---
+
+<figure class:list={['video', destaque && 'video--destaque']}>
+  {
+    video.arquivo ? (
+      <video
+        class="video__player"
+        controls
+        preload="none"
+        playsinline
+        poster={video.poster || undefined}
+        aria-label={rotulo}
+      >
+        <source src={video.arquivo} type="video/mp4" />
+        <p>
+          Seu navegador não consegue exibir este vídeo.{' '}
+          <a href={video.arquivo} download>
+            Baixe o arquivo
+          </a>{' '}
+          para assistir.
+        </p>
+      </video>
+    ) : (
+      <a
+        class="video__externo"
+        href={video.url}
+        target="_blank"
+        rel="noopener"
+        aria-label={`Assistir: ${video.titulo} (abre em outra aba)`}
+      >
+        {video.poster && <img src={video.poster} alt="" loading="lazy" />}
+        <span class="video__jogar">
+          <Icone nome="seta" tamanho={22} />
+          Assistir ao vídeo
+        </span>
+      </a>
+    )
+  }
+
+  {
+    (video.titulo || video.descricao) && (
+      <figcaption>
+        <strong>{video.titulo}</strong>
+        {video.descricao && <span>{video.descricao}</span>}
+      </figcaption>
+    )
+  }
+</figure>
+
+<style>
+  .video {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .video__player,
+  .video__externo img {
+    width: 100%;
+    max-width: 22rem;
+    aspect-ratio: 9 / 16;
+    object-fit: cover;
+    background-color: var(--verde-escuro);
+    border: 1px solid var(--borda);
+    border-radius: var(--raio-grande);
+  }
+
+  .video--destaque .video__player,
+  .video--destaque .video__externo img {
+    max-width: 26rem;
+  }
+
+  .video__externo {
+    position: relative;
+    display: inline-block;
+    max-width: 22rem;
+    text-decoration: none;
+  }
+
+  .video__jogar {
+    position: absolute;
+    left: 50%;
+    bottom: 1rem;
+    transform: translateX(-50%);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 2.75rem;
+    padding: 0.6rem 1.15rem;
+    background-color: var(--dourado);
+    color: var(--verde-profundo);
+    border-radius: 999px;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .video figcaption {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    max-width: 22rem;
+    color: var(--texto-suave);
+    font-size: 0.9375rem;
+  }
+
+  .video figcaption strong {
+    color: var(--texto);
+  }
+
+  :global(.secao--escura) .video figcaption {
+    color: var(--creme);
+  }
+
+  :global(.secao--escura) .video figcaption strong {
+    color: var(--branco);
+  }
+</style>
