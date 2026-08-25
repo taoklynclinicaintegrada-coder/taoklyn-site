@@ -1,1 +1,90 @@
-[]
+[
+  {
+    "titulo": "Fachada",
+    "imagem": "/src/assets/uploads/galeria/fachada.webp",
+    "alt": "Fachada da Tao Klyn: muro de pedra clara com o letreiro \"Tao Klyn\" em letras escuras, cercado por plantas.",
+    "categoria": "Clínica",
+    "descricao": "Rua Princesa Isabel, 473 — Farol, Maceió.",
+    "ativo": true
+  },
+  {
+    "titulo": "Recepção",
+    "imagem": "/src/assets/uploads/galeria/recepcao.webp",
+    "alt": "Recepção da clínica, com sofás claros, mesa de centro com arranjo de plantas e revistas.",
+    "categoria": "Recepção",
+    "descricao": "",
+    "ativo": true
+  },
+  {
+    "titulo": "Sala de espera",
+    "imagem": "/src/assets/uploads/galeria/sala-de-espera.webp",
+    "alt": "Sala de espera com duas poltronas bege, um quadro na parede e uma planta entre elas.",
+    "categoria": "Recepção",
+    "descricao": "",
+    "ativo": true
+  },
+  {
+    "titulo": "Estúdio de Pilates",
+    "imagem": "/src/assets/uploads/galeria/estudio-de-pilates.webp",
+    "alt": "Estúdio de pilates com aparelhos de madeira, piso azul, bolas suspensas e espaldar ao fundo.",
+    "categoria": "Pilates",
+    "descricao": "",
+    "ativo": true
+  },
+  {
+    "titulo": "Estúdio de Pilates",
+    "imagem": "/src/assets/uploads/galeria/estudio-de-pilates-2.webp",
+    "alt": "Outro ângulo do estúdio de pilates, com barrel, cadeira, bola azul e janela ao fundo.",
+    "categoria": "Pilates",
+    "descricao": "",
+    "ativo": true
+  },
+  {
+    "titulo": "Consultório",
+    "imagem": "/src/assets/uploads/galeria/consultorio.webp",
+    "alt": "Consultório com mesa branca, duas cadeiras, prateleiras e material de atendimento.",
+    "categoria": "Consultórios",
+    "descricao": "",
+    "ativo": true
+  },
+  {
+    "titulo": "Sala de atendimento",
+    "imagem": "/src/assets/uploads/galeria/sala-de-atendimento-reservada.webp",
+    "alt": "Sala de atendimento com poltronas, luminária de mesa, ar-condicionado e persiana.",
+    "categoria": "Consultórios",
+    "descricao": "",
+    "ativo": true
+  },
+  {
+    "titulo": "Sala de atendimento",
+    "imagem": "/src/assets/uploads/galeria/sala-de-maca-1.webp",
+    "alt": "Sala de atendimento com maca preta, banqueta com rodízios e escada de apoio.",
+    "categoria": "Consultórios",
+    "descricao": "",
+    "ativo": true
+  },
+  {
+    "titulo": "Sala de atendimento",
+    "imagem": "/src/assets/uploads/galeria/sala-de-maca-2.webp",
+    "alt": "Maca preta pronta para atendimento, com apoio de cabeça e escada de acesso.",
+    "categoria": "Consultórios",
+    "descricao": "",
+    "ativo": true
+  },
+  {
+    "titulo": "Sala de fisioterapia",
+    "imagem": "/src/assets/uploads/galeria/sala-de-fisioterapia.webp",
+    "alt": "Sala de fisioterapia com maca azul, bolas de exercício, espelho e aparelho de eletroterapia.",
+    "categoria": "Consultórios",
+    "descricao": "",
+    "ativo": true
+  },
+  {
+    "titulo": "Sala de fisioterapia",
+    "imagem": "/src/assets/uploads/galeria/sala-de-fisioterapia-2.webp",
+    "alt": "Maca azul com apoio de cabeça e escada, em sala de fisioterapia.",
+    "categoria": "Consultórios",
+    "descricao": "",
+    "ativo": true
+  }
+]

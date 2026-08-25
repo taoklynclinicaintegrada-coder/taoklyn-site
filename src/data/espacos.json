@@ -1,1 +1,34 @@
-[]
+[
+  {
+    "nome": "Recepção",
+    "descricao": "Onde você é recebido e aguarda o atendimento.",
+    "imagem": "/src/assets/uploads/galeria/recepcao.webp",
+    "alt": "Recepção da clínica, com sofás claros e arranjo de plantas.",
+    "disponivelParaLocacao": false,
+    "ativo": true
+  },
+  {
+    "nome": "Consultórios",
+    "descricao": "Salas reservadas para consulta e atendimento individual.",
+    "imagem": "/src/assets/uploads/galeria/consultorio.webp",
+    "alt": "Consultório com mesa branca, cadeiras e prateleiras.",
+    "disponivelParaLocacao": false,
+    "ativo": true
+  },
+  {
+    "nome": "Estúdio de Pilates",
+    "descricao": "Espaço equipado para as aulas de pilates.",
+    "imagem": "/src/assets/uploads/galeria/estudio-de-pilates.webp",
+    "alt": "Estúdio de pilates com aparelhos de madeira e piso azul.",
+    "disponivelParaLocacao": false,
+    "ativo": true
+  },
+  {
+    "nome": "Sala de fisioterapia",
+    "descricao": "Sala preparada para avaliação e sessões de fisioterapia.",
+    "imagem": "/src/assets/uploads/galeria/sala-de-fisioterapia.webp",
+    "alt": "Sala de fisioterapia com maca azul, bolas de exercício e espelho.",
+    "disponivelParaLocacao": false,
+    "ativo": true
+  }
+]

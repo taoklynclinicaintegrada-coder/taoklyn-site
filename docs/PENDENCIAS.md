@@ -41,12 +41,14 @@ se esconde sozinha. Cada item abaixo é uma decisão que só a clínica pode tom
 |---|---|---|
 | 2.9 | **Horário de funcionamento oficial** | Configurações → Horário. Enquanto não for preenchido, o site pede para confirmar pelo WhatsApp, em vez de mostrar horário inventado. |
 | 2.10 | **Link oficial do Google Maps** | Configurações → Endereço. Sem ele, "Abrir no Google Maps" faz uma busca pelo endereço. Nenhum Place ID foi inventado. |
-| 2.11 | **Fotos da clínica** | A galeria continua vazia. Os dois vídeos do tour já mostram os ambientes, mas fotos permitem legenda e categoria. |
+| 2.11 | ~~Fotos da clínica~~ | ✅ Recebidas em 25/08/2026: 11 fotos, incluindo a **fachada**. Publicadas na galeria (4 categorias) e em Espaços (4 ambientes). Originais preservados em `referencias/clinica/fotos/`. |
 | 2.12 | **Texto institucional e destaques** | Compostos a partir da missão oficial e do texto da arte da Dra. Audinei. Revisar. |
 | 2.13 | **Quem atende Terapias Integrativas e G.T. Dança** | Seguem sem profissional relacionado, porque nenhuma referência informa quem os conduz. Fisioterapia, Pilates e Yoga já foram ligados a Tereza e Alicya. |
 | 2.14 | **História da clínica** | Só se sabe a data de fundação (22/12/2007). |
 | 2.15 | **Informações de locação** | Valores, metragem, horários e condições **não foram inventados**. |
 | 2.16 | **Acessibilidade física e estacionamento** | Campo "Orientações de como chegar", em Configurações → Endereço, está vazio. |
+| 2.20 | **Quais salas são alugadas** | Os 4 ambientes publicados estão com "Disponível para locação" desmarcado, porque nenhuma referência diz quais salas a clínica aluga. Marcar no CMS as que forem. |
+| 2.21 | **Imagem de compartilhamento** | Hoje é a marca sobre fundo verde. Com a foto da fachada disponível, vale considerar trocá-la — é ela que aparece ao mandar o site no WhatsApp. |
 | 2.17 | **Registro profissional do Fernando** | Nenhum CREF foi informado. O campo está vazio. |
 | 2.18 | **Primeira publicação do blog** | Existe apenas um **rascunho** chamado "Modelo de publicação". |
 | 2.19 | **Conferir "Hipnose ericksoniana" com o Robson** | Confirmado por você em 23/08/2026 e publicado. A arte de origem trazia o termo truncado; vale confirmar com o profissional. |
