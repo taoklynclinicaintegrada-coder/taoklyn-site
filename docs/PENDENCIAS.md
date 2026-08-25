@@ -47,11 +47,11 @@ se esconde sozinha. Cada item abaixo é uma decisão que só a clínica pode tom
 | 2.14 | **História da clínica** | Só se sabe a data de fundação (22/12/2007). |
 | 2.15 | **Informações de locação** | Valores, metragem, horários e condições **não foram inventados**. |
 | 2.16 | **Acessibilidade física e estacionamento** | Campo "Orientações de como chegar", em Configurações → Endereço, está vazio. |
-| 2.20 | **Quais salas são alugadas** | Os 4 ambientes publicados estão com "Disponível para locação" desmarcado, porque nenhuma referência diz quais salas a clínica aluga. Marcar no CMS as que forem. |
-| 2.21 | **Imagem de compartilhamento** | Hoje é a marca sobre fundo verde. Com a foto da fachada disponível, vale considerar trocá-la — é ela que aparece ao mandar o site no WhatsApp. |
 | 2.17 | **Registro profissional do Fernando** | Nenhum CREF foi informado. O campo está vazio. |
 | 2.18 | **Primeira publicação do blog** | Existe apenas um **rascunho** chamado "Modelo de publicação". |
 | 2.19 | **Conferir "Hipnose ericksoniana" com o Robson** | Confirmado por você em 23/08/2026 e publicado. A arte de origem trazia o termo truncado; vale confirmar com o profissional. |
+| 2.20 | **Quais salas são alugadas** | Os 4 ambientes publicados estão com "Disponível para locação" desmarcado, porque nenhuma referência diz quais salas a clínica aluga. Marcar no CMS as que forem. |
+| 2.21 | **Imagem de compartilhamento** | Hoje é a marca sobre fundo verde. Com a foto da fachada disponível, vale considerar trocá-la — é ela que aparece ao mandar o site no WhatsApp. |
 
 ---
 
